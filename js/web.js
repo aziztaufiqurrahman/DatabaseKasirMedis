@@ -18,7 +18,7 @@ $(document).ready(() => {
         }
     })
 
-    $(document).on('input', 'input[name^="jumlah"]', function() {
+    $(document).on('input', 'input[name^="count"]', function() {
         let col_count = $(this)
         let col_price = col_count.parent().next()
         let col_subtotal = col_price.next()
@@ -77,7 +77,7 @@ function generateRow(id, name, count, price)
         <td></td>
         <td class="text-center"></td>
         <td class="text-left"><input type="hidden" name="id_product[]" id="id_product[]" value="${id}">${name}</td>
-        <td class="text-center"><input type="number" class="cs-inputjumlah" name="jumlah[]" id="jumlah[]" value="${count}" min="1" max="100"></td>
+        <td class="text-center"><input type="number" class="cs-inputcount" name="count[]" id="count[]" value="${count}" min="1" max="100"></td>
         <td class="text-right">${numberToCurrency(price)}</td>
         <td class="text-right" id="subtotal">${numberToCurrency(total)}</td>
         <td class="text-center"><a class="cs-btndelete">Hapus</a></td>
