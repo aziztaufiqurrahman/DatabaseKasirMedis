@@ -1,6 +1,9 @@
 <?php
 $username = "system";
-$password = "admin";
+$password = "";
+$ip = "127.0.0.1";
+$port = "1521";
+$sid = "xe";
 
 $opt = [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -11,7 +14,7 @@ global $db;
 
 try
 {
-    $db = new PDO("oci:dbname=127.0.0.1:1521/xe", $username, $password, $opt);
+    $db = new PDO("oci:dbname={$ip}:{$port}/{$sid}", $username, $password, $opt);
     if (!$db) throw new Exception("Cannot connect into the database!");
 }
 catch(PDOException $e)
