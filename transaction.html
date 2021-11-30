@@ -679,7 +679,7 @@
                   </tr>
                   <tr>
                     <td class="text-right"><strong>Kembalian:</strong></td>
-                    <td class="text-right" id="ctx_back">Rp 0,00</td>
+                    <td class="text-right" id="ctx_change">Rp 0,00</td>
                   </tr>
                 </tbody>
               </table>
@@ -810,14 +810,112 @@
     <!-- =====  FOOTER END  ===== -->
   </div>
   <a id="scrollup">Scroll</a>
-  <script src="js/jQuery_v3.1.1.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/jquery.magnific-popup.js"></script>
-  <script src="js/custom.js"></script>
-  <script src="js/web.js"></script>
+<script src="js/jQuery_v3.1.1.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.magnific-popup.js"></script>
+<script src="js/custom.js"></script>
+<script src="js/web.js"></script>
+<script>
+/**
+ * insert a new row into the table
+ */
+function generateRow(id, name, count, price)
+{
+    let total = count * price
+    return `<tr>
+        <td></td>
+        <td class="text-center"></td>
+        <td class="text-left"><input type="hidden" name="id_product[]" id="id_product[]" value="${id}">${name}</td>
+        <td class="text-center"><input type="number" class="cs-inputcount" name="count[]" id="count[]" value="${count}" min="1" max="100"></td>
+        <td class="text-right">${numberToCurrency(price)}</td>
+        <td class="text-right" id="subtotal">${numberToCurrency(total)}</td>
+        <td class="text-center"><a class="cs-btndelete">Hapus</a></td>
+    </tr>`
+}
+/**
+ * calculate all subtotal
+ */
+function countTotal(table)
+{
+    let rows = table.children('tr')
+    let total = 0
+    rows.each(function() {
+        let subtotal = $(this).find('#subtotal').html()
+        total += currencyToNumber(subtotal)
+    })
+    $('#ctx_total').text(numberToCurrency(total))
+}
+$(document).ready(() => {
+    var tbody = $('#cs-transactiontb').children('tbody')
+    var table =  tbody.length? tbody : $('#cs-transactiontb')
+
+    var ctx_name = $('#ctx_name')
+    var ctx_count = $('#ctx_count')
+    var ctx_content_count = $('#ctx_content_count')
+
+    ctx_content_count.hide()
+    ctx_count.val('1')
+
+    ctx_name.on('input', function() {
+        if (ctx_name.val().trim().length > 0) ctx_content_count.show()
+        else
+        {
+            ctx_content_count.hide()
+            ctx_count.val('1')
+        }
+    })
+    // change subtotal of the item
+    $(document).on('input', 'input[name^="count"]', function() {
+        let col_count = $(this)
+        let col_price = col_count.parent().next()
+        let col_subtotal = col_price.next()
+
+        let subtotal = col_count.val() * currencyToNumber(col_price.text())
+        col_subtotal.text(numberToCurrency(subtotal))
+        countTotal(table)
+    })
+    // insert a new item into the table
+    $('#add_product').click(function() {
+        let name = ctx_name.val()
+        let count = ctx_count.val()
+
+        if (name.length == 0 || count.length == 0) return
+
+        let id = 0
+        let price = 1000
+        table.append(generateRow(id, name, count, price))
+        countTotal(table)
+        
+        ctx_name.val('')
+        ctx_content_count.hide()
+        ctx_count.val('1')
+    })
+    // delete a row on button click
+    $(table).on('click', '.cs-btndelete', function() {
+        $(this).closest('tr').remove()
+        countTotal(table)
+    })
+    // clear every input field value (excluding item count!)
+    $('#clear_input').click(function() {
+        ctx_name.val('')
+        ctx_content_count.hide()
+        ctx_count.val('1')
+        $('#ctx_custname').val('')
+        $('#ctx_custphone').val('')
+        $('#ctx_custaddress').val('')
+        $('#ctx_custpay').val('')
+        $('#ctx_change').text(numberToCurrency(0))
+    })
+    // calculate the change amount based on the given money on the payment
+    $('#ctx_custpay').on('input', function() {
+        let total = currencyToNumber($('#ctx_total').html())
+        let payment = parseFloat($(this).val())
+        let change = payment - total
+        if (isNaN(change)) change = 0
+        $('#ctx_change').text(numberToCurrency(change))
+    })
+})
+</script>
 </body>
-
-
-<!-- Mirrored from html.lionode.com/healthcare/hc001/cart_page.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:01 GMT -->
 </html>
