@@ -1,0 +1,82 @@
+@charset "utf-8";
+
+.cs-textarea {
+    font-size: 13px;
+    border-color:#e5e5e5;
+    color: #888;
+}
+
+.cs-textarea:focus {
+    border: 1px solid black;
+}
+
+.cs-btninput {
+    display: block;
+}
+
+.cs-btninput input {
+    display: inline-block;
+    margin-bottom: 0px;
+    height: 40px;
+    vertical-align: middle;
+}
+
+.cs-btninput button {
+    height: 40px;
+    display: inline-block;
+    padding: 9px 15px;
+    color: white;
+    border: 0;
+    line-height: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.cs-inputjumlah {
+    border: 1px solid transparent!important;
+    padding: 4px 8px!important;
+    background-color: transparent!important;
+    width: 75px!important;
+}
+.cs-inputjumlah:focus {
+    border: 1px solid #000!important;
+}
+
+#cs-transactiontb tbody {
+    counter-reset: rowNumber;
+}
+
+#cs-transactiontb tbody tr {
+    counter-increment: rowNumber;
+}
+
+#cs-transactiontb tbody tr td:first-child::before {
+    content: counter(rowNumber);
+}
+
+#cs-transactiontb td {
+    vertical-align: middle!important;
+}
+
+#cs-transactiontb tr:nth-child(even)
+{
+    background-color: #fcfcfc;
+}
+
+.cs-btndelete {
+    color: #222;
+}
+
+.cs-btndelete:hover {
+    color: #e74c3c;
+    cursor: pointer;
+}
+
+.cs-fitinput {
+    width: auto!important;
+    border: transparent!important;
+    margin: 0;
+    padding: 0;
+    font-size: 14px!important;
+    font-family: 'Raleway', 'Sans-Serif';
+}
