@@ -1,5 +1,5 @@
 /**
- * Convert currency into the floating number
+ * Konversi uang ke nomor pecahan
  * @param {String} value
  */
 function currencyToNumber(value)
@@ -7,7 +7,7 @@ function currencyToNumber(value)
     return parseFloat(value.substring(3).replace('&nbsp;', '').replace(/[^0-9\,\-]+/g, ''))
 }
 /**
- * Convert the floating number into currency
+ * Konversi nomor pecahan ke uang (dalam bentuk rupiah)
  * @param {String} value
  */
 function numberToCurrency(value)

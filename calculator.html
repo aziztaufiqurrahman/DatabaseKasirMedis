@@ -42,6 +42,7 @@
   <div class="loder"></div>
   <div class="wrapper">
     <!-- =====  HEADER START  ===== -->
+    <form method="post" action="events/performtransaction.php">
     <header id="header">
       <div class="header-top">
         <div class="container">
@@ -91,7 +92,7 @@
                             <td class="text-center"><a href="#"><img src="images/product/70x84.jpg" alt="iPod Classic" title="iPod Classic"></a></td>
                             <td class="text-left product-name"><a href="#">MacBook Pro</a>
                               <span class="text-left price">$20.00</span>
-                              <input class="cart-qty" name="product_quantity" min="1" value="1" type="number">
+                              <input class="cart-qty" min="1" value="1" type="number">
                             </td>
                             <td class="text-center"><a class="close-cart"><i class="fa fa-times-circle"></i></a></td>
                           </tr>
@@ -99,7 +100,7 @@
                             <td class="text-center"><a href="#"><img src="images/product/70x84.jpg" alt="iPod Classic" title="iPod Classic"></a></td>
                             <td class="text-left product-name"><a href="#">MacBook Pro</a>
                               <span class="text-left price">$20.00</span>
-                              <input class="cart-qty" name="product_quantity" min="1" value="1" type="number">
+                              <input class="cart-qty" min="1" value="1" type="number">
                             </td>
                             <td class="text-center"><a class="close-cart"><i class="fa fa-times-circle"></i></a></td>
                           </tr>
@@ -128,33 +129,8 @@
                         </tbody>
                       </table>
                     </li>
-                    <li>
-                      <form action="http://html.lionode.com/healthcare/hc001/cart_page.html">
-                        <input class="btn pull-left mt_10" value="View cart" type="submit">
-                      </form>
-                      <form action="http://html.lionode.com/healthcare/hc001/checkout_page.html">
-                        <input class="btn pull-right mt_10" value="Checkout" type="submit">
-                      </form>
-                    </li>
                   </ul>
                 </div>
-              </div>
-              <div class="main-search pull-right">
-                <div class="search-overlay">
-                  <!-- Close Icon -->
-                  <a href="javascript:void(0)" class="search-overlay-close"></a>
-                  <!-- End Close Icon -->
-                  <div class="container">
-                    <!-- Search Form -->
-                    <form role="search" id="searchform" action="http://html.lionode.com/search" method="get">
-                      <label class="h5 normal search-input-label">Enter keywords To Search Entire Store</label>
-                      <input value="" name="q" placeholder="Search here..." type="search">
-                      <button type="submit"></button>
-                    </form>
-                    <!-- End Search Form -->
-                  </div>
-                </div>
-                <div class="header-search"> <a id="search-overlay-btn"></a> </div>
               </div>
             </div>
             <div class="collapse navbar-collapse js-navbar-collapse pull-right">
@@ -243,7 +219,7 @@
                   <h4 class="category_text">Top category</h4>
                   <span class="i-bar"><i class="fa fa-bars"></i></span></div>
               </div>
-              <div id="category-menu-responsive" class="navbar collapse " aria-expanded="true" style="" role="button">
+              <div id="category-menu-responsive" class="navbar collapse " aria-expanded="true" role="button">
                 <div class="nav-responsive">
                   <ul class="nav  main-navigation collapse in">
                     <li><a href="#">Pharmacy</a></li>
@@ -282,7 +258,7 @@
     <div class="container">
       <div class="row ">
         <div id="column-left" class="col-sm-4 col-md-4 col-lg-3 hidden-xs">
-          <div id="category-menu" class="navbar collapse in  mb_40" aria-expanded="true" style="" role="button">
+          <div id="category-menu" class="navbar collapse in  mb_40" aria-expanded="true" role="button">
             <div class="nav-responsive">
               <ul class="nav  main-navigation collapse in">
                 <li><a href="#">Pharmacy</a></li>
@@ -619,7 +595,7 @@
                       <div class="col-md-12 no-padding mt_10" id="ctx_content_count">
                         <div class="col-md-4"><label for="ctx_count">Jumlah Barang</label></div>
                         <div class="col-md-8">
-                          <input type="number" name="ctx_count" id="ctx_count" value="1" min="1" max="100">
+                          <input type="number" id="ctx_count" value="1" min="1" max="100">
                           <span>(Stok Tersedia: <span id="ctx_stock">0</span>)</span>
                         </div>
                       </div>
@@ -635,33 +611,32 @@
             </div>
             <div id="collapseTwo" class="panel-collapse collapse in" aria-expanded="true">
               <div class="panel-body">
-                <form action="">
-                  <div class="row">
-                    <div class="col-md-12 no-padding mt_10">
-                      <div class="col-md-4"><label for="ctx_custname">Nama Pembeli</label></div>
-                      <div class="col-md-8">
-                        <select id='ctx_customer' name="ctx_customer" style='width: 100%;'></select>
-                      </div>
-                    </div>
-                    <div class="col-md-12 no-padding mt_10">
-                      <div class="col-md-4"><label for="ctx_custphone">No. Telepon</label></div>
-                      <div class="col-md-8">
-                        <input type="hidden" name="ctx_custid" id="ctx_custid" value="0">
-                        <input type="text" class="form-control" name="ctx_custphone" id="ctx_custphone" placeholder="Masukkan No. Telepon Pembeli">
-                      </div>
-                    </div>
-                    <div class="col-md-12 no-padding mt_10">
-                      <div class="col-md-4"><label for="ctx_custaddress">Alamat</label></div>
-                      <div class="col-md-8">
-                        <textarea class="form-control cs-textarea" name="ctx_custaddress" id="ctx_custaddress"></textarea>
-                      </div>
-                    </div>
-                    <div class="col-md-12 mt_10" id="ctx_custhelper">
-                        <p style="text-align: right; margin-bottom: 1em; font-style: italic;"><b>*)</b> Tekan tombol di bawah apabila anda ingin menghapus pembeli ini secara permanen.</p>
-                        <span class="btn pull-right" id="add_product">Hapus Pembeli</span>
+                <div class="row">
+                  <div class="col-md-12 no-padding mt_10">
+                    <div class="col-md-4"><label for="ctx_customer">Nama Pembeli</label></div>
+                    <div class="col-md-8">
+                      <select id="ctx_customer" style='width: 100%;'></select>
                     </div>
                   </div>
-                </form>
+                  <div class="col-md-12 no-padding mt_10">
+                    <div class="col-md-4"><label for="ctx_custphone">No. Telepon</label></div>
+                    <div class="col-md-8">
+                      <input type="hidden" name="ctx_custid" id="ctx_custid" value="0">
+                      <input type="hidden" name="ctx_custname" id="ctx_custname" value="">
+                      <input type="text" class="form-control" name="ctx_custphone" id="ctx_custphone" placeholder="Masukkan No. Telepon Pembeli">
+                    </div>
+                  </div>
+                  <div class="col-md-12 no-padding mt_10">
+                    <div class="col-md-4"><label for="ctx_custaddress">Alamat</label></div>
+                    <div class="col-md-8">
+                      <textarea class="form-control cs-textarea" name="ctx_custaddress" id="ctx_custaddress"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-md-12 mt_10" id="ctx_custhelper">
+                      <p style="text-align: right; margin-bottom: 1em; font-style: italic;"><b>*)</b> Tekan tombol di bawah apabila anda ingin menghapus pembeli ini secara permanen.</p>
+                      <span class="btn pull-right" id="add_product">Hapus Pembeli</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -692,7 +667,7 @@
           <div class="col-md-12" style="padding: 0;">
             <div style="float:right">
               <button class="btn" id="clear_input">Bersihkan</button>
-              <button class="btn">Simpan Transaksi</button>
+              <button type="submit" class="btn">Simpan Transaksi</button>
             </div>
           </div>
         </div>
@@ -811,6 +786,7 @@
         </div>
       </div>
     </div>
+    </form>
     <!-- =====  FOOTER END  ===== -->
   </div>
   <a id="scrollup">Scroll</a>
@@ -823,7 +799,7 @@
 <script src="js/web.js"></script>
 <script>
 /**
- * insert a new row into the table
+ * tambah baris baru ke tabel transaksi
  */
 function generateRow(id, name, count, maxstock, price)
 {
@@ -831,30 +807,45 @@ function generateRow(id, name, count, maxstock, price)
   return `<tr>
       <td class="text-center"></td>
       <td class="text-left"><input type="hidden" name="id_product[]" id="id_product[]" value="${id}">${name}</td>
-      <td class="text-center"><input type="number" class="cs-inputcount" name="count[]" id="count[]" value="${count}" min="1" max="100"><input type="hidden" name="max_stock" value="${maxstock}"></td>
+      <td class="text-center"><input type="number" class="cs-inputcount" name="count[]" id="count[]" value="${count}" min="1" max="100"><input type="hidden" value="${maxstock}"></td>
       <td class="text-right">${numberToCurrency(price)}</td>
       <td class="text-right" id="subtotal">${numberToCurrency(total)}</td>
       <td class="text-center"><a class="cs-btndelete">Hapus</a></td>
   </tr>`
 }
 /**
- * calculate all subtotal
+ * hitung total berdasarkan subtotal dari produk yang dibeli
  */
 function countTotal(table)
 {
-    let rows = table.children('tr')
-    let total = 0
-    rows.each(function() {
-        let subtotal = $(this).find('#subtotal').html()
-        total += currencyToNumber(subtotal)
-    })
-    $('#ctx_total').text(numberToCurrency(total))
-    let payment = parseFloat($('#ctx_custpay').val().replaceAll('.','').replace(',','.'))
-    let change = payment - total
-    if (isNaN(change)) change = 0
+  let rows = table.children('tr')
+  let total = 0
+  rows.each(function() {
+      let subtotal = $(this).find('#subtotal').html()
+      total += currencyToNumber(subtotal)
+  })
+  $('#ctx_total').text(numberToCurrency(total))
+  let payment = parseFloat($('#ctx_custpay').val().replaceAll('.','').replace(',','.'))
+  let change = payment - total
+  if (isNaN(change)) change = 0
 
-    if (change < 0) $('#ctx_change').text(`Kurang ${numberToCurrency(change * -1)}`)
-    else $('#ctx_change').text(numberToCurrency(change))
+  if (change < 0) $('#ctx_change').text(`Kurang ${numberToCurrency(change * -1)}`)
+  else $('#ctx_change').text(numberToCurrency(change))
+}
+/**
+ * hapus input yang ada di formulir (kecuali data input yang ada di tabel) 
+ */
+function clearInput()
+{
+  $('#ctx_product').val('').trigger('change')
+  $('#ctx_customer').val('').trigger('change')
+  $('ctx_content_count').hide()
+  $('#ctx_count').val(1)
+  $('ctx_customer').val('')
+  $('#ctx_custphone').val('')
+  $('#ctx_custaddress').val('')
+  $('#ctx_custpay').val('')
+  $('#ctx_change').text(numberToCurrency(0))
 }
 $(document).ready(() => {
     var tbody = $('#cs-transactiontb').children('tbody')
@@ -874,7 +865,7 @@ $(document).ready(() => {
     var dataCustomers = []
     var dataPickProduct
     var dataPickCustomer
-    // on select
+    // ambil data produk dari database
     ctx_product.select2({
       placeholder: 'Masukkan Nama Produk',
       ajax: {
@@ -895,7 +886,7 @@ $(document).ready(() => {
              existId.push(Number($(this).find('td').children('input[name^="id_product"]').val()))
           })
           res.forEach(element => {
-            // exclude existing products
+            // kalau udah ada, jangan dimasukkin ke daftar seleksi
             if (!existId.includes(element.ID_PRODUCT)) dataProducts.push(element)
           });
           $.each(dataProducts, function(index, item) {
@@ -911,8 +902,9 @@ $(document).ready(() => {
         cache: false
       }
     })
+    // ambil data customer dari databases
     ctx_customer.select2({
-      placeholder: 'Masukkan Nama Customer',
+      placeholder: 'Masukkan Nama Pembeli',
       tags: true,
       ajax: {
         type: 'POST',
@@ -941,7 +933,7 @@ $(document).ready(() => {
         }
       }
     })
-    // remove the previous result from the product selection
+    // hapus hasil dari seleksi sebelumnya
     ctx_product.on('change', function() {
       let id_product = ctx_product.children('option:selected').val()
       if (typeof id_product === typeof(undefined)) return
@@ -949,7 +941,7 @@ $(document).ready(() => {
       ctx_content_count.show()
       $('#ctx_stock').text(dataPickProduct.STOCK)
     })
-    // remove the previous result from the product selection
+    // hapus hasil dari seleksi sebelumnya
     ctx_customer.on('change', function() {
       let id_customer = $(this).val()
       if (typeof id_customer === typeof(undefined)) return
@@ -957,26 +949,29 @@ $(document).ready(() => {
       let phone = ''
       let address = ''
       let id = 0
+      let name = $('#ctx_customer :selected').text()
       if (dataPickCustomer)
       {
         phone = dataPickCustomer.PHONE
         address = dataPickCustomer.ADDRESS
         id = dataPickCustomer.ID_CUSTOMER
+        name = dataPickCustomer.NAME
         $('#ctx_custhelper').show()
       }
       else $('#ctx_custhelper').hide()
       $('#ctx_custid').val(id)
+      $('#ctx_custname').val(name)
       $('#ctx_custphone').val(phone)
       $('#ctx_custaddress').val(address)
     })
-    // count the price of the products
+    // hitung harga subtotal dari produk yang dibeli
     $(document).on('input', '#ctx_count', function() {
       let val = Number($(this).val())
       if (val > dataPickProduct.STOCK) $(this).val(dataPickProduct.STOCK)
       else if (val >= 1) return
       else $(this).val(1)
     })
-    // change subtotal of the product
+    // ganti subtotal produk
     $(document).on('input', 'input[name^="count"]', function() {
       let col_count = $(this)
       let col_max = $(this).next()
@@ -991,7 +986,7 @@ $(document).ready(() => {
       col_subtotal.text(numberToCurrency(subtotal))
       countTotal(table)
     })
-    // insert a new product into the table
+    // tambah produk baru ke tabel
     $('#add_product').click(function() {
       if (row_count == 10) return alert('Peringatan: Maksimal hanya 10 produk yang dapat dibeli dalam satu transaksi')
       let name = ctx_product.children('option:selected').text()
@@ -1010,25 +1005,17 @@ $(document).ready(() => {
       dataPickProduct = null
       row_count++
     })  
-    // delete a row on button click
+    // hapus baris dari tabel di baris ketika tulisan delete diklik
     $(table).on('click', '.cs-btndelete', function() {
       $(this).closest('tr').remove()
       countTotal(table)
       row_count--
     })
-    // clear every input field value (excluding item count!)
+    // hapus semua input, kecuali data yang ada di tabel
     $('#clear_input').click(function() {
-      ctx_product.val('').trigger('change')
-      ctx_customer.val('').trigger('change')
-      ctx_content_count.hide()
-      ctx_count.val(1)
-      ctx_customer.val('')
-      $('#ctx_custphone').val('')
-      $('#ctx_custaddress').val('')
-      $('#ctx_custpay').val('')
-      $('#ctx_change').text(numberToCurrency(0))
+      clearInput()
     })
-    // calculate the change amount based on the given money on the payment
+    // hitung kembalian berdasarkan uang yang dikasih sama pembeli
     $('#ctx_custpay').on('input', function() {
       countTotal(table)
     })
