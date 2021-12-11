@@ -594,7 +594,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <!-- <tr>
                     <td class="text-center"></td>
                     <td class="text-left"><input type="hidden" name="id_product[]" id="id_product[]" value="0">product 11</td>
                     <td class="text-center">
@@ -603,7 +603,7 @@
                     <td class="text-right">Rp. 100.000,00</td>
                     <td class="text-right" id="subtotal">Rp. 100.000,00</td>
                     <td class="text-center"><a href="#" class="cs-btndelete">Hapus</a></td>
-                  </tr>
+                  </tr> -->
                 </tbody>
               </table>
             </div>
@@ -611,10 +611,9 @@
               <div class="panel-body">
                   <div class="row">
                       <div class="col-md-12 no-padding mt-10">
-                        <div class="col-md-4"><label for="ctx_name">Nama Barang</label></div>
+                        <div class="col-md-4"><label for="ctx_product">Nama Barang</label></div>
                         <div class="col-md-8">
-                          <!-- <input type="text" class="form-control" name="ctx_name" id="ctx_name" placeholder="Masukkan Nama Barang" autofocus> -->
-                          <select id='ctx_name' name="ctx_name" style='width: 100%;'></select>                           
+                          <select id='ctx_product' name="ctx_product" style='width: 100%;'></select>
                         </div>
                       </div>
                       <div class="col-md-12 no-padding mt_10" id="ctx_content_count">
@@ -641,12 +640,13 @@
                     <div class="col-md-12 no-padding mt_10">
                       <div class="col-md-4"><label for="ctx_custname">Nama Pembeli</label></div>
                       <div class="col-md-8">
-                        <input type="text" class="form-control" name="ctx_custname" id="ctx_custname" placeholder="Masukkan Nama Pembeli">
+                        <select id='ctx_customer' name="ctx_customer" style='width: 100%;'></select>
                       </div>
                     </div>
                     <div class="col-md-12 no-padding mt_10">
                       <div class="col-md-4"><label for="ctx_custphone">No. Telepon</label></div>
                       <div class="col-md-8">
+                        <input type="hidden" name="ctx_custid" id="ctx_custid" value="0">
                         <input type="text" class="form-control" name="ctx_custphone" id="ctx_custphone" placeholder="Masukkan No. Telepon Pembeli">
                       </div>
                     </div>
@@ -655,6 +655,10 @@
                       <div class="col-md-8">
                         <textarea class="form-control cs-textarea" name="ctx_custaddress" id="ctx_custaddress"></textarea>
                       </div>
+                    </div>
+                    <div class="col-md-12 mt_10" id="ctx_custhelper">
+                        <p style="text-align: right; margin-bottom: 1em; font-style: italic;"><b>*)</b> Tekan tombol di bawah apabila anda ingin menghapus pembeli ini secara permanen.</p>
+                        <span class="btn pull-right" id="add_product">Hapus Pembeli</span>
                     </div>
                   </div>
                 </form>
@@ -845,25 +849,37 @@ function countTotal(table)
         total += currencyToNumber(subtotal)
     })
     $('#ctx_total').text(numberToCurrency(total))
+    let payment = parseFloat($('#ctx_custpay').val().replaceAll('.','').replace(',','.'))
+    let change = payment - total
+    if (isNaN(change)) change = 0
+
+    if (change < 0) $('#ctx_change').text(`Kurang ${numberToCurrency(change * -1)}`)
+    else $('#ctx_change').text(numberToCurrency(change))
 }
 $(document).ready(() => {
     var tbody = $('#cs-transactiontb').children('tbody')
     var table =  tbody.length? tbody : $('#cs-transactiontb')
-    var ctx_name = $('#ctx_name')
+    var ctx_product = $('#ctx_product')
+    var ctx_customer = $('#ctx_customer')
     var ctx_count = $('#ctx_count')
     var ctx_content_count = $('#ctx_content_count')
-    ctx_content_count.hide()    
+    var ctx_custhelper = $('#ctx_custhelper')
+    var row_count = 0
+
+    ctx_content_count.hide()
+    ctx_custhelper.hide()
     ctx_count.val(1)
 
-    var dataRes = []
-    var dataPick
+    var dataProducts = []
+    var dataCustomers = []
+    var dataPickProduct
+    var dataPickCustomer
     // on select
-    ctx_name.select2({
+    ctx_product.select2({
       placeholder: 'Masukkan Nama Produk',
-      ajax:
-      {
+      ajax: {
         type: 'POST',
-        url: 'handlers/suggestion.php',
+        url: 'handlers/productsuggestion.php',
         data: function(params) {
           return {
             name: params.term
@@ -872,21 +888,20 @@ $(document).ready(() => {
         dataType: 'json',
         delay: 250,
         processResults: function(res) {
-          while (dataRes.length > 0) dataRes.pop()
+          while (dataProducts.length > 0) dataProducts.pop()
           let result = []
           let existId = []
           table.find('tr').each(function() {
              existId.push(Number($(this).find('td').children('input[name^="id_product"]').val()))
           })
-          console.log(existId)
           res.forEach(element => {
             // exclude existing products
-            if (!existId.includes(element.ID_PRODUCT)) dataRes.push(element)
+            if (!existId.includes(element.ID_PRODUCT)) dataProducts.push(element)
           });
-          $.each(dataRes, function(index, item) {
+          $.each(dataProducts, function(index, item) {
             result.push({
               id: item['ID_PRODUCT'],
-              text: item['NAME'] + (item['UNIT']? ' - ' + item['UNIT'] : ''),
+              text: item['NAME'] + (item['UNIT']? ' - ' + item['UNIT'] : '') + ' (' + item['TYPE'] +')',
             })
           })
           return {
@@ -896,18 +911,68 @@ $(document).ready(() => {
         cache: false
       }
     })
+    ctx_customer.select2({
+      placeholder: 'Masukkan Nama Customer',
+      tags: true,
+      ajax: {
+        type: 'POST',
+        url: 'handlers/customersuggestion.php',
+        data: function(params) {
+          return {
+            name: params.term
+          }
+        },
+        dataType: 'json',
+        delay: 250,
+        processResults: function(res) {
+          let result = []
+          res.forEach(element => {
+            dataCustomers.push(element)
+          });
+          $.each(res, function(index, item) {
+            result.push({
+              id: item['ID_CUSTOMER'],
+              text: item['NAME'] + ' (' + item['PHONE'] + ')'
+            })
+          })
+          return {
+            results: result
+          }
+        }
+      }
+    })
     // remove the previous result from the product selection
-    ctx_name.on('change', function() {
-      let id_product = ctx_name.children('option:selected').val()
+    ctx_product.on('change', function() {
+      let id_product = ctx_product.children('option:selected').val()
       if (typeof id_product === typeof(undefined)) return
-      dataPick = dataRes.find(data => data.ID_PRODUCT == id_product)
+      dataPickProduct = dataProducts.find(data => data.ID_PRODUCT == id_product)
       ctx_content_count.show()
-      $('#ctx_stock').text(dataPick.STOCK)
+      $('#ctx_stock').text(dataPickProduct.STOCK)
+    })
+    // remove the previous result from the product selection
+    ctx_customer.on('change', function() {
+      let id_customer = $(this).val()
+      if (typeof id_customer === typeof(undefined)) return
+      dataPickCustomer = dataCustomers.find(data => data.ID_CUSTOMER == id_customer)
+      let phone = ''
+      let address = ''
+      let id = 0
+      if (dataPickCustomer)
+      {
+        phone = dataPickCustomer.PHONE
+        address = dataPickCustomer.ADDRESS
+        id = dataPickCustomer.ID_CUSTOMER
+        $('#ctx_custhelper').show()
+      }
+      else $('#ctx_custhelper').hide()
+      $('#ctx_custid').val(id)
+      $('#ctx_custphone').val(phone)
+      $('#ctx_custaddress').val(address)
     })
     // count the price of the products
     $(document).on('input', '#ctx_count', function() {
       let val = Number($(this).val())
-      if (val > dataPick.STOCK) $(this).val(dataPick.STOCK)
+      if (val > dataPickProduct.STOCK) $(this).val(dataPickProduct.STOCK)
       else if (val >= 1) return
       else $(this).val(1)
     })
@@ -928,32 +993,36 @@ $(document).ready(() => {
     })
     // insert a new product into the table
     $('#add_product').click(function() {
-      let name = ctx_name.children('option:selected').text()
+      if (row_count == 10) return alert('Peringatan: Maksimal hanya 10 produk yang dapat dibeli dalam satu transaksi')
+      let name = ctx_product.children('option:selected').text()
       let count = ctx_count.val()
       if (name.length == 0 || count.length == 0) return
 
-      let id_product = dataPick.ID_PRODUCT
-      let price = dataPick.PRICE
-      let maxstock = dataPick.STOCK
+      let id_product = dataPickProduct.ID_PRODUCT
+      let price = dataPickProduct.PRICE
+      let maxstock = dataPickProduct.STOCK
       table.append(generateRow(id_product, name, count, maxstock, price))
       countTotal(table)
       
-      ctx_name.val('').trigger('change')
+      ctx_product.val('').trigger('change')
       ctx_content_count.hide()
       ctx_count.val(1)
-      dataPick = null
+      dataPickProduct = null
+      row_count++
     })  
     // delete a row on button click
     $(table).on('click', '.cs-btndelete', function() {
       $(this).closest('tr').remove()
       countTotal(table)
+      row_count--
     })
     // clear every input field value (excluding item count!)
     $('#clear_input').click(function() {
-      ctx_name.val('').trigger('change')
+      ctx_product.val('').trigger('change')
+      ctx_customer.val('').trigger('change')
       ctx_content_count.hide()
       ctx_count.val(1)
-      $('#ctx_custname').val('')
+      ctx_customer.val('')
       $('#ctx_custphone').val('')
       $('#ctx_custaddress').val('')
       $('#ctx_custpay').val('')
@@ -961,12 +1030,7 @@ $(document).ready(() => {
     })
     // calculate the change amount based on the given money on the payment
     $('#ctx_custpay').on('input', function() {
-      let total = parseFloat(currencyToNumber($('#ctx_total').html()))
-      let payment = parseFloat($(this).val().replaceAll('.','').replace(',','.'))
-      let change = payment - total
-      if (isNaN(change)) change = 0
-      
-      $('#ctx_change').text(numberToCurrency(change))
+      countTotal(table)
     })
 })
 </script>

@@ -1,9 +1,5 @@
 <?php
-$username = "";
-$password = "";
-$ip = "";
-$port = "";
-$sid = "";
+include "config.php";
 
 $opt = [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

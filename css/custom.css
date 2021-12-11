@@ -54,6 +54,10 @@
     content: counter(rowNumber);
 }
 
+.no-content::before{
+    content: none!important;
+}
+
 #cs-transactiontb td {
     vertical-align: middle!important;
 }
