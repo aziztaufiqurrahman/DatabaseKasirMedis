@@ -10,19 +10,23 @@ $id_employee = intval(3);
 $id_customer = intval($_POST['ctx_custid']);
 $phone = $_POST['ctx_custphone'];
 $address = $_POST['ctx_custaddress'];
-$name = ($id_customer == 0)? $_POST['ctx_custname'] : $_POST['ctx_custname'];
-
+$name = ($id_customer == 0)? $_POST['ctx_customer'] : $_POST['ctx_custname'];
 // lakukan UPSERT (UPDATE/INSERT) untuk data customer
-// Customers::upsert($db, $id_customer, $name, $phone, $address);
-print_r(pretty($_POST));
-// $id_transaction = Transactions::create($db, $id_customer, $id_employee);
-$id_transaction = 1;
+Customers::upsert($db, $id_customer, $name, $phone, $address);
+$transaction = Transactions::create($db, $id_customer, $id_employee);
 // ambil informasi tentang produk
-foreach ($_POST['id_product'] as $key => $value)
+if ($transaction)
 {
-    $id_product = $value;
-    $count = $_POST['count'][$key];
-
-    
+    $id_transaction = $transaction['ID_TRANSACTION'];
+    $code = $transaction['CODE'];
+    foreach ($_POST['id_product'] as $key => $value)
+    {
+        $id_product = $value;
+        $amount = $_POST['count'][$key];
+        // masukkan detail produk yang dibeli
+        Transactions::detail($db, $id_transaction, $id_product, $amount);
+    }
+    return header('location:../calculator.html?ctx='.$code);
 }
+return header('location:../calculator.html?ctx=0');
 ?>
