@@ -3,6 +3,7 @@ include "models/transactions2.php";
 $dataTransaksi= Transactions2::getAll($db);
 print_r (pretty($dataTransaksi));
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
