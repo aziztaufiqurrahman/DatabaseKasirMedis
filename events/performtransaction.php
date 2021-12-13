@@ -12,7 +12,7 @@ $phone = $_POST['ctx_custphone'];
 $address = $_POST['ctx_custaddress'];
 $name = ($id_customer == 0)? $_POST['ctx_customer'] : $_POST['ctx_custname'];
 // lakukan UPSERT (UPDATE/INSERT) untuk data customer
-Customers::upsert($db, $id_customer, $name, $phone, $address);
+$id_customer = Customers::upsert($db, $id_customer, $name, $phone, $address);
 $transaction = Transactions::create($db, $id_customer, $id_employee);
 // ambil informasi tentang produk
 if ($transaction)

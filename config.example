@@ -1,0 +1,7 @@
+<?php
+$username = "";
+$password = "";
+$ip = "";
+$port = "";
+$sid = "";
+?>

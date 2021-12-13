@@ -634,7 +634,7 @@
                   </div>
                   <div class="col-md-12 mt_10" id="ctx_custhelper">
                       <p style="text-align: right; margin-bottom: 1em; font-style: italic;"><b>*)</b> Tekan tombol di bawah apabila anda ingin menghapus pembeli ini secara permanen.</p>
-                      <span class="btn pull-right" id="add_product">Hapus Pembeli</span>
+                      <span class="btn pull-right" id="ctx_custdelete">Hapus Pembeli</span>
                   </div>
                 </div>
               </div>
@@ -1018,6 +1018,21 @@ $(document).ready(() => {
     // hitung kembalian berdasarkan uang yang dikasih sama pembeli
     $('#ctx_custpay').on('input', function() {
       countTotal(table)
+    })
+    // hapus customer ketika tombol diklik
+    $('#ctx_custdelete').click(function(e) {
+      let id_customer = Number($('#ctx_custid').val())
+      if (id_customer == 0) return;
+      let name = $('#ctx_custname').val()
+      e.preventDefault()
+      $.ajax({
+        type: 'POST',
+        url: 'handlers/deletecustomer.php',
+        data: {
+          id_customer: id_customer
+        }
+      })
+      clearInput()
     })
 })
 </script>

@@ -7,7 +7,7 @@ class Transactions
      */
     public static function getProductSuggestions($db, $name)
     {
-        $sql = "SELECT pro.id_product, pro.name, pt.type, pro.stock, pro.unit, pro.created_at, pri.price, pri.created_at AS price_at FROM products pro JOIN prices pri ON pri.id_product = pro.id_product JOIN producttypes pt ON pt.id_type = pro.id_type WHERE" .(strlen($name) > 0? " upper(pro.name) LIKE upper(:productname) AND" : ""). " pro.deleted_at IS NULL ORDER BY ".(strlen($name) > 0? "pro.created_at DESC" : "pro.name ASC").", pri.created_at DESC FETCH FIRST 10 ROWS ONLY";
+        $sql = "SELECT pro.id_product, pro.name, pt.type, pro.stock, pro.unit, pro.created_at, pri.price, pri.created_at AS price_at FROM products pro JOIN prices pri ON pri.id_product = pro.id_product JOIN producttypes pt ON pt.id_type = pro.id_type WHERE" .(strlen($name) > 0? " upper(pro.name) LIKE upper(:productname) AND" : ""). " pro.deleted_at IS NULL ORDER BY ".(strlen($name) > 0? "pro.name ASC" : "pro.updated_at DESC").", pri.created_at DESC FETCH FIRST 10 ROWS ONLY";
         $stmt = $db->prepare($sql);
         if (strlen($name) > 0) $stmt->bindValue(":productname", $name.'%');
         $stmt->execute();
