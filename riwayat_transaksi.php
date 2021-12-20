@@ -4,6 +4,7 @@ include "models/transactions.php";
 $dataTransaksi= Transactions::getAll($db);
 print_r (pretty($dataTransaksi));
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
