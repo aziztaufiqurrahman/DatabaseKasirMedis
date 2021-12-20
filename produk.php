@@ -1,28 +1,28 @@
 <?php 
 include "connect.php";
-include "models/transactions.php";
-$dataTransaksi= Transactions::getAll($db);
+include "models/products.php";
+$produk= Products::getAll($db);
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-<title>riwayat belanja</title>
+<title>Daftar Produk</title>
 <link rel="stylesheet" href="admin/assets/css/bootstrap.css">
 </head>
 <body>
 
 <section class="riwayat">
 <div class="container">
-<h3>Riwayat Belanja</h3>
+<h3>Daftar Produk</h3>
 
 <table class="table table-bordered">
 <thead>
 <tr>
 <th>No</th>
-<th>Tanggal Berlangsung</th>
-<th>Kode</th>
-<th>Total</th>
+<th>Nama</th>
+<th>Unit</th>
+<th>Harga</th>
 <th>Aksi</th>
 </tr>
 </thead>
@@ -32,14 +32,15 @@ $nomor=1;
 ?>
 
 
-<?php foreach ($dataTransaksi as $key) {
+<?php foreach ($produk as $key) {
 echo "<tr>";
 echo "<td>". $nomor++."</td>";
-echo "<td>". $key["CREATED_AT"]."</td>";
-echo "<td>". $key["CODE"]. "</td>";
+echo "<td>". $key["NAME"]."</td>";
+echo "<td>". $key["UNIT"]. "</td>";
+echo "<td>". $key["PRICE"]. "</td>";
 echo "<td>". "</td>";
 echo "</tr>";
-}?>
+}?> 
 
 </tbody>
 </table>
