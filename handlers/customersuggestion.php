@@ -1,4 +1,5 @@
 <?php
+require "../connect.php";
 require "../models/transactions.php";
 header("Content-type:application/json");
 $query = '';

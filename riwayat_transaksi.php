@@ -1,6 +1,7 @@
 <?php 
-include "models/transactions2.php";
-$dataTransaksi= Transactions2::getAll($db);
+include "connect.php";
+include "models/transactions.php";
+$dataTransaksi= Transactions::getAll($db);
 print_r (pretty($dataTransaksi));
 ?>
 <!DOCTYPE html>
@@ -10,12 +11,10 @@ print_r (pretty($dataTransaksi));
 <link rel="stylesheet" href="admin/assets/css/bootstrap.css">
 </head>
 <body>
-<?php include 'menu.php'; ?>
 
 <section class="riwayat">
 <div class="container">
-<h3>Riwayat Belanja <?php echo $_SESSION["pelanggan"]["nama_pelanggan"]
-?></h3>
+<h3>Riwayat Belanja</h3>
 
 <table class="table table-bordered">
 <thead>

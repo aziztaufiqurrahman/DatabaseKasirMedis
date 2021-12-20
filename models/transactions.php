@@ -1,5 +1,5 @@
 <?php
-include_once "../connect.php";
+
 class Transactions
 {
     /**
@@ -57,6 +57,14 @@ class Transactions
         $stmt->bindValue(":id_product", $id_product);
         $stmt->bindValue(":amount", $amount);
         $stmt->execute();
+    }
+    public static function getAll ($db) 
+    {
+        $riwayat = "SELECT * FROM transactions WHERE archived_at IS NULL";
+        $stmt = $db->prepare($riwayat);
+        $stmt->execute();
+        $temp = $stmt->fetchAll ();
+        return $temp;
     }
 }
 ?>

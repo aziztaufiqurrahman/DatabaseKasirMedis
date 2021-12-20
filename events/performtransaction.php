@@ -1,4 +1,5 @@
 <?php
+require "../connect.php";
 require "../models/customers.php";
 require "../models/transactions.php";
 if ($_SERVER['REQUEST_METHOD'] != 'POST') return;
