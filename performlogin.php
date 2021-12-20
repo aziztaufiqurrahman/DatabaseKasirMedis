@@ -16,7 +16,7 @@ var_dump($data);
 // Cek apakah variabel $data ada datanya atau tidak
 if( ! empty($data)){ // Jika tidak sama dengan empty (kosong)
   $_SESSION['employee'] = $data; // Set session untuk username (simpan username di session)
-  header("location: index.html"); // Kita redirect ke halaman index.php
+  header("location: index.php"); // Kita redirect ke halaman index.php
  }else{ // Jika $data nya kosong
    // Buat sebuah cookie untuk menampung data pesan kesalahan
    header("location: login.php?status=gagal"); // Redirect kembali ke halaman login.php

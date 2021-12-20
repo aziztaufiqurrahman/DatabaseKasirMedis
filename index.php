@@ -1,3 +1,6 @@
+<?php
+  session_start();
+?>
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html lang="en">
@@ -70,7 +73,16 @@
             </div>
             <div class="col-sm-6">
               <ul class="header-top-right text-right">
-                <li class="account"><a href="login.php">Masuk</a></li>
+                <li class="account">
+                  <?php 
+                  if (!empty($_SESSION['employee'])){
+                    echo'<a href="logout.php">Keluar</a>';
+                  }else{
+                    echo'<a href="login.php">Masuk</a>';
+                  }
+                   
+                  ?>
+                </li>
                 <li class="sitemap"><a href="https://goo.gl/maps/t1pZEah8czZkTvxx6" target="_blank">Kampus Kita</a></li>
               </ul>
             </div>
@@ -80,7 +92,7 @@
       <div class="header">
         <div class="container">
           <nav class="navbar">
-            <div class="navbar-header mtb_20"> <a class="navbar-brand" href="index.html"> <img alt="HealthCared" src="images/logokami3.png"> </a> </div>
+            <div class="navbar-header mtb_20"> <a class="navbar-brand" href="index.php"> <img alt="HealthCared" src="images/logokami3.png"> </a> </div>
             <div class="header-right pull-right mtb_50">
               <button class="navbar-toggle pull-left" type="button" data-toggle="collapse" data-target=".js-navbar-collapse"> <span class="i-bar"><i class="fa fa-bars"></i></span></button>
               <div class="main-search pull-right">
@@ -102,7 +114,7 @@
             </div>
             <div class="collapse navbar-collapse js-navbar-collapse pull-right">
               <ul id="menu" class="nav navbar-nav">
-                <li> <a href="index.html">Halaman Utama</a></li>
+                <li> <a href="index.php">Halaman Utama</a></li>
                 <li> <a href="category_page.html">Daftar Produk</a></li>
                 <li> <a href="checkout_page.html">Riwayat Transaksi</a></li>
                 <li> <a href="calculator.html">Transaksi</a></li>
@@ -1530,7 +1542,7 @@
         <div class="row">
           <div class="col-md-12 footer-block">
             <center><div class="footer-contact">
-              <div class="footer-logo mb_40"> <a href="index.html"> <img src="images/logokami3.png" alt="HealthCare"> </a> </div>
+              <div class="footer-logo mb_40"> <a href="index.php"> <img src="images/logokami3.png" alt="HealthCare"> </a> </div>
               <ul>
                 <li>KELOMPOK A4 <br/> D4 TEKNIK INFORMATIKA</li>
                 <li><b>MOTTO KELOMPOK : <br/>KERJA SAMA, SALING MELENGKAPI, MEMBERIKAN YANG TERBAIK</b> </li>
