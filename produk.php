@@ -37,7 +37,7 @@ echo "<tr>";
 echo "<td>". $nomor++."</td>";
 echo "<td>". $key["NAME"]."</td>";
 echo "<td>". $key["UNIT"]. "</td>";
-echo "<td>". $key["PRICE"]. "</td>";
+echo "<td>Rp. ". number_format($key["PRICE"],2,",","."). "</td>";
 echo "<td>". "</td>";
 echo "</tr>";
 }?> 

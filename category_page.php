@@ -1,3 +1,8 @@
+<?php 
+include "connect.php";
+include "models/products.php";
+$produk= Products::getAll($db);
+?>
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html lang="en">
@@ -33,7 +38,6 @@
   <link rel="apple-touch-icon" href="images/apple-touch-icon.html">
   <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.html">
   <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.html">
-  <link href="DataTables/datatables.css" rel="stylesheet">
 </head>
 
 <body>
@@ -89,7 +93,7 @@
               <ul id="menu" class="nav navbar-nav">
                 <li> <a href="index.php">Halaman Utama</a></li>
                 <li> <a href="category_page.php">Daftar Produk</a></li>
-                <li> <a href="riwayat_transaksi.php">Riwayat Transaksi</a></li>
+                <li> <a href="checkout_page.html">Riwayat Transaksi</a></li>
                 <li> <a href="calculator.html">Transaksi</a></li>
                 <li> <a href="employee.html">Kelola Pegawai</a></li>
                 <li> <a href="about-us.html">Tentang Kami</a></li>
@@ -150,16 +154,51 @@
               </ul>
             </div>
           </div>
+          <div class="left_banner left-sidebar-widget mt_30 mb_50"> <a href="#"><img src="images/leftt 1.jpg" alt="Left Banner" class="img-responsive" /></a> </div>
+          <div class="left-cms left-sidebar-widget mb_50">
+            
+          </div>
         </div>
         <div class="col-sm-8 col-md-8 col-lg-9 mtb_30">
-            <table id="table" class="display" cellspacing="0" width="100%">
-                <thead>
-                    <tr><th>FOTO</th><th>NAMA</th><th>EMAIL</th><th>NO HP</th><th>ACTION</th></tr>
-                </thead>
-                <tbody>
-                </tbody>
+          <!-- =====  BANNER STRAT  ===== -->
+          <div class="breadcrumb ptb_20">
+            <h1>Daftar Produk</h1>
+            <ul>
+              <li><a href="index.php">Halaman Utama</a></li>
+              <li class="active">Daftar Produk</li>
+            </ul>
+          </div>
+          <!-- =====  BREADCRUMB END===== -->
+          <table class="table table-bordered">
+            <thead>
+            <tr>
+            <th>No</th>
+            <th>Nama</th>
+            <th>Unit</th>
+            <th>Harga</th>
+            <th>Aksi</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            $nomor=1;
+            ?>
+            
+            
+            <?php foreach ($produk as $key) {
+            echo "<tr>";
+            echo "<td>". $nomor++."</td>";
+            echo "<td>". $key["NAME"]."</td>";
+            echo "<td>". $key["UNIT"]. "</td>";
+            echo "<td>Rp. ". number_format($key["PRICE"],2,",","."). "</td>";
+            echo "<td>". "</td>";
+            echo "</tr>";
+            }?> 
+            
+            </tbody>
             </table>
-         </div>
+            
+        </div>
       </div>
     </div>
     <!-- =====  CONTAINER END  ===== -->
@@ -188,7 +227,6 @@
         </div>
       </div>
     </div>
-    </div>
     <!-- =====  FOOTER END  ===== -->
   </div>
   <a id="scrollup">Scroll</a>
@@ -212,37 +250,6 @@
     $("#amount").val("$" + $("#slider-range").slider("values", 0) +
       " - $" + $("#slider-range").slider("values", 1));
   });
-  </script>
-  <script src="js/jQuery_v3.1.1.min.js"></script>
-  <script src="DataTables/datatables.js"></script>
-  <script type="text/javascript">
-
-      var save_method; //for save method string
-      var table;
-
-      $(document).ready(function() {
-          //datatables
-          table = $('#table').DataTable({ 
-              "processing": true, //Feature control the processing indicator.
-              "serverSide": true, //Feature control DataTables' server-side processing mode.
-              "order": [], //Initial no order.
-              // Load data for the table's content from an Ajax source
-              // "ajax": {
-              //     "url": '<?php echo site_url('karyawan/json'); ?>',
-              //     "type": "POST"
-              // },
-              //Set column definition initialisation properties.
-              // "columns": [
-              //     {"data": "foto",width:170},
-              //     {"data": "nama_lengkap",width:100},
-              //     {"data": "email",width:100},
-              //     {"data": "no_hp",width:100},
-              //     {"data": "action",width:100}
-              // ],
-
-          });
-
-      });
   </script>
 </body>
 
