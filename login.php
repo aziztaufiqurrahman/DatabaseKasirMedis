@@ -1,8 +1,13 @@
+<?php
+if ($_GET["status"] == "gagal"){
+  echo"<script>alert('Login gagalllllllll!!!, harap periksa kembali username atau password anda!!')</script>";
+}
+?>
+
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html lang="en">
 <!--<![endif]-->
-
 
 <!-- Mirrored from html.lionode.com/healthcare/hc001/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:46:54 GMT -->
 <head>
@@ -167,7 +172,7 @@
                 <div class="panel-body">
                   <div class="row">
                     <div class="col-lg-12">
-                      <form id="login-form" action="#" method="post">
+                      <form id="login-form" action="performlogin.php" method="post">
                         <div class="form-group">
                           <input type="text" name="username" id="username1" tabindex="1" class="form-control" placeholder="Username" value="">
                         </div>
@@ -227,7 +232,7 @@
   </div>
   <!-- =====  FOOTER END  ===== -->
   <a id="scrollup">Scroll</a>
-  <script src="js/jQuery_v3.1.1.min.js"></script>
+  <script src="js/jQuery_v3.1.1.min.js"></>
   <script src="js/owl.carousel.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/jquery.magnific-popup.js"></script>
