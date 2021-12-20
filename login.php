@@ -1,3 +1,8 @@
+<?php
+if ($_GET["status"] == "gagal"){
+  echo"<script>alert('Login gagalllllllll!!!, harap periksa kembali username atau password anda!!')</script>";
+}
+?>
 
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
@@ -227,7 +232,7 @@
   </div>
   <!-- =====  FOOTER END  ===== -->
   <a id="scrollup">Scroll</a>
-  <script src="js/jQuery_v3.1.1.min.js"></script>
+  <script src="js/jQuery_v3.1.1.min.js"></>
   <script src="js/owl.carousel.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/jquery.magnific-popup.js"></script>
