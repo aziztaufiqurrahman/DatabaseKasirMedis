@@ -1,5 +1,5 @@
 <?php
-if ($_GET["status"] == "gagal"){
+if (!empty($_GET['status']) && $_GET["status"] == "gagal"){
   echo"<script>alert('Login gagalllllllll!!!, harap periksa kembali username atau password anda!!')</script>";
 }
 ?>
@@ -9,7 +9,7 @@ if ($_GET["status"] == "gagal"){
 <html lang="en">
 <!--<![endif]-->
 
-<!-- Mirrored from html.lionode.com/healthcare/hc001/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:46:54 GMT -->
+<!-- Mirrored from html.lionode.com/healthcare/hc001/login.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:46:54 GMT -->
 <head>
   <!-- =====  BASIC PAGE NEEDS  ===== -->
   <meta charset="utf-8">
@@ -58,7 +58,7 @@ if ($_GET["status"] == "gagal"){
             </div>
             <div class="col-sm-6">
               <ul class="header-top-right text-right">
-                <li class="account"><a href="login.html">Masuk</a></li>
+                <li class="account"><a href="login.php">Masuk</a></li>
                 <li class="sitemap"><a href="https://goo.gl/maps/t1pZEah8czZkTvxx6" target="_blank">Kampus Kita</a></li>
               </ul>
             </div>
@@ -239,5 +239,5 @@ if ($_GET["status"] == "gagal"){
   <script src="js/custom.js"></script>
 
 
-<!-- Mirrored from html.lionode.com/healthcare/hc001/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:46:54 GMT -->
+<!-- Mirrored from html.lionode.com/healthcare/hc001/login.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:46:54 GMT -->
 </html>

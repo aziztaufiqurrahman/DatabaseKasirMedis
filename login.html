@@ -4,7 +4,7 @@
 <!--<![endif]-->
 
 
-<!-- Mirrored from html.lionode.com/healthcare/hc001/checkout_page.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:07 GMT -->
+<!-- Mirrored from html.lionode.com/healthcare/hc001/login.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:46:54 GMT -->
 <head>
   <!-- =====  BASIC PAGE NEEDS  ===== -->
   <meta charset="utf-8">
@@ -28,7 +28,6 @@
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link rel="stylesheet" type="text/css" href="css/magnific-popup.css">
   <link rel="stylesheet" type="text/css" href="css/owl.carousel.css">
-  <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
   <link rel="shortcut icon" href="images/favicon.png">
   <link rel="apple-touch-icon" href="images/apple-touch-icon.html">
   <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.html">
@@ -107,7 +106,7 @@
                   <h4 class="category_text">Daftar Produk</h4>
                   <span class="i-bar"><i class="fa fa-bars"></i></span></div>
               </div>
-              <div id="category-menu-responsive" class="navbar collapse " aria-expanded="true" role="button">
+              <div id="category-menu-responsive" class="navbar collapse " aria-expanded="true"  role="button">
                 <div class="nav-responsive">
                   <ul class="nav  main-navigation collapse in">
                     <li><a href="#">Anti Inflamasi</a></li>
@@ -136,8 +135,8 @@
     <!-- =====  CONTAINER START  ===== -->
     <div class="container">
       <div class="row ">
-        <div id="column-left" class="col-sm-4 col-md-4 col-lg-3 ">
-          <div id="category-menu" class="navbar collapse mb_40 hidden-sm-down in" aria-expanded="true" role="button">
+        <div id="column-left" class="col-sm-4 col-md-4 col-lg-3 hidden-xs">
+          <div id="category-menu" class="navbar collapse in  mb_40" aria-expanded="true" role="button">
             <div class="nav-responsive">
               <ul class="nav  main-navigation collapse in ">
                 <li><a href="#">Anti Inflamasi</a></li>
@@ -150,83 +149,43 @@
             </div>
           </div>
           <div class="left_banner left-sidebar-widget mt_30 mb_50"> <a href="#"><img src="images/leftt 1.jpg" alt="Left Banner" class="img-responsive" /></a> </div>
-          <div class="left-cms left-sidebar-widget mb_50">
-            <ul>
-              <li>
-                <div class="feature-i-left ptb_40">
-                  <div class="icon-right Shipping"></div>
-                  <h6>Free Shipping</h6>
-                  <p>Siap Melayani Anda</p>
-                </div>
-              </li>
-              <li>
-                <div class="feature-i-left ptb_40">
-                  <div class="icon-right Order"></div>
-                  <h6>Order Online</h6>
-                  <p>Mudah Bertransaksi di Toko Kami</p>
-                </div>
-              </li>
-              <li>
-
-              </li>
-              <li>
-                <div class="feature-i-left ptb_40">
-                  <div class="icon-right Safe"></div>
-                  <h6>Safe Shoping</h6>
-                  <p>Memberikan Pelayanan Terbaik</p>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="left-special left-sidebar-widget mb_50">
-           
-          </div>
-          
         </div>
-        <div id="column-right" class="col-sm-8 col-md-8 col-lg-9 mtb_30">
-          <!-- =====  BANNER STRAT  ===== -->
-          <div class="breadcrumb ptb_20">
-            <h1>Riwayat Transaksi</h1>
-            <ul>
-              <li><a href="index.html">Halaman Utama</a></li>
-              <li class="active">Riwayat Transaksi</li>
-            </ul>
-          </div>
-          <!-- =====  BREADCRUMB END===== -->
-          <div class="panel-group mt_20" id="accordion">
-            <div class="panel panel-default  ">
-              <div class="panel-heading">
-                <h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Riwayat Transaksi Penjualan <i class="fa fa-caret-down"></i></a></h4>
-              </div>
-              <div id="collapseOne" class="panel-collapse collapse in">
+        <div class="col-sm-8 col-md-8 col-lg-9 mtb_30">
+          <!-- contact  -->
+          <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+              <div class="panel-login">
+                <div class="panel-heading">
+                  <div class="row mb_20">
+                    <div class="col-xs-12">
+                      <center> <a href="#" class="active" id="login-form-link">Login</a> </center>
+                    </div>
+
+                  </div>
+                  <hr>
+                </div>
                 <div class="panel-body">
                   <div class="row">
-                    <div class="col-sm-6">
-                      <h3>New Customer</h3>
-                      <p>Checkout Options:</p>
-                      <div class="radio">
-                        <label>
-                          <input type="radio" checked="checked" value="register" name="account"> Register Account</label>
-                      </div>
-                      <div class="radio">
-                        <label>
-                          <input type="radio" value="guest" name="account"> Guest Checkout</label>
-                      </div>
-                      <p>By creating an account you will be able to shop faster, be up to date on an order's status, and keep track of the orders you have previously made.</p>
-                      <input type="button" class="btn mt_20" data-loading-text="Loading..." id="button-account" value="Continue">
-                    </div>
-                    <div class="col-sm-6">
-                      <h3>Returning Customer</h3>
-                      <p>I am a returning customer</p>
-                      <div class="form-group">
-                        <label for="input-email" class="control-label">E-Mail</label>
-                        <input type="text" class="form-control" id="input-email" placeholder="E-Mail" value="" name="email">
-                      </div>
-                      <div class="form-group">
-                        <label for="input-password" class="control-label">Password</label>
-                        <input type="password" class="form-control" id="input-password" placeholder="Password" value="" name="password">
-                        <input type="button" class="btn mt_20" data-loading-text="Loading..." id="button-login" value="Login">
-                        <a class="pt_30" href="#">Forgotten Password</a></div>
+                    <div class="col-lg-12">
+                      <form id="login-form" action="#" method="post">
+                        <div class="form-group">
+                          <input type="text" name="username" id="username1" tabindex="1" class="form-control" placeholder="Username" value="">
+                        </div>
+                        <div class="form-group">
+                          <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+                        </div>
+                        <div class="form-group text-center">
+                          <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
+                          <label for="remember"> Remember Me</label>
+                        </div>
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-sm-6 col-sm-offset-3">
+                              <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
+                            </div>
+                          </div>
+                        </div>
+                      </form>
                     </div>
                   </div>
                 </div>
@@ -235,65 +194,45 @@
           </div>
         </div>
       </div>
-      
     </div>
-    <!-- =====  CONTAINER END  ===== -->
-    <!-- =====  FOOTER START  ===== -->
-    <div class="footer pt_30">
+  </div>
+  <!-- Single Blog  -->
+  <!-- End Blog   -->
+  <!-- =====  CONTAINER END  ===== -->
+  <!-- =====  FOOTER START  ===== -->
+  <div class="footer pt_30">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 footer-block">
+          <center><div class="footer-contact">
+            <div class="footer-logo mb_40"> <a href="index.html"> <img src="images/logokami3.png" alt="HealthCare"> </a> </div>
+            <ul>
+              <li>KELOMPOK A4 <br/> D4 TEKNIK INFORMATIKA</li>
+              <li><b>MOTTO KELOMPOK : <br/>KERJA SAMA, SALING MELENGKAPI, MEMBERIKAN YANG TERBAIK</b> </li>
+            </ul>
+          </div>
+        </div></center>
+      </div>
+    </div>
+    <div class="footer-bottom mt_60 ptb_10">
       <div class="container">
         <div class="row">
-          <div class="col-md-12 footer-block">
-            <center><div class="footer-contact">
-              <div class="footer-logo mb_40"> <a href="index.html"> <img src="images/logokami3.png" alt="HealthCare"> </a> </div>
-              <ul>
-                <li>KELOMPOK A4 <br/> D4 TEKNIK INFORMATIKA</li>
-                <li><b>MOTTO KELOMPOK : <br/>KERJA SAMA, SALING MELENGKAPI, MEMBERIKAN YANG TERBAIK</b> </li>
-              </ul>
-            </div>
-          </div></center>
-        </div>
-      </div>
-      <div class="footer-bottom mt_60 ptb_10">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-12">
-             <center><div class="copyright-part">SISTEM BASIS DATA</div></center> 
-            </div>
+          <div class="col-sm-12">
+           <center><div class="copyright-part">SISTEM BASIS DATA</div></center> 
           </div>
         </div>
       </div>
     </div>
-    </div>
-    <!-- =====  FOOTER END  ===== -->
   </div>
+  </div>
+  <!-- =====  FOOTER END  ===== -->
   <a id="scrollup">Scroll</a>
   <script src="js/jQuery_v3.1.1.min.js"></script>
   <script src="js/owl.carousel.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/jquery.magnific-popup.js"></script>
   <script src="js/custom.js"></script>
-  <script type="text/javascript">
-  $('input[name=\'payment_address\']').on('change', function() {
-    if (this.value == 'new') {
-      $('#payment-existing').hide();
-      $('#payment-new').show();
-    } else {
-      $('#payment-existing').show();
-      $('#payment-new').hide();
-    }
-  });
-  $('input[name=\'shipping_address\']').on('change', function() {
-    if (this.value == 'new') {
-      $('#shipping-existing').hide();
-      $('#shipping-new').show();
-    } else {
-      $('#shipping-existing').show();
-      $('#shipping-new').hide();
-    }
-  });
-  </script>
-</body>
 
 
-<!-- Mirrored from html.lionode.com/healthcare/hc001/checkout_page.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:07 GMT -->
+<!-- Mirrored from html.lionode.com/healthcare/hc001/login.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:46:54 GMT -->
 </html>

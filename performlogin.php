@@ -19,7 +19,7 @@ if( ! empty($data)){ // Jika tidak sama dengan empty (kosong)
   header("location: index.html"); // Kita redirect ke halaman index.php
  }else{ // Jika $data nya kosong
    // Buat sebuah cookie untuk menampung data pesan kesalahan
-   header("location: login.php?status=gagal"); // Redirect kembali ke halaman login.html
+   header("location: login.php?status=gagal"); // Redirect kembali ke halaman login.php
 }
 
 ?>
