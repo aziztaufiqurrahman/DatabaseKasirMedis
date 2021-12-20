@@ -11,4 +11,5 @@ public static function getAll ($db)
         return $temp;
     }
 }
-?>
+?> 
+
