@@ -58,9 +58,9 @@ class Transactions
         $stmt->bindValue(":amount", $amount);
         $stmt->execute();
     }
-    public static function getAll ($db) 
+    public static function getAll ($db)
     {
-        $riwayat = "SELECT * FROM transactions WHERE archived_at IS NULL";
+        $riwayat = "SELECT * FROM transactions  WHERE archived_at IS NULL";
         $stmt = $db->prepare($riwayat);
         $stmt->execute();
         $temp = $stmt->fetchAll ();
