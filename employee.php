@@ -167,9 +167,9 @@ $employee = Employees::getAll($db);
                       <th>NAMA</th>
                       <th>ROLE</th>
                       <th>NO HP</th>
-                      <th>ALAMAT</th>
-                      <th>DITERIMA PADA</th>
-                      <th>DIPERBAHARUI PADA</th>
+                      <th width="800px">ALAMAT</th>
+                      <th width="600px">DITERIMA PADA</th>
+                      <th width="900px">DIPERBAHARUI PADA</th>
                       <th>ACTION</th>
                     </tr>
                 </thead>
