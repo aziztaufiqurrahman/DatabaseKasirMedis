@@ -1,3 +1,9 @@
+<?php 
+include "connect.php";
+include "models/employees.php";
+$employee = Employees::getAll($db);
+?>
+
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html lang="en">
@@ -33,7 +39,6 @@
   <link rel="apple-touch-icon" href="images/apple-touch-icon.html">
   <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.html">
   <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.html">
-  <link href="DataTables/datatables.css" rel="stylesheet">
 </head>
 
 <body>
@@ -89,7 +94,7 @@
               <ul id="menu" class="nav navbar-nav">
                 <li> <a href="index.php">Halaman Utama</a></li>
                 <li> <a href="category_page.php">Daftar Produk</a></li>
-                <li> <a href="riwayat_transaksi.php">Riwayat Transaksi</a></li>
+                <li> <a href="checkout_page.html">Riwayat Transaksi</a></li>
                 <li> <a href="calculator.html">Transaksi</a></li>
                 <li> <a href="employee.php">Kelola Pegawai</a></li>
                 <li> <a href="about-us.html">Tentang Kami</a></li>
@@ -150,16 +155,73 @@
               </ul>
             </div>
           </div>
+          <div class="left_banner left-sidebar-widget mt_30 mb_50"> <a href="#"><img src="images/leftt 1.jpg" alt="Left Banner" class="img-responsive" /></a> </div>
+          <div class="left-cms left-sidebar-widget mb_50">
+            
+          </div>
         </div>
         <div class="col-sm-8 col-md-8 col-lg-9 mtb_30">
-            <table id="table" class="display" cellspacing="0" width="100%">
-                <thead>
-                    <tr><th>FOTO</th><th>NAMA</th><th>EMAIL</th><th>NO HP</th><th>ACTION</th></tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-         </div>
+          <!-- =====  BANNER STRAT  ===== -->
+          <div class="breadcrumb ptb_20">
+            <h1>Tambah Pegawai</h1>
+            <ul>
+              <li><a href="index.php">Halaman Utama</a></li>
+              <li class="active">Tambah Pegawai</li>
+            </ul>
+          </div>
+          <!-- =====  BREADCRUMB END===== -->
+         <a href = 'employee.php'class = 'btn'> Kembali </a> <br></br>
+          <div class="panel panel-default pull-left">
+              <div class="panel-body">
+                  <div class="row">
+                      <div class="col-md-12 no-padding mt_10">
+                        <div class="col-md-4"><label for="nama">Nama</label></div>
+                        <div class="col-md-8">
+                          <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan Nama Pegawai">
+                        </div>
+                      </div> 
+                      <br> </br>
+                      <div class="col-md-12 no-padding mt_10">
+                        <div class="col-md-4"><label for="username">Username</label></div>
+                        <div class="col-md-8">
+                          <input type="text" class="form-control" name="username" id="username" placeholder="Masukkan Username">
+                        </div>
+                      </div>
+                      <div class="col-md-12 no-padding mt_10">
+                        <div class="col-md-4"><label for="password">Password</label></div>
+                        <div class="col-md-8">
+                          <input type="password" class = "form-control" name="password" id="password" placeholder="Masukkan password">
+                        </div>
+                      </div>
+                      <br> </br>
+                      <div class="col-md-12 no-padding mt_10">
+                        <div class="col-md-4"><label for="phone">No HP</label></div>
+                        <div class="col-md-8">
+                          <input type="text" class="form-control" name="phone" id="phone" placeholder="Masukkan Nomor HP contoh 08xx">
+                        </div>
+                      </div> 
+                      <div class="col-md-12 no-padding mt_10">
+                        <div class="col-md-4"><label for="role">Role</label></div>
+                        <div class="col-md-8">
+                          <select class="form-control" name="role" id="role" placeholder="---Diterima sebagai---"> 
+                              <option value="1">Pegawai Kasir</option>
+                              <option value="2">Manajer</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-12 no-padding mt_10">
+                      <div class="col-md-4"><label for="ctx_custaddress">Alamat</label></div>
+                         <div class="col-md-8">
+                             <textarea class="form-control cs-textarea" name="ctx_custaddress" id="ctx_custaddress"></textarea>
+                         </div>
+                     </div>
+                      <div class="col-md-12 mt_10">
+                        <span class="btn pull-right" id="add_employee"> Tambah </span>
+                      </div>
+                    </div>
+              </div>
+          </div>  
+        </div>
       </div>
     </div>
     <!-- =====  CONTAINER END  ===== -->
@@ -188,7 +250,6 @@
         </div>
       </div>
     </div>
-    </div>
     <!-- =====  FOOTER END  ===== -->
   </div>
   <a id="scrollup">Scroll</a>
@@ -212,37 +273,6 @@
     $("#amount").val("$" + $("#slider-range").slider("values", 0) +
       " - $" + $("#slider-range").slider("values", 1));
   });
-  </script>
-  <script src="js/jQuery_v3.1.1.min.js"></script>
-  <script src="DataTables/datatables.js"></script>
-  <script type="text/javascript">
-
-      var save_method; //for save method string
-      var table;
-
-      $(document).ready(function() {
-          //datatables
-          table = $('#table').DataTable({ 
-              "processing": true, //Feature control the processing indicator.
-              "serverSide": true, //Feature control DataTables' server-side processing mode.
-              "order": [], //Initial no order.
-              // Load data for the table's content from an Ajax source
-              // "ajax": {
-              //     "url": '<?php echo site_url('karyawan/json'); ?>',
-              //     "type": "POST"
-              // },
-              //Set column definition initialisation properties.
-              // "columns": [
-              //     {"data": "foto",width:170},
-              //     {"data": "nama_lengkap",width:100},
-              //     {"data": "email",width:100},
-              //     {"data": "no_hp",width:100},
-              //     {"data": "action",width:100}
-              // ],
-
-          });
-
-      });
   </script>
 </body>
 

@@ -1,10 +1,16 @@
+<?php 
+include "connect.php";
+include "models/employees.php";
+$employee = Employees::getAll($db);
+?>
+
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html lang="en">
 <!--<![endif]-->
 
 
-<!-- Mirrored from html.lionode.com/healthcare/hc001/about.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:08 GMT -->
+<!-- Mirrored from html.lionode.com/healthcare/hc001/category_page.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:02 GMT -->
 <head>
   <!-- =====  BASIC PAGE NEEDS  ===== -->
   <meta charset="utf-8">
@@ -28,10 +34,12 @@
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link rel="stylesheet" type="text/css" href="css/magnific-popup.css">
   <link rel="stylesheet" type="text/css" href="css/owl.carousel.css">
+  <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
   <link rel="shortcut icon" href="images/favicon.png">
   <link rel="apple-touch-icon" href="images/apple-touch-icon.html">
   <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.html">
   <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.html">
+  <link href="DataTables/datatables.css" rel="stylesheet">
 </head>
 
 <body>
@@ -87,7 +95,7 @@
               <ul id="menu" class="nav navbar-nav">
                 <li> <a href="index.php">Halaman Utama</a></li>
                 <li> <a href="category_page.php">Daftar Produk</a></li>
-                <li> <a href="checkout_page.html">Riwayat Transaksi</a></li>
+                <li> <a href="riwayat_transaksi.php">Riwayat Transaksi</a></li>
                 <li> <a href="calculator.html">Transaksi</a></li>
                 <li> <a href="employee.php">Kelola Pegawai</a></li>
                 <li> <a href="about-us.html">Tentang Kami</a></li>
@@ -135,7 +143,7 @@
     <!-- =====  CONTAINER START  ===== -->
     <div class="container">
       <div class="row ">
-        <div id="column-left" class="col-sm-4 col-md-4 col-lg-3 hidden-xs">
+        <div id="column-left" class="col-sm-4 col-md-4 col-lg-3 ">
           <div id="category-menu" class="navbar collapse in  mb_40" aria-expanded="true" role="button">
             <div class="nav-responsive">
               <ul class="nav  main-navigation collapse in ">
@@ -148,111 +156,131 @@
               </ul>
             </div>
           </div>
-          <div class="left_banner left-sidebar-widget mt_30 mb_50"> <a href="#"><img src="images/leftt 1.jpg" alt="Left Banner" class="img-responsive" /></a> </div>
         </div>
         <div class="col-sm-8 col-md-8 col-lg-9 mtb_30">
-          <!-- about  -->
-          <div class="row">
-            <div class="col-md-12">
-              <figure> <img src="images/anggota.png" alt="#"> </figure>
-            </div>
-            <div class="col-md-12">
-              <div class="about-text">
-                <div class="about-heading-wrap">
-                  <h2 class="about-heading mb_20 mt_40 ptb_10">Website <span>Kasir Medis </span></h2>
-                </div>
-                <p>
-                  Website Kasir Medis merupakan website yang dirancang untuk membantu proses transaksi dari pembelian obat-obatan yang tersedia dalam aplikasi. Pada aplikasi ini ketersediaan berbagai kebutuhan konsumen untuk jenis obat-obatan serta alat medis lainnya seperti masker, P3K, antiseptik dan lain-lain disesuaikan dengan stok yang masih tersedia di toko medis.
-                </p>
-                <br />
-                <a class="btn" href="index.php" class="btn mt_30">Buka Website</a>
-              </div>
-            </div>
-          </div>
-          <!--Team Carousel -->
-          <div class="heading-part mb_10">
-            <h2 class="main_title mt_50">Tim Kami</h2>
-          </div>
-          <div class="team_grid box">
-            <div class="team3col  owl-carousel">
-              <div class="item team-detail">
-                <div class="team-item-img"> <img src="images/Diana.jpeg" alt="" /> </div>
-                <div class="team-designation mt_20">Diana</div>
-                <h4 class="team-title  mtb_10">Diana Fauziah </h4>
-                <p>Haiii semua, aku biasa di panggil didi, senang bermusik dan bersosialisasi. </p>
-                <ul class="social mt_20 mb_80">
-                  <li><a href="https://www.github.com/dianafauziah13" target="_blank"><i class="fa fa-github"></i></a></li>
-                  <li><a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                  <li><a href="https://www.twitter.com/" target="_blank"><i class="fa fa-twitter"></i></a></li>
-                </ul>
-              </div>
-              <div class="item team-detail">
-                <div class="team-item-img"> <img src="images/ihsan.png" alt="" /> </div>
-                <div class="team-designation mt_20">Ihsan</div>
-                <h4 class="team-title  mtb_10">Ihsan Fauzan Hanif</h4>
-                <p>Lorem ipsum dolor sit amet, sea in odio erat, volumu Clita prodesset Rem ipsum dolor s..</p>
-                <ul class="social mt_20 mb_80">
-                  <li><a href="https://www.github.com/Zlarex" target="_blank"><i class="fa fa-github"></i></a></li>
-                  <li><a href="https://www.twitter.com/" target="_blank"><i class="fa fa-twitter"></i></a></li>
-                  <li><a href="https://www.dribbble.com/" target="_blank"><i class="fa fa-dribbble"></i></a></li>
-                </ul>
-              </div>
-              <div class="item team-detail">
-                <div class="team-item-img"> <img src="images/Taufiq.jpeg" alt="" /> </div>
-                <div class="team-designation mt_20">Taufiq</div>
-                <h4 class="team-title  mtb_10">M. Aziz Taufiqurrahman</h4>
-                <p>Hallo, aku Aziz Taufiqurrahman dari Bandung, sangat menyukai bisnis  dan investasi. </p>
-                <ul class="social mt_20 mb_80">
-                  <li><a href="https://www.github.com/aziztaufiqurrahman" target="_blank"><i class="fa fa-github"></i></a></li>
-                  <li><a href="https://twitter.com/aziztaufiq__?t=CyOpVHO5GsTmL70ExsfzOg&s=09" target="_blank"><i class="fa fa-twitter"></i></a></li>
-                  <li><a href="https://www.instagram.com/aziztaufiqurrahman/" target="_blank"><i class="fa fa-dribbble"></i></a></li>
-                </ul>
-              </div>
-            </div>
-            <!--End Team Carousel -->
-          </div>
-        </div>
+        <a href = 'addemployee.php' class = 'btn'> Tambah Pegawai </a> <br></br>
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                      <th>NO.</th>
+                      <th>USERNAME</th>
+                      <th>NAMA</th>
+                      <th>ROLE</th>
+                      <th>NO HP</th>
+                      <th>ALAMAT</th>
+                      <th>DITERIMA PADA</th>
+                      <th>DIPERBAHARUI PADA</th>
+                      <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                 $nomor=1;
+                ?>
+
+            <?php foreach ($employee as $key) {
+            echo "<tr>";
+            echo "<td>".$nomor++."</td>";
+            echo "<td>".$key["USERNAME"]."</td>";
+            echo "<td>". $key["NAME"]."</td>";
+            echo "<td>". $key["ROLE"]."</td>";
+            echo "<td>". $key["PHONE"]. "</td>";
+            echo "<td>". $key["ADDRESS"]. "</td>";
+            echo "<td>". $key["CREATED_AT"]. "</td>";
+            echo "<td>". $key["UPDATED_AT"]. "</td>";
+            echo "<td><a href = '' > <i class = 'fa fa-pencil'> </i> </a> <a href = '' > <i class = 'fa fa-trash'> </i> </a>". "</td>";
+            echo "</tr>";
+            }?> 
+
+                </tbody>
+            </table>
+         </div>
       </div>
     </div>
-  </div>
-  <!-- Single Blog  -->
-  <!-- End Blog   -->
-  <!-- =====  CONTAINER END  ===== -->
-  <!-- =====  FOOTER START  ===== -->
-  <div class="footer pt_30">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12 footer-block">
-          <center><div class="footer-contact">
-            <div class="footer-logo mb_40"> <a href="index.php"> <img src="images/logokami3.png" alt="HealthCare"> </a> </div>
-            <ul>
-              <li>KELOMPOK A4 <br/> D4 TEKNIK INFORMATIKA</li>
-              <li><b>MOTTO KELOMPOK : <br/>KERJA SAMA, SALING MELENGKAPI, MEMBERIKAN YANG TERBAIK</b> </li>
-            </ul>
-          </div>
-        </div></center>
-      </div>
-    </div>
-    <div class="footer-bottom mt_60 ptb_10">
+    <!-- =====  CONTAINER END  ===== -->
+    <!-- =====  FOOTER START  ===== -->
+    <div class="footer pt_30">
       <div class="container">
         <div class="row">
-          <div class="col-sm-12">
-           <center><div class="copyright-part">SISTEM BASIS DATA</div></center> 
+          <div class="col-md-12 footer-block">
+            <center><div class="footer-contact">
+              <div class="footer-logo mb_40"> <a href="index.php"> <img src="images/logokami3.png" alt="HealthCare"> </a> </div>
+              <ul>
+                <li>KELOMPOK A4 <br/> D4 TEKNIK INFORMATIKA</li>
+                <li><b>MOTTO KELOMPOK : <br/>KERJA SAMA, SALING MELENGKAPI, MEMBERIKAN YANG TERBAIK</b> </li>
+              </ul>
+            </div>
+          </div></center>
+        </div>
+      </div>
+      <div class="footer-bottom mt_60 ptb_10">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12">
+             <center><div class="copyright-part">SISTEM BASIS DATA</div></center> 
+            </div>
           </div>
         </div>
       </div>
     </div>
+    </div>
+    <!-- =====  FOOTER END  ===== -->
   </div>
-  </div>
-  <!-- =====  FOOTER END  ===== -->
   <a id="scrollup">Scroll</a>
   <script src="js/jQuery_v3.1.1.min.js"></script>
   <script src="js/owl.carousel.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/jquery.magnific-popup.js"></script>
   <script src="js/custom.js"></script>
+  <script src="js/jquery-ui.js"></script>
+  <script>
+  $(function() {
+    $("#slider-range").slider({
+      range: true,
+      min: 0,
+      max: 500,
+      values: [75, 300],
+      slide: function(event, ui) {
+        $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+      }
+    });
+    $("#amount").val("$" + $("#slider-range").slider("values", 0) +
+      " - $" + $("#slider-range").slider("values", 1));
+  });
+  </script>
+  <script src="js/jQuery_v3.1.1.min.js"></script>
+  <script src="DataTables/datatables.js"></script>
+  <script type="text/javascript">
+
+      var save_method; //for save method string
+      var table;
+
+      $(document).ready(function() {
+          //datatables
+          table = $('#table').DataTable({ 
+              "processing": true, //Feature control the processing indicator.
+              "serverSide": true, //Feature control DataTables' server-side processing mode.
+              "order": [], //Initial no order.
+              // Load data for the table's content from an Ajax source
+              // "ajax": {
+              //     "url": '<?php echo site_url('karyawan/json'); ?>',
+              //     "type": "POST"
+              // },
+              //Set column definition initialisation properties.
+              // "columns": [
+              //     {"data": "foto",width:170},
+              //     {"data": "nama_lengkap",width:100},
+              //     {"data": "email",width:100},
+              //     {"data": "no_hp",width:100},
+              //     {"data": "action",width:100}
+              // ],
+
+          });
+
+      });
+  </script>
 </body>
 
 
-<!-- Mirrored from html.lionode.com/healthcare/hc001/about.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:22 GMT -->
+<!-- Mirrored from html.lionode.com/healthcare/hc001/category_page.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:03 GMT -->
 </html>
