@@ -169,26 +169,62 @@ $produk= Products::getAll($db);
             </ul>
           </div>
           <!-- =====  BREADCRUMB END===== -->
-          <a href = 'category_page.php'class = 'btn'> Kembali </a>
-          <form id="login-form" action="performlogin.php" method="post">
-                       <div class="form-group">
-                          <input type="text" name="nama"  class="form-control" placeholder="Masukkan nama produk" value="">
+         <a href = 'category_page.php'class = 'btn'> Kembali </a> <br></br>
+          <div class="panel panel-default pull-left">
+              <div class="panel-body">
+                  <div class="row">
+                      <div class="col-md-12 no-padding mt_10">
+                        <div class="col-md-4"><label for="nama">Nama Barang</label></div>
+                        <div class="col-md-8">
+                          <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan Nama Barang">
                         </div>
-                        <div class="form-group">
-                          <input type="unit" name="unit"  class="form-control" placeholder="Masukkan jumlah unit">
+                      </div> 
+                      <br> </br>
+                      <div class="col-md-12 no-padding mt_10">
+                        <div class="col-md-4"><label for="unit">Unit</label></div>
+                        <div class="col-md-8">
+                          <input type="text" class="form-control" name="unit" id="unit" placeholder="Masukk Unit Barang">
                         </div>
-                        <div class="form-group">
-                          <input type="text" name="jumlah"  class="form-control" placeholder="Jumlah stock" value="">
+                      </div>
+                      <div class="col-md-12 no-padding mt_10" id="ctx_content_count">
+                        <div class="col-md-4"><label for="stock">Jumlah Stock</label></div>
+                        <div class="col-md-8">
+                          <input type="number" class = "form-control" name="stock" id="stock" value="1" min="1" max="100">
                         </div>
-                        <div class="form-group">
-                          <div class="row">
-                            <div class="col-sm-6 col-sm-offset-3">
-                              <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
-                            </div>
-                          </div>
+                      </div>
+                      <br> </br>
+                      <div class="col-md-12 no-padding mt_10">
+                        <div class="col-md-4"><label for="harga">Harga</label></div>
+                        <div class="col-md-8">
+                          <input type="text" class="form-control" name="harga" id="harga" placeholder="Masukkan Harga Produk">
                         </div>
-                      </form>
-            
+                      </div> 
+                      <div class="col-md-12 no-padding mt_10">
+                        <div class="col-md-4"><label for="kategori">Kategori</label></div>
+                        <div class="col-md-8">
+                          <select class="form-control" name="kategori" id="kategori" placeholder="Masukkan Kategori Produk"> 
+                              <option value="1"> Contoh 1</option>
+                              <option value="2"> Contoh 2</option>
+                              <option value="3"> Contoh 3</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-12 no-padding mt_10">
+                        <div class="col-md-4"><label for="tipe">Tipe Produk</label></div>
+                        <div class="col-md-8">
+                          <select class="form-control" name="tipe" id="tipe" placeholder="Masukkan Tipe Produk"> 
+                              <option value="1"> Contoh Tipe 1 </option>
+                              <option value="2"> Contoh Tipe 2</option>
+                              <option value="3"> Contoh Tipe 3</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-12 mt_10">
+                        <span class="btn pull-right" id="add_product"> Tambah </span>
+                      </div>
+                    </div>
+              </div>
+          </div>  
         </div>
       </div>
     </div>
