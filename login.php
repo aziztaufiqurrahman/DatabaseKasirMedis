@@ -1,6 +1,6 @@
 <?php
 if (!empty($_GET['status']) && $_GET["status"] == "gagal"){
-  echo"<script>alert('Login gagalllllllll!!!, harap periksa kembali username atau password anda!!')</script>";
+  echo"<script>alert('Yah gabisa log in nih, harap periksa kembali username atau password anda!')</script>";
 }
 ?>
 
@@ -232,7 +232,7 @@ if (!empty($_GET['status']) && $_GET["status"] == "gagal"){
   </div>
   <!-- =====  FOOTER END  ===== -->
   <a id="scrollup">Scroll</a>
-  <script src="js/jQuery_v3.1.1.min.js"></>
+  <script src="js/jQuery_v3.1.1.min.js"></script>
   <script src="js/owl.carousel.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/jquery.magnific-popup.js"></script>
