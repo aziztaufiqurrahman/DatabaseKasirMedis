@@ -95,7 +95,7 @@ $produk= Products::getAll($db);
                 <li> <a href="category_page.php">Daftar Produk</a></li>
                 <li> <a href="checkout_page.html">Riwayat Transaksi</a></li>
                 <li> <a href="calculator.html">Transaksi</a></li>
-                <li> <a href="employee.html">Kelola Pegawai</a></li>
+                <li> <a href="employee.php">Kelola Pegawai</a></li>
                 <li> <a href="about-us.html">Tentang Kami</a></li>
               </ul>
             </div>
@@ -169,6 +169,7 @@ $produk= Products::getAll($db);
             </ul>
           </div>
           <!-- =====  BREADCRUMB END===== -->
+          <a href = 'addproducts.php' class = 'btn'> Tambah Produk </a> <br></br>
           <table class="table table-bordered">
             <thead>
             <tr>
@@ -191,7 +192,7 @@ $produk= Products::getAll($db);
             echo "<td>". $key["NAME"]."</td>";
             echo "<td>". $key["UNIT"]. "</td>";
             echo "<td>Rp. ". number_format($key["PRICE"],2,",","."). "</td>";
-            echo "<td>". "</td>";
+            echo "<td><a href = '' > <i class = 'fa fa-pencil'> </i> </a> <a href = '' > <i class = 'fa fa-trash'> </i> </a>". "</td>";
             echo "</tr>";
             }?> 
             

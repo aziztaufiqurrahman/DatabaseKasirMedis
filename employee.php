@@ -1,7 +1,7 @@
-<?php
-if (!empty($_GET['status']) && $_GET["status"] == "gagal"){
-  echo"<script>alert('Yah gabisa log in nih, harap periksa kembali username atau password anda!')</script>";
-}
+<?php 
+include "connect.php";
+include "models/employees.php";
+$employee = Employees::getAll($db);
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +9,8 @@ if (!empty($_GET['status']) && $_GET["status"] == "gagal"){
 <html lang="en">
 <!--<![endif]-->
 
-<!-- Mirrored from html.lionode.com/healthcare/hc001/login.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:46:54 GMT -->
+
+<!-- Mirrored from html.lionode.com/healthcare/hc001/category_page.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:02 GMT -->
 <head>
   <!-- =====  BASIC PAGE NEEDS  ===== -->
   <meta charset="utf-8">
@@ -33,10 +34,12 @@ if (!empty($_GET['status']) && $_GET["status"] == "gagal"){
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link rel="stylesheet" type="text/css" href="css/magnific-popup.css">
   <link rel="stylesheet" type="text/css" href="css/owl.carousel.css">
+  <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
   <link rel="shortcut icon" href="images/favicon.png">
   <link rel="apple-touch-icon" href="images/apple-touch-icon.html">
   <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.html">
   <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.html">
+  <link href="DataTables/datatables.css" rel="stylesheet">
 </head>
 
 <body>
@@ -92,7 +95,7 @@ if (!empty($_GET['status']) && $_GET["status"] == "gagal"){
               <ul id="menu" class="nav navbar-nav">
                 <li> <a href="index.php">Halaman Utama</a></li>
                 <li> <a href="category_page.php">Daftar Produk</a></li>
-                <li> <a href="checkout_page.html">Riwayat Transaksi</a></li>
+                <li> <a href="riwayat_transaksi.php">Riwayat Transaksi</a></li>
                 <li> <a href="calculator.html">Transaksi</a></li>
                 <li> <a href="employee.php">Kelola Pegawai</a></li>
                 <li> <a href="about-us.html">Tentang Kami</a></li>
@@ -111,7 +114,7 @@ if (!empty($_GET['status']) && $_GET["status"] == "gagal"){
                   <h4 class="category_text">Daftar Produk</h4>
                   <span class="i-bar"><i class="fa fa-bars"></i></span></div>
               </div>
-              <div id="category-menu-responsive" class="navbar collapse " aria-expanded="true"  role="button">
+              <div id="category-menu-responsive" class="navbar collapse " aria-expanded="true" role="button">
                 <div class="nav-responsive">
                   <ul class="nav  main-navigation collapse in">
                     <li><a href="#">Anti Inflamasi</a></li>
@@ -140,7 +143,7 @@ if (!empty($_GET['status']) && $_GET["status"] == "gagal"){
     <!-- =====  CONTAINER START  ===== -->
     <div class="container">
       <div class="row ">
-        <div id="column-left" class="col-sm-4 col-md-4 col-lg-3 hidden-xs">
+        <div id="column-left" class="col-sm-4 col-md-4 col-lg-3 ">
           <div id="category-menu" class="navbar collapse in  mb_40" aria-expanded="true" role="button">
             <div class="nav-responsive">
               <ul class="nav  main-navigation collapse in ">
@@ -153,91 +156,131 @@ if (!empty($_GET['status']) && $_GET["status"] == "gagal"){
               </ul>
             </div>
           </div>
-          <div class="left_banner left-sidebar-widget mt_30 mb_50"> <a href="#"><img src="images/leftt 1.jpg" alt="Left Banner" class="img-responsive" /></a> </div>
         </div>
         <div class="col-sm-8 col-md-8 col-lg-9 mtb_30">
-          <!-- contact  -->
-          <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-              <div class="panel-login">
-                <div class="panel-heading">
-                  <div class="row mb_20">
-                    <div class="col-xs-12">
-                      <center> <a href="#" class="active" id="login-form-link">Login</a> </center>
-                    </div>
+        <a href = 'addemployee.php' class = 'btn'> Tambah Pegawai </a> <br></br>
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                      <th>NO.</th>
+                      <th>USERNAME</th>
+                      <th>NAMA</th>
+                      <th>ROLE</th>
+                      <th>NO HP</th>
+                      <th>ALAMAT</th>
+                      <th>DITERIMA PADA</th>
+                      <th>DIPERBAHARUI PADA</th>
+                      <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                 $nomor=1;
+                ?>
 
-                  </div>
-                  <hr>
-                </div>
-                <div class="panel-body">
-                  <div class="row">
-                    <div class="col-lg-12">
-                      <form id="login-form" action="performlogin.php" method="post">
-                        <div class="form-group">
-                          <input type="text" name="username" id="username1" tabindex="1" class="form-control" placeholder="Username" value="">
-                        </div>
-                        <div class="form-group">
-                          <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
-                        </div>
-                        <div class="form-group text-center">
-                          <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
-                          <label for="remember"> Remember Me</label>
-                        </div>
-                        <div class="form-group">
-                          <div class="row">
-                            <div class="col-sm-6 col-sm-offset-3">
-                              <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
-                            </div>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <?php foreach ($employee as $key) {
+            echo "<tr>";
+            echo "<td>".$nomor++."</td>";
+            echo "<td>".$key["USERNAME"]."</td>";
+            echo "<td>". $key["NAME"]."</td>";
+            echo "<td>". $key["ROLE"]."</td>";
+            echo "<td>". $key["PHONE"]. "</td>";
+            echo "<td>". $key["ADDRESS"]. "</td>";
+            echo "<td>". $key["CREATED_AT"]. "</td>";
+            echo "<td>". $key["UPDATED_AT"]. "</td>";
+            echo "<td><a href = '' > <i class = 'fa fa-pencil'> </i> </a> <a href = '' > <i class = 'fa fa-trash'> </i> </a>". "</td>";
+            echo "</tr>";
+            }?> 
+
+                </tbody>
+            </table>
+         </div>
+      </div>
+    </div>
+    <!-- =====  CONTAINER END  ===== -->
+    <!-- =====  FOOTER START  ===== -->
+    <div class="footer pt_30">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 footer-block">
+            <center><div class="footer-contact">
+              <div class="footer-logo mb_40"> <a href="index.php"> <img src="images/logokami3.png" alt="HealthCare"> </a> </div>
+              <ul>
+                <li>KELOMPOK A4 <br/> D4 TEKNIK INFORMATIKA</li>
+                <li><b>MOTTO KELOMPOK : <br/>KERJA SAMA, SALING MELENGKAPI, MEMBERIKAN YANG TERBAIK</b> </li>
+              </ul>
+            </div>
+          </div></center>
+        </div>
+      </div>
+      <div class="footer-bottom mt_60 ptb_10">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12">
+             <center><div class="copyright-part">SISTEM BASIS DATA</div></center> 
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- Single Blog  -->
-  <!-- End Blog   -->
-  <!-- =====  CONTAINER END  ===== -->
-  <!-- =====  FOOTER START  ===== -->
-  <div class="footer pt_30">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12 footer-block">
-          <center><div class="footer-contact">
-            <div class="footer-logo mb_40"> <a href="index.php"> <img src="images/logokami3.png" alt="HealthCare"> </a> </div>
-            <ul>
-              <li>KELOMPOK A4 <br/> D4 TEKNIK INFORMATIKA</li>
-              <li><b>MOTTO KELOMPOK : <br/>KERJA SAMA, SALING MELENGKAPI, MEMBERIKAN YANG TERBAIK</b> </li>
-            </ul>
-          </div>
-        </div></center>
-      </div>
     </div>
-    <div class="footer-bottom mt_60 ptb_10">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12">
-           <center><div class="copyright-part">SISTEM BASIS DATA</div></center> 
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- =====  FOOTER END  ===== -->
   </div>
-  </div>
-  <!-- =====  FOOTER END  ===== -->
   <a id="scrollup">Scroll</a>
   <script src="js/jQuery_v3.1.1.min.js"></script>
   <script src="js/owl.carousel.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/jquery.magnific-popup.js"></script>
   <script src="js/custom.js"></script>
+  <script src="js/jquery-ui.js"></script>
+  <script>
+  $(function() {
+    $("#slider-range").slider({
+      range: true,
+      min: 0,
+      max: 500,
+      values: [75, 300],
+      slide: function(event, ui) {
+        $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+      }
+    });
+    $("#amount").val("$" + $("#slider-range").slider("values", 0) +
+      " - $" + $("#slider-range").slider("values", 1));
+  });
+  </script>
+  <script src="js/jQuery_v3.1.1.min.js"></script>
+  <script src="DataTables/datatables.js"></script>
+  <script type="text/javascript">
+
+      var save_method; //for save method string
+      var table;
+
+      $(document).ready(function() {
+          //datatables
+          table = $('#table').DataTable({ 
+              "processing": true, //Feature control the processing indicator.
+              "serverSide": true, //Feature control DataTables' server-side processing mode.
+              "order": [], //Initial no order.
+              // Load data for the table's content from an Ajax source
+              // "ajax": {
+              //     "url": '<?php echo site_url('karyawan/json'); ?>',
+              //     "type": "POST"
+              // },
+              //Set column definition initialisation properties.
+              // "columns": [
+              //     {"data": "foto",width:170},
+              //     {"data": "nama_lengkap",width:100},
+              //     {"data": "email",width:100},
+              //     {"data": "no_hp",width:100},
+              //     {"data": "action",width:100}
+              // ],
+
+          });
+
+      });
+  </script>
+</body>
 
 
-<!-- Mirrored from html.lionode.com/healthcare/hc001/login.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:46:54 GMT -->
+<!-- Mirrored from html.lionode.com/healthcare/hc001/category_page.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:03 GMT -->
 </html>

@@ -1,15 +1,15 @@
-<?php
-if (!empty($_GET['status']) && $_GET["status"] == "gagal"){
-  echo"<script>alert('Yah gabisa log in nih, harap periksa kembali username atau password anda!')</script>";
-}
+<?php 
+include "connect.php";
+include "models/products.php";
+$produk= Products::getAll($db);
 ?>
-
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html lang="en">
 <!--<![endif]-->
 
-<!-- Mirrored from html.lionode.com/healthcare/hc001/login.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:46:54 GMT -->
+
+<!-- Mirrored from html.lionode.com/healthcare/hc001/category_page.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:02 GMT -->
 <head>
   <!-- =====  BASIC PAGE NEEDS  ===== -->
   <meta charset="utf-8">
@@ -33,6 +33,7 @@ if (!empty($_GET['status']) && $_GET["status"] == "gagal"){
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link rel="stylesheet" type="text/css" href="css/magnific-popup.css">
   <link rel="stylesheet" type="text/css" href="css/owl.carousel.css">
+  <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
   <link rel="shortcut icon" href="images/favicon.png">
   <link rel="apple-touch-icon" href="images/apple-touch-icon.html">
   <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.html">
@@ -111,7 +112,7 @@ if (!empty($_GET['status']) && $_GET["status"] == "gagal"){
                   <h4 class="category_text">Daftar Produk</h4>
                   <span class="i-bar"><i class="fa fa-bars"></i></span></div>
               </div>
-              <div id="category-menu-responsive" class="navbar collapse " aria-expanded="true"  role="button">
+              <div id="category-menu-responsive" class="navbar collapse " aria-expanded="true" role="button">
                 <div class="nav-responsive">
                   <ul class="nav  main-navigation collapse in">
                     <li><a href="#">Anti Inflamasi</a></li>
@@ -140,7 +141,7 @@ if (!empty($_GET['status']) && $_GET["status"] == "gagal"){
     <!-- =====  CONTAINER START  ===== -->
     <div class="container">
       <div class="row ">
-        <div id="column-left" class="col-sm-4 col-md-4 col-lg-3 hidden-xs">
+        <div id="column-left" class="col-sm-4 col-md-4 col-lg-3 ">
           <div id="category-menu" class="navbar collapse in  mb_40" aria-expanded="true" role="button">
             <div class="nav-responsive">
               <ul class="nav  main-navigation collapse in ">
@@ -154,90 +155,131 @@ if (!empty($_GET['status']) && $_GET["status"] == "gagal"){
             </div>
           </div>
           <div class="left_banner left-sidebar-widget mt_30 mb_50"> <a href="#"><img src="images/leftt 1.jpg" alt="Left Banner" class="img-responsive" /></a> </div>
+          <div class="left-cms left-sidebar-widget mb_50">
+            
+          </div>
         </div>
         <div class="col-sm-8 col-md-8 col-lg-9 mtb_30">
-          <!-- contact  -->
-          <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-              <div class="panel-login">
-                <div class="panel-heading">
-                  <div class="row mb_20">
-                    <div class="col-xs-12">
-                      <center> <a href="#" class="active" id="login-form-link">Login</a> </center>
-                    </div>
-
-                  </div>
-                  <hr>
-                </div>
-                <div class="panel-body">
+          <!-- =====  BANNER STRAT  ===== -->
+          <div class="breadcrumb ptb_20">
+            <h1>Tambah Produk</h1>
+            <ul>
+              <li><a href="index.php">Halaman Utama</a></li>
+              <li class="active">Tambah Produk</li>
+            </ul>
+          </div>
+          <!-- =====  BREADCRUMB END===== -->
+         <a href = 'category_page.php'class = 'btn'> Kembali </a> <br></br>
+          <div class="panel panel-default pull-left">
+              <div class="panel-body">
                   <div class="row">
-                    <div class="col-lg-12">
-                      <form id="login-form" action="performlogin.php" method="post">
-                        <div class="form-group">
-                          <input type="text" name="username" id="username1" tabindex="1" class="form-control" placeholder="Username" value="">
+                      <div class="col-md-12 no-padding mt_10">
+                        <div class="col-md-4"><label for="nama">Nama Barang</label></div>
+                        <div class="col-md-8">
+                          <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan Nama Barang">
                         </div>
-                        <div class="form-group">
-                          <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+                      </div> 
+                      <br> </br>
+                      <div class="col-md-12 no-padding mt_10">
+                        <div class="col-md-4"><label for="unit">Unit</label></div>
+                        <div class="col-md-8">
+                          <input type="text" class="form-control" name="unit" id="unit" placeholder="Masukk Unit Barang">
                         </div>
-                        <div class="form-group text-center">
-                          <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
-                          <label for="remember"> Remember Me</label>
+                      </div>
+                      <div class="col-md-12 no-padding mt_10" id="ctx_content_count">
+                        <div class="col-md-4"><label for="stock">Jumlah Stock</label></div>
+                        <div class="col-md-8">
+                          <input type="number" class = "form-control" name="stock" id="stock" value="1" min="1" max="100">
                         </div>
-                        <div class="form-group">
-                          <div class="row">
-                            <div class="col-sm-6 col-sm-offset-3">
-                              <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
-                            </div>
-                          </div>
+                      </div>
+                      <br> </br>
+                      <div class="col-md-12 no-padding mt_10">
+                        <div class="col-md-4"><label for="harga">Harga</label></div>
+                        <div class="col-md-8">
+                          <input type="text" class="form-control" name="harga" id="harga" placeholder="Masukkan Harga Produk">
                         </div>
-                      </form>
+                      </div> 
+                      <div class="col-md-12 no-padding mt_10">
+                        <div class="col-md-4"><label for="kategori">Kategori</label></div>
+                        <div class="col-md-8">
+                          <select class="form-control" name="kategori" id="kategori" placeholder="Masukkan Kategori Produk"> 
+                              <option value="1"> Contoh 1</option>
+                              <option value="2"> Contoh 2</option>
+                              <option value="3"> Contoh 3</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-12 no-padding mt_10">
+                        <div class="col-md-4"><label for="tipe">Tipe Produk</label></div>
+                        <div class="col-md-8">
+                          <select class="form-control" name="tipe" id="tipe" placeholder="Masukkan Tipe Produk"> 
+                              <option value="1"> Contoh Tipe 1 </option>
+                              <option value="2"> Contoh Tipe 2</option>
+                              <option value="3"> Contoh Tipe 3</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-12 mt_10">
+                        <span class="btn pull-right" id="add_product"> Tambah </span>
+                      </div>
                     </div>
-                  </div>
-                </div>
               </div>
+          </div>  
+        </div>
+      </div>
+    </div>
+    <!-- =====  CONTAINER END  ===== -->
+    <!-- =====  FOOTER START  ===== -->
+    <div class="footer pt_30">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 footer-block">
+            <center><div class="footer-contact">
+              <div class="footer-logo mb_40"> <a href="index.php"> <img src="images/logokami3.png" alt="HealthCare"> </a> </div>
+              <ul>
+                <li>KELOMPOK A4 <br/> D4 TEKNIK INFORMATIKA</li>
+                <li><b>MOTTO KELOMPOK : <br/>KERJA SAMA, SALING MELENGKAPI, MEMBERIKAN YANG TERBAIK</b> </li>
+              </ul>
+            </div>
+          </div></center>
+        </div>
+      </div>
+      <div class="footer-bottom mt_60 ptb_10">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12">
+             <center><div class="copyright-part">SISTEM BASIS DATA</div></center> 
             </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- =====  FOOTER END  ===== -->
   </div>
-  <!-- Single Blog  -->
-  <!-- End Blog   -->
-  <!-- =====  CONTAINER END  ===== -->
-  <!-- =====  FOOTER START  ===== -->
-  <div class="footer pt_30">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12 footer-block">
-          <center><div class="footer-contact">
-            <div class="footer-logo mb_40"> <a href="index.php"> <img src="images/logokami3.png" alt="HealthCare"> </a> </div>
-            <ul>
-              <li>KELOMPOK A4 <br/> D4 TEKNIK INFORMATIKA</li>
-              <li><b>MOTTO KELOMPOK : <br/>KERJA SAMA, SALING MELENGKAPI, MEMBERIKAN YANG TERBAIK</b> </li>
-            </ul>
-          </div>
-        </div></center>
-      </div>
-    </div>
-    <div class="footer-bottom mt_60 ptb_10">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12">
-           <center><div class="copyright-part">SISTEM BASIS DATA</div></center> 
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
-  <!-- =====  FOOTER END  ===== -->
   <a id="scrollup">Scroll</a>
   <script src="js/jQuery_v3.1.1.min.js"></script>
   <script src="js/owl.carousel.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/jquery.magnific-popup.js"></script>
   <script src="js/custom.js"></script>
+  <script src="js/jquery-ui.js"></script>
+  <script>
+  $(function() {
+    $("#slider-range").slider({
+      range: true,
+      min: 0,
+      max: 500,
+      values: [75, 300],
+      slide: function(event, ui) {
+        $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+      }
+    });
+    $("#amount").val("$" + $("#slider-range").slider("values", 0) +
+      " - $" + $("#slider-range").slider("values", 1));
+  });
+  </script>
+</body>
 
 
-<!-- Mirrored from html.lionode.com/healthcare/hc001/login.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:46:54 GMT -->
+<!-- Mirrored from html.lionode.com/healthcare/hc001/category_page.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:03 GMT -->
 </html>
