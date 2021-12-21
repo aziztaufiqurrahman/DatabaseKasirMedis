@@ -170,6 +170,7 @@ $dataTransaksi= orders::getAll($db);
             </ul>
           </div>
           <!-- =====  BREADCRUMB END===== -->
+          <a href = 'checkout_page.html' class = 'btn'> Kembali </a> <br></br>
           <table class="table table-bordered table-hover">  
             <thead>
             <tr>
