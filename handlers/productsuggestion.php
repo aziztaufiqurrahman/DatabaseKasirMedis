@@ -1,9 +1,9 @@
 <?php
 require "../connect.php";
-require "../models/transactions.php";
+require "../models/orders.php";
 header("Content-type:application/json");
 $query = '';
 if (isset($_POST['name'])) $query = $_POST['name'];
-$suggestion = Transactions::getProductSuggestions($db, $query);
+$suggestion = orders::getProductSuggestions($db, $query);
 print($suggestion);
 ?>

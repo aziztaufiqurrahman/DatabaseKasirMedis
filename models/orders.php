@@ -1,6 +1,6 @@
 <?php
 
-class Transactions
+class orders
 {
     /**
      * ambil saran 10 produk, kalau ada parameter nama, ambil berdasarkan parameter
@@ -31,36 +31,36 @@ class Transactions
      */
     public static function create($db, $id_customer, $id_employee)
     {
-        $id_transaction = 0;
+        $id_order = 0;
         $code = "";
-        $sql = "CALL new_transaction(:id_customer, :id_employee, :id_transaction, :code)";
+        $sql = "CALL new_order(:id_customer, :id_employee, :id_order, :code)";
         $stmt = $db->prepare($sql);
         $stmt->bindValue(":id_customer", $id_customer);
         $stmt->bindValue(":id_employee", $id_employee);
-        $stmt->bindParam(":id_transaction", $id_transaction, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT, 38);
+        $stmt->bindParam(":id_order", $id_order, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT, 38);
         $stmt->bindParam(":code", $code, PDO::PARAM_STR|PDO::PARAM_INPUT_OUTPUT, 11);
         $stmt->execute();
         
-        $key = ["ID_TRANSACTION", "CODE"];
-        $val = [$id_transaction, $code];
+        $key = ["ID_order", "CODE"];
+        $val = [$id_order, $code];
         $retVal = array_combine($key, $val);
         return $retVal;
     }
     /**
      * melakukan transaksi baru (mencatat produk yang ditransaksikan)
      */
-    public static function detail($db, $id_transaction, $id_product, $amount)
+    public static function detail($db, $id_order, $id_product, $amount)
     {
-        $sql = "CALL detail_transaction(:id_transaction, :id_product, :amount)";
+        $sql = "CALL detail_order(:id_order, :id_product, :amount)";
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(":id_transaction", $id_transaction);
+        $stmt->bindValue(":id_order", $id_order);
         $stmt->bindValue(":id_product", $id_product);
         $stmt->bindValue(":amount", $amount);
         $stmt->execute();
     }
     public static function getAll ($db)
     {
-        $riwayat = "SELECT * FROM transactions  WHERE archived_at IS NULL";
+        $riwayat = "SELECT * FROM orders  WHERE archived_at IS NULL";
         $stmt = $db->prepare($riwayat);
         $stmt->execute();
         $temp = $stmt->fetchAll ();

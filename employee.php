@@ -95,7 +95,7 @@ $employee = Employees::getAll($db);
               <ul id="menu" class="nav navbar-nav">
                 <li> <a href="index.php">Halaman Utama</a></li>
                 <li> <a href="category_page.php">Daftar Produk</a></li>
-                <li> <a href="riwayat_transaksi.php">Riwayat Transaksi</a></li>
+                <li> <a href="checkout_page.html">Riwayat Transaksi</a></li>
                 <li> <a href="calculator.html">Transaksi</a></li>
                 <li> <a href="employee.php">Kelola Pegawai</a></li>
                 <li> <a href="about-us.html">Tentang Kami</a></li>
@@ -164,11 +164,11 @@ $employee = Employees::getAll($db);
                     <tr>
                       <th>NO.</th>
                       <th>USERNAME</th>
-                      <th>NAMA</th>
+                      <th width="400px">NAMA</th>
                       <th>ROLE</th>
                       <th>NO HP</th>
-                      <th width="800px">ALAMAT</th>
-                      <th width="600px">DITERIMA PADA</th>
+                      <th width="600px">ALAMAT</th>
+                      <th width="700px">DITERIMA PADA</th>
                       <th width="900px">DIPERBAHARUI PADA</th>
                       <th>ACTION</th>
                     </tr>

@@ -42,15 +42,15 @@
     border: 1px solid #000!important;
 }
 
-#cs-transactiontb tbody {
+#cs-ordertb tbody {
     counter-reset: rowNumber;
 }
 
-#cs-transactiontb tbody tr {
+#cs-ordertb tbody tr {
     counter-increment: rowNumber;
 }
 
-#cs-transactiontb tbody tr td:first-child::before {
+#cs-ordertb tbody tr td:first-child::before {
     content: counter(rowNumber);
 }
 
@@ -58,11 +58,11 @@
     content: none!important;
 }
 
-#cs-transactiontb td {
+#cs-ordertb td {
     vertical-align: middle!important;
 }
 
-#cs-transactiontb tr:nth-child(even)
+#cs-ordertb tr:nth-child(even)
 {
     background-color: #fcfcfc;
 }

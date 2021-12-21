@@ -579,7 +579,7 @@
           </div>
           <!-- =====  BREADCRUMB END===== -->
             <div class="table-responsive">
-              <table class="table table-bordered" id="cs-transactiontb">
+              <table class="table table-bordered" id="cs-ordertb">
                 <thead>
                   <tr>
                     <th class="text-center" style="width: 5%;">No.</th>
@@ -847,8 +847,8 @@ function countTotal(table)
     $('#ctx_total').text(numberToCurrency(total))
 }
 $(document).ready(() => {
-    var tbody = $('#cs-transactiontb').children('tbody')
-    var table =  tbody.length? tbody : $('#cs-transactiontb')
+    var tbody = $('#cs-ordertb').children('tbody')
+    var table =  tbody.length? tbody : $('#cs-ordertb')
 
     var ctx_name = $('#ctx_name')
     var ctx_count = $('#ctx_count')

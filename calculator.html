@@ -59,7 +59,7 @@
       </div>
     </div>
     <!-- =====  HEADER START  ===== -->
-    <form method="post" action="events/performtransaction.php"> 
+    <form method="post" action="events/performorder.php"> 
     <header id="header">
       <div class="header-top">
         <div class="container">
@@ -197,7 +197,7 @@
           </div>
           <!-- =====  BREADCRUMB END===== -->
             <div class="table-responsive">
-              <table class="table table-bordered" id="cs-transactiontb">
+              <table class="table table-bordered" id="cs-ordertb">
                 <thead>
                   <tr>
                     <th class="text-center" style="width: 5%;">No.</th>
@@ -401,8 +401,8 @@ function clearInput()
   $('#ctx_change').text(numberToCurrency(0))
 }
 $(document).ready(() => {
-    var tbody = $('#cs-transactiontb').children('tbody')
-    var table =  tbody.length? tbody : $('#cs-transactiontb')
+    var tbody = $('#cs-ordertb').children('tbody')
+    var table =  tbody.length? tbody : $('#cs-ordertb')
     var ctx_product = $('#ctx_product')
     var ctx_customer = $('#ctx_customer')
     var ctx_count = $('#ctx_count')
