@@ -37,7 +37,7 @@ class Products
     /**
      * tambah stock
      */
-    public static function addStock($db, $id_product, $count, $expired_at)
+    public static function addStock($db, $id_product, $id_employee, $count, $expired_at)
     {
         $sql = "CALL add_stock(:id_product, :id_employee, :count, :expired_at)";
         $stmt = $db->prepare($sql);

@@ -173,6 +173,7 @@ $produk= Products::getForAddStock($db,$_GET["id"]);
           <div class="panel panel-default pull-left">
               <div class="panel-body">
                   <div class="row">
+                  <form  action="events/perfomeaddstock.php" method="post" >
                       <div class="col-md-12 no-padding mt_10">
                         <div class="col-md-4"><label for="nama">Nama Barang</label></div>
                         <div class="col-md-8"> <?php echo $produk ["NAME"]?>
@@ -182,6 +183,7 @@ $produk= Products::getForAddStock($db,$_GET["id"]);
                       <div class="col-md-12 no-padding mt_10">
                         <div class="col-md-4"><label for="count">Jumlah Penambahan</label></div>
                         <div class="col-md-8">
+                          <input type = 'hidden' name = "id_product" value =  '"<?php echo $_GET["id"]?>"'>
                           <input type="number" class="form-control" name="count" id="count" placeholder="Jumlah Penambahan">
                         </div>
                       </div>
@@ -196,6 +198,7 @@ $produk= Products::getForAddStock($db,$_GET["id"]);
                         <span class="btn pull-right" id="add_product"> Tambah Stock </span>
                       </div>
                     </div>
+                    </form>
               </div>
           </div>  
         </div>
