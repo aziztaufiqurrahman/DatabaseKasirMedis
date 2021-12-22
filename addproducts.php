@@ -200,16 +200,6 @@ $produk= Products::getAll($db);
                         </div>
                       </div> 
                       <div class="col-md-12 no-padding mt_10">
-                        <div class="col-md-4"><label for="kategori">Kategori</label></div>
-                        <div class="col-md-8">
-                          <select class="form-control" name="kategori" id="kategori" placeholder="Masukkan Kategori Produk"> 
-                              <option value="1"> Contoh 1</option>
-                              <option value="2"> Contoh 2</option>
-                              <option value="3"> Contoh 3</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-md-12 no-padding mt_10">
                         <div class="col-md-4"><label for="tipe">Tipe Produk</label></div>
                         <div class="col-md-8">
                           <select class="form-control" name="tipe" id="tipe" placeholder="Masukkan Tipe Produk"> 

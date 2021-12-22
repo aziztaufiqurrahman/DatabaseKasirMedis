@@ -25,7 +25,7 @@ class Products
     public static function getForAddStock($db, $id_product)
     {
         $sql = "SELECT id_product, name FROM products WHERE deleted_at IS NULL and id_product = :id_product";
-        $stmt = $db->prepare($products);
+        $stmt = $db->prepare($sql);
         $stmt->bindValue(":id_product", $id_product);
         $stmt->execute();
         $temp = $stmt->fetch();

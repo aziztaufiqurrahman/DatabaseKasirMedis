@@ -191,10 +191,10 @@ $dataTransaksi= Orders::getAll($db);
             <?php foreach ($dataTransaksi as $key) {
             echo "<tr>";
             echo "<td>". $nomor++."</td>";
-            echo "<td>". $key["CREATED_AT"]."</td>";
+            echo "<td>". "</td>";
+            echo "<td>".  "</td>";
             echo "<td>". $key["CREATED_AT"]. "</td>";
-            echo "<td>". $key["CREATED_AT"]. "</td>";
-            echo "<td>Rp. ". number_format($key["PRICE"],2,",","."). "</td>";
+            echo "<td>Rp. ". "</td>";
             echo "<td><a href = 'deletetransactions.php' > <i class = 'fa fa-trash'> </i> </a>". "</td>";
             echo "</tr>";
             }?> 

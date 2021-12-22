@@ -189,7 +189,7 @@ $dataTransaksi= Orders::getAll($db);
             <?php foreach ($dataTransaksi as $key) {
             echo "<tr>";
             echo "<td>". $nomor++."</td>";
-            echo "<td>". $key["CREATED_AT"]."</td>";
+            echo "<td>". "</td>";
             echo "<td>". $key["CREATED_AT"]. "</td>";
             echo "<td><a href = 'detailtransactions.php' > <i class = 'fa fa-eye'> </i> </a>". "</td>";
             echo "</tr>";

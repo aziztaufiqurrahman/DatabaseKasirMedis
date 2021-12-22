@@ -170,7 +170,8 @@ $produk= Products::getAll($db);
           </div>
           <!-- =====  BREADCRUMB END===== -->
          <a href = 'category_page.php'class = 'btn'> Kembali </a> <br></br>
-          <div class="panel panel-default pull-left">
+         <form id="login-form" action="events/performlogin.php" method="post">
+         <div class="panel panel-default pull-left">
               <div class="panel-body">
                   <div class="row">
                       <div class="col-md-12 no-padding mt_10">
@@ -179,7 +180,7 @@ $produk= Products::getAll($db);
                       </div> 
                       <br> </br>
                       <div class="col-md-12 mt_10">
-                        <button class="btn pull-right"> Ya Setuju</button>
+                        <a href = 'category_page.php' class="btn pull-right"> Ya Setuju</a>
                       </div>
                     </div>
               </div>
