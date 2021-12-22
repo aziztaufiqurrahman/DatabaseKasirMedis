@@ -26,4 +26,9 @@ function pretty($arr)
     print("<pre>".print_r($arr,true)."</pre>");
 }
 
+function formatdate($date)
+{
+    return date("Y-m-d H:i:s",strtotime($date));
+}
+
 ?>

@@ -194,7 +194,7 @@ $produk= Products::getAll($db);
             echo "<td>". $key["UNIT"]. "</td>";
             echo "<td>Rp. ". number_format($key["PRICE"],2,",","."). "</td>";
             echo "<td>". $key["STOCK"]."</td>";
-            echo "<td><a href = 'addstocks.php?id= ".$key["ID_PRODUCT"]."' > <i class = 'fa fa-plus'> </i> </a>". "</td>";
+            echo "<td><a href = 'addstocks.php?id=".$key["ID_PRODUCT"]."' > <i class = 'fa fa-plus'> </i> </a>". "</td>";
             echo "<td><a href = 'editproducts.php' > <i class = 'fa fa-pencil'> </i> </a> <a href = 'deleteproducts.php' > <i class = 'fa fa-trash'> </i> </a>". "</td>";
             echo "</tr>";
             }?> 
