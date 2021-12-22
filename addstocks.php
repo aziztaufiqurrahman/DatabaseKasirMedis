@@ -1,10 +1,15 @@
+<?php 
+include "connect.php";
+include "models/products.php";
+$produk= Products::getAll($db);
+?>
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html lang="en">
 <!--<![endif]-->
 
 
-<!-- Mirrored from html.lionode.com/healthcare/hc001/checkout_page.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:07 GMT -->
+<!-- Mirrored from html.lionode.com/healthcare/hc001/category_page.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:02 GMT -->
 <head>
   <!-- =====  BASIC PAGE NEEDS  ===== -->
   <meta charset="utf-8">
@@ -137,7 +142,7 @@
     <div class="container">
       <div class="row ">
         <div id="column-left" class="col-sm-4 col-md-4 col-lg-3 ">
-          <div id="category-menu" class="navbar collapse mb_40 hidden-sm-down in" aria-expanded="true" role="button">
+          <div id="category-menu" class="navbar collapse in  mb_40" aria-expanded="true" role="button">
             <div class="nav-responsive">
               <ul class="nav  main-navigation collapse in ">
                 <li><a href="#">Anti Inflamasi</a></li>
@@ -151,56 +156,50 @@
           </div>
           <div class="left_banner left-sidebar-widget mt_30 mb_50"> <a href="#"><img src="images/leftt 1.jpg" alt="Left Banner" class="img-responsive" /></a> </div>
           <div class="left-cms left-sidebar-widget mb_50">
-            <ul>
-              <li>
-                <div class="feature-i-left ptb_40">
-                  <div class="icon-right Shipping"></div>
-                  <h6>Free Shipping</h6>
-                  <p>Siap Melayani Anda</p>
-                </div>
-              </li>
-              <li>
-                <div class="feature-i-left ptb_40">
-                  <div class="icon-right Order"></div>
-                  <h6>Order Online</h6>
-                  <p>Mudah Bertransaksi di Toko Kami</p>
-                </div>
-              </li>
-              <li>
-
-              </li>
-              <li>
-                <div class="feature-i-left ptb_40">
-                  <div class="icon-right Safe"></div>
-                  <h6>Safe Shoping</h6>
-                  <p>Memberikan Pelayanan Terbaik</p>
-                </div>
-              </li>
-            </ul>
+            
           </div>
-          <div class="left-special left-sidebar-widget mb_50">
-           
-          </div>
-          
         </div>
-        <div id="column-right" class="col-sm-8 col-md-8 col-lg-9 mtb_30">
+        <div class="col-sm-8 col-md-8 col-lg-9 mtb_30">
           <!-- =====  BANNER STRAT  ===== -->
           <div class="breadcrumb ptb_20">
-            <h1>Riwayat Transaksi</h1>
+            <h1>Tambah Produk</h1>
             <ul>
               <li><a href="index.php">Halaman Utama</a></li>
-              <li class="active">Riwayat Transaksi</li>
+              <li class="active">Tambah Produk</li>
             </ul>
           </div>
           <!-- =====  BREADCRUMB END===== -->
-          <center>
-          <a href = 'riwayattransactionskasir.php' class = 'btn'> Riwayat Transaksi Saya </a> 
-          <a href = 'riwayattransactionsadmin.php' class = 'btn'> Riwayat Transaksi Semua </a> <br></br>
-          </center>
-          
+         <a href = 'category_page.php'class = 'btn'> Kembali </a> <br></br>
+          <div class="panel panel-default pull-left">
+              <div class="panel-body">
+                  <div class="row">
+                      <div class="col-md-12 no-padding mt_10">
+                        <div class="col-md-4"><label for="nama">Nama Barang</label></div>
+                        <div class="col-md-8">
+                        </div>
+                      </div> 
+                      <br> </br>
+                      <div class="col-md-12 no-padding mt_10">
+                        <div class="col-md-4"><label for="count">Jumlah Penambahan</label></div>
+                        <div class="col-md-8">
+                          <input type="text" class="form-control" name="count" id="count" placeholder="Jumlah Stock Yang Tersedia">
+                        </div>
+                      </div>
+                      <br> </br>
+                      <div class="col-md-12 no-padding mt_10">
+                        <div class="col-md-4"><label for="expired_at">Tanggal Kadaluarsa</label></div>
+                        <div class="col-md-8">
+                          <input type="datetime-local" class="form-control" name="expired_at" id="expired_at" placeholder="Tanggal Kadaluarsa Produk">
+                        </div>
+                      </div> 
+                      <div class="col-md-12 mt_10">
+                        <span class="btn pull-right" id="add_product"> Tambah Stock</span>
+                      </div>
+                    </div>
+              </div>
+          </div>  
         </div>
       </div>
-      
     </div>
     <!-- =====  CONTAINER END  ===== -->
     <!-- =====  FOOTER START  ===== -->
@@ -228,7 +227,6 @@
         </div>
       </div>
     </div>
-    </div>
     <!-- =====  FOOTER END  ===== -->
   </div>
   <a id="scrollup">Scroll</a>
@@ -237,28 +235,24 @@
   <script src="js/bootstrap.min.js"></script>
   <script src="js/jquery.magnific-popup.js"></script>
   <script src="js/custom.js"></script>
-  <script type="text/javascript">
-  $('input[name=\'payment_address\']').on('change', function() {
-    if (this.value == 'new') {
-      $('#payment-existing').hide();
-      $('#payment-new').show();
-    } else {
-      $('#payment-existing').show();
-      $('#payment-new').hide();
-    }
-  });
-  $('input[name=\'shipping_address\']').on('change', function() {
-    if (this.value == 'new') {
-      $('#shipping-existing').hide();
-      $('#shipping-new').show();
-    } else {
-      $('#shipping-existing').show();
-      $('#shipping-new').hide();
-    }
+  <script src="js/jquery-ui.js"></script>
+  <script>
+  $(function() {
+    $("#slider-range").slider({
+      range: true,
+      min: 0,
+      max: 500,
+      values: [75, 300],
+      slide: function(event, ui) {
+        $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+      }
+    });
+    $("#amount").val("$" + $("#slider-range").slider("values", 0) +
+      " - $" + $("#slider-range").slider("values", 1));
   });
   </script>
 </body>
 
 
-<!-- Mirrored from html.lionode.com/healthcare/hc001/checkout_page.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:07 GMT -->
+<!-- Mirrored from html.lionode.com/healthcare/hc001/category_page.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:03 GMT -->
 </html>
