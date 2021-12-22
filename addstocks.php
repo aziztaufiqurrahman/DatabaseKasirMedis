@@ -1,7 +1,7 @@
 <?php 
 include "connect.php";
 include "models/products.php";
-$produk= Products::getAll($db);
+$produk= Products::getForAddStock($db,$_GET["id"]);
 ?>
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
@@ -175,25 +175,25 @@ $produk= Products::getAll($db);
                   <div class="row">
                       <div class="col-md-12 no-padding mt_10">
                         <div class="col-md-4"><label for="nama">Nama Barang</label></div>
-                        <div class="col-md-8">
+                        <div class="col-md-8"> <?php echo $produk ["NAME"]?>
                         </div>
                       </div> 
                       <br> </br>
                       <div class="col-md-12 no-padding mt_10">
                         <div class="col-md-4"><label for="count">Jumlah Penambahan</label></div>
                         <div class="col-md-8">
-                          <input type="text" class="form-control" name="count" id="count" placeholder="Jumlah Stock Yang Tersedia">
+                          <input type="number" class="form-control" name="count" id="count" placeholder="Jumlah Penambahan">
                         </div>
                       </div>
                       <br> </br>
                       <div class="col-md-12 no-padding mt_10">
                         <div class="col-md-4"><label for="expired_at">Tanggal Kadaluarsa</label></div>
                         <div class="col-md-8">
-                          <input type="datetime-local" class="form-control" name="expired_at" id="expired_at" placeholder="Tanggal Kadaluarsa Produk">
+                          <input type="datetime-local" class="form-control" name="expired_at">
                         </div>
                       </div> 
                       <div class="col-md-12 mt_10">
-                        <span class="btn pull-right" id="add_product"> Tambah Stock</span>
+                        <span class="btn pull-right" id="add_product"> Tambah Stock </span>
                       </div>
                     </div>
               </div>
