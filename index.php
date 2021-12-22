@@ -117,7 +117,7 @@
                 <li> <a href="index.php">Halaman Utama</a></li>
                 <li> <a href="category_page.php">Daftar Produk</a></li>
                 <li> <a href="checkout_page.html">Riwayat Transaksi</a></li>
-                <li> <a href="calculator.html">Transaksi</a></li>
+                <li> <a href="orders.php">Transaksi</a></li>
                 <li> <a href="employee.php">Kelola Pegawai</a></li>
                 <li> <a href="about-us.html">Tentang Kami</a></li>
               </ul>

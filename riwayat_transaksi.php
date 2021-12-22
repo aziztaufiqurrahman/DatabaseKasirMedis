@@ -1,7 +1,7 @@
 <?php 
 include "connect.php";
 include "models/orders.php";
-$dataTransaksi= orders::getAll($db);
+$dataTransaksi= Orders::getAll($db);
 ?>
 
 <!DOCTYPE html>
