@@ -22,6 +22,9 @@ class Products
         $temp = $stmt->fetchAll ();
         return $temp;
     }
+    /**
+     * ambil id dan nama produk
+     */
     public static function getForAddStock($db, $id_product)
     {
         $sql = "SELECT id_product, name FROM products WHERE deleted_at IS NULL and id_product = :id_product";
@@ -30,6 +33,19 @@ class Products
         $stmt->execute();
         $temp = $stmt->fetch();
         return $temp;
+    }
+    /**
+     * tambah stock
+     */
+    public static function addStock($db, $id_product, $count, $expired_at)
+    {
+        $sql = "CALL add_stock(:id_product, :id_employee, :count, :expired_at)";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(":id_product", $id_product);
+        $stmt->bindValue(":id_employee", $id_employee);
+        $stmt->bindValue(":count", $count);
+        $stmt->bindValue(":expired_at", $expired_at);
+        $stmt->execute();
     }
 }
 ?>
