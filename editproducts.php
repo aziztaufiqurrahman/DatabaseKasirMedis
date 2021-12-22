@@ -162,10 +162,10 @@ $produk= Products::getAll($db);
         <div class="col-sm-8 col-md-8 col-lg-9 mtb_30">
           <!-- =====  BANNER STRAT  ===== -->
           <div class="breadcrumb ptb_20">
-            <h1>Tambah Stock</h1>
+            <h1>Edit Produk</h1>
             <ul>
               <li><a href="index.php">Halaman Utama</a></li>
-              <li class="active">Tambah Stock</li>
+              <li class="active">Edit Produk</li>
             </ul>
           </div>
           <!-- =====  BREADCRUMB END===== -->
@@ -176,24 +176,51 @@ $produk= Products::getAll($db);
                       <div class="col-md-12 no-padding mt_10">
                         <div class="col-md-4"><label for="nama">Nama Barang</label></div>
                         <div class="col-md-8">
+                          <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan Nama Barang">
                         </div>
                       </div> 
                       <br> </br>
                       <div class="col-md-12 no-padding mt_10">
-                        <div class="col-md-4"><label for="count">Jumlah Penambahan</label></div>
+                        <div class="col-md-4"><label for="unit">Unit</label></div>
                         <div class="col-md-8">
-                          <input type="text" class="form-control" name="count" id="count" placeholder="Jumlah Stock Yang Tersedia">
+                          <input type="text" class="form-control" name="unit" id="unit" placeholder="Masukk Unit Barang">
+                        </div>
+                      </div>
+                      <div class="col-md-12 no-padding mt_10" id="ctx_content_count">
+                        <div class="col-md-4"><label for="stock">Jumlah Stock</label></div>
+                        <div class="col-md-8">
+                          <input type="number" class = "form-control" name="stock" id="stock" value="1" min="1" max="100">
                         </div>
                       </div>
                       <br> </br>
                       <div class="col-md-12 no-padding mt_10">
-                        <div class="col-md-4"><label for="expired_at">Tanggal Kadaluarsa</label></div>
+                        <div class="col-md-4"><label for="harga">Harga</label></div>
                         <div class="col-md-8">
-                          <input type="datetime-local" class="form-control" name="expired_at" id="expired_at" placeholder="Tanggal Kadaluarsa Produk">
+                          <input type="text" class="form-control" name="harga" id="harga" placeholder="Masukkan Harga Produk">
                         </div>
                       </div> 
+                      <div class="col-md-12 no-padding mt_10">
+                        <div class="col-md-4"><label for="kategori">Kategori</label></div>
+                        <div class="col-md-8">
+                          <select class="form-control" name="kategori" id="kategori" placeholder="Masukkan Kategori Produk"> 
+                              <option value="1"> Contoh 1</option>
+                              <option value="2"> Contoh 2</option>
+                              <option value="3"> Contoh 3</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-12 no-padding mt_10">
+                        <div class="col-md-4"><label for="tipe">Tipe Produk</label></div>
+                        <div class="col-md-8">
+                          <select class="form-control" name="tipe" id="tipe" placeholder="Masukkan Tipe Produk"> 
+                              <option value="1"> Contoh Tipe 1 </option>
+                              <option value="2"> Contoh Tipe 2</option>
+                              <option value="3"> Contoh Tipe 3</option>
+                          </select>
+                        </div>
+                      </div>
                       <div class="col-md-12 mt_10">
-                        <span class="btn pull-right" id="add_product"> Tambah Stock</span>
+                        <span class="btn pull-right" id="add_product"> Edit </span>
                       </div>
                     </div>
               </div>

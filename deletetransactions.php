@@ -162,38 +162,24 @@ $produk= Products::getAll($db);
         <div class="col-sm-8 col-md-8 col-lg-9 mtb_30">
           <!-- =====  BANNER STRAT  ===== -->
           <div class="breadcrumb ptb_20">
-            <h1>Tambah Stock</h1>
+            <h1>Hapus Riwayat Transaksi</h1>
             <ul>
               <li><a href="index.php">Halaman Utama</a></li>
-              <li class="active">Tambah Stock</li>
+              <li class="active">Hapus Riwayat Transaksi</li>
             </ul>
           </div>
           <!-- =====  BREADCRUMB END===== -->
-         <a href = 'category_page.php'class = 'btn'> Kembali </a> <br></br>
+         <a href = 'riwayattransactionssemua.php'class = 'btn'> Kembali </a> <br></br>
           <div class="panel panel-default pull-left">
               <div class="panel-body">
                   <div class="row">
                       <div class="col-md-12 no-padding mt_10">
-                        <div class="col-md-4"><label for="nama">Nama Barang</label></div>
-                        <div class="col-md-8">
+                        <div class="col-md-12"> <center>Apakah Anda Yakin Ingin Menghapus Riwayat Transaksi?</center></div>
                         </div>
                       </div> 
                       <br> </br>
-                      <div class="col-md-12 no-padding mt_10">
-                        <div class="col-md-4"><label for="count">Jumlah Penambahan</label></div>
-                        <div class="col-md-8">
-                          <input type="text" class="form-control" name="count" id="count" placeholder="Jumlah Stock Yang Tersedia">
-                        </div>
-                      </div>
-                      <br> </br>
-                      <div class="col-md-12 no-padding mt_10">
-                        <div class="col-md-4"><label for="expired_at">Tanggal Kadaluarsa</label></div>
-                        <div class="col-md-8">
-                          <input type="datetime-local" class="form-control" name="expired_at" id="expired_at" placeholder="Tanggal Kadaluarsa Produk">
-                        </div>
-                      </div> 
                       <div class="col-md-12 mt_10">
-                        <span class="btn pull-right" id="add_product"> Tambah Stock</span>
+                        <button class="btn pull-right"> Ya Setuju</button>
                       </div>
                     </div>
               </div>
