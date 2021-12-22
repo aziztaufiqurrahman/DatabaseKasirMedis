@@ -187,7 +187,7 @@ $produk= Products::getAll($db);
                         </div>
                       </div>
                       <div class="col-md-12 no-padding mt_10" id="ctx_content_count">
-                        <div class="col-md-4"><label for="stock">Jumlah Stock</label></div>
+                        <div class="col-md-4"><label for="stock">Jumlah Penambahan</label></div>
                         <div class="col-md-8">
                           <input type="number" class = "form-control" name="stock" id="stock" value="1" min="1" max="100">
                         </div>
@@ -199,16 +199,6 @@ $produk= Products::getAll($db);
                           <input type="text" class="form-control" name="harga" id="harga" placeholder="Masukkan Harga Produk">
                         </div>
                       </div> 
-                      <div class="col-md-12 no-padding mt_10">
-                        <div class="col-md-4"><label for="kategori">Kategori</label></div>
-                        <div class="col-md-8">
-                          <select class="form-control" name="kategori" id="kategori" placeholder="Masukkan Kategori Produk"> 
-                              <option value="1"> Contoh 1</option>
-                              <option value="2"> Contoh 2</option>
-                              <option value="3"> Contoh 3</option>
-                          </select>
-                        </div>
-                      </div>
                       <div class="col-md-12 no-padding mt_10">
                         <div class="col-md-4"><label for="tipe">Tipe Produk</label></div>
                         <div class="col-md-8">

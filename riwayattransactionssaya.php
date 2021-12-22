@@ -177,7 +177,7 @@ $dataTransaksi= Orders::getAll($db);
             <th>No</th>
             <th>Nama Pelanggan</th>
             <th>Tanggal Pembelian</th>
-            <th>Total Belanja</th>
+            <th>Aksi</th>
             </tr>
             </thead>
             <tbody>
@@ -189,10 +189,11 @@ $dataTransaksi= Orders::getAll($db);
             <?php foreach ($dataTransaksi as $key) {
             echo "<tr>";
             echo "<td>". $nomor++."</td>";
-            echo "<td>". $key["CREATED_AT"]."</td>";
+            echo "<td>". "</td>";
             echo "<td>". $key["CREATED_AT"]. "</td>";
-            // echo "<td>Rp. ". number_format($key["CREATED_AT"],2,",","."). "</td>";
+            echo "<td><a href = 'detailtransactions.php' > <i class = 'fa fa-eye'> </i> </a>". "</td>";
             echo "</tr>";
+            
             }?> 
             </tbody>
             </table>
