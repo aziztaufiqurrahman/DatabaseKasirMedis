@@ -3,9 +3,7 @@ class ProductTypes
 {
     public static function getAll($db)
     {
-        $sql = "SELECT t.id_type, CONCAT(c.category, CONCAT(' - ', t.type))
-        FROM producttypes t
-        JOIN categories c ON t.id_category = c.id_category;";
+        $sql = "SELECT * FROM view_types";
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $rows = $stmt->fetchAll();
