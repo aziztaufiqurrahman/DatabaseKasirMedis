@@ -1,3 +1,11 @@
+<?php
+if (isset($_GET['ctx']))
+{
+  if (strlen($_GET['ctx']) > 1) echo "<script>alert('Transaksi jual beli berhasil dilakukan, Kode: ".$_GET['ctx']."');</script>";
+  else echo "<script>alert('Transaksi jual beli gagal');</script>";
+}
+?>
+
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html lang="en">
@@ -93,7 +101,7 @@
                 <li> <a href="index.php">Halaman Utama</a></li>
                 <li> <a href="category_page.php">Daftar Produk</a></li>
                 <li> <a href="checkout_page.html">Riwayat Transaksi</a></li>
-                <li> <a href="calculator.html">Transaksi</a></li>
+                <li> <a href="orders.php">Transaksi</a></li>
                 <li> <a href="employee.php">Kelola Pegawai</a></li>
                 <li> <a href="about-us.html">Tentang Kami</a></li>
               </ul>
@@ -189,10 +197,10 @@
         <div id="column-right" class="col-sm-8 col-md-8 col-lg-9 mtb_30">
           <!-- =====  BANNER STRAT  ===== -->
           <div class="breadcrumb ptb_20">
-            <h1>Transaksi</h1>
+            <h1>Transaksi Jual Beli</h1>
             <ul>
               <li><a href="index-2.html">Halaman Utama</a></li>
-              <li class="active">Transaksi</li>
+              <li class="active">Transaksi Jual Beli</li>
             </ul>
           </div>
           <!-- =====  BREADCRUMB END===== -->

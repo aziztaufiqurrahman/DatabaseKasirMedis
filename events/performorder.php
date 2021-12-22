@@ -14,7 +14,7 @@ $address = $_POST['ctx_custaddress'];
 $name = ($id_customer == 0)? $_POST['ctx_customer'] : $_POST['ctx_custname'];
 // lakukan UPSERT (UPDATE/INSERT) untuk data customer
 $id_customer = Customers::upsert($db, $id_customer, $name, $phone, $address);
-$order = orders::create($db, $id_customer, $id_employee);
+$order = Orders::create($db, $id_customer, $id_employee);
 // ambil informasi tentang produk
 if ($order)
 {
@@ -25,9 +25,9 @@ if ($order)
         $id_product = $value;
         $amount = $_POST['count'][$key];
         // masukkan detail produk yang dibeli
-        orders::detail($db, $id_order, $id_product, $amount);
+        Orders::detail($db, $id_order, $id_product, $amount);
     }
-    return header('location:../calculator.html?ctx='.$code);
+    return header('location:../orders.php?ctx='.$code);
 }
-return header('location:../calculator.html?ctx=0');
+return header('location:../orders.php?ctx=0');
 ?>
