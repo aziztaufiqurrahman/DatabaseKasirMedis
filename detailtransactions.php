@@ -1,9 +1,8 @@
 <?php 
 include "connect.php";
-include "models/orders.php";
-$dataTransaksi= Orders::getAll($db);
-?> 
-
+include "models/products.php";
+$produk= Products::getAll($db);
+?>
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html lang="en">
@@ -163,40 +162,38 @@ $dataTransaksi= Orders::getAll($db);
         <div class="col-sm-8 col-md-8 col-lg-9 mtb_30">
           <!-- =====  BANNER STRAT  ===== -->
           <div class="breadcrumb ptb_20">
-            <h1>Riwayat Transaksi</h1>
+            <h1>Detail Transaksi</h1>
             <ul>
               <li><a href="index.php">Halaman Utama</a></li>
-              <li class="active">Riwayat Transaksi</li>
+              <li class="active">Detail Transaksi</li>
             </ul>
           </div>
           <!-- =====  BREADCRUMB END===== -->
-          <a href = 'checkout_page.html' class = 'btn'> Kembali </a> <br></br>
-          <table class="table table-bordered table-hover">  
-            <thead>
-            <tr>
-            <th>No</th>
-            <th>Nama Pelanggan</th>
-            <th>Tanggal Pembelian</th>
-            <th>Aksi</th>
-            </tr>
-            </thead>
-            <tbody>
-            
-            <?php
-            $nomor=1;
-            ?>
-            
-            <?php foreach ($dataTransaksi as $key) {
+         <a href = 'riwayattransactionssaya.php'class = 'btn'> Kembali </a> <br></br>
+          <div class="panel panel-default pull-left">
+          <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                      <th>NO.</th>
+                      <th>Nama Barang</th>
+                      <th>Jumlah Pembelian</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                 $nomor=1;
+                ?>
+
+            <?php foreach ($produk as $key) {
             echo "<tr>";
-            echo "<td>". $nomor++."</td>";
-            echo "<td>". $key["CREATED_AT"]."</td>";
-            echo "<td>". $key["CREATED_AT"]. "</td>";
-            echo "<td><a href = 'detailtransactions.php' > <i class = 'fa fa-eye'> </i> </a>". "</td>";
+            echo "<td>".$nomor++."</td>";
+            echo "<td>".$key["NAME"]."</td>";
+            echo "<td>".$key["AMOUNT"]."</td>";
             echo "</tr>";
-            
-            }?> 
-            </tbody>
+            }?>
+                </tbody>
             </table>
+          </div>  
         </div>
       </div>
     </div>
