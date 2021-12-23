@@ -1,4 +1,5 @@
 <?php 
+session_start();
 include "connect.php";
 include "models/employees.php";
 $employee = Employees::getAll($db);
@@ -61,7 +62,15 @@ $employee = Employees::getAll($db);
             </div>
             <div class="col-sm-6">
               <ul class="header-top-right text-right">
-                <li class="account"><a href="login.php">Masuk</a></li>
+                <li class="account">
+                <?php 
+                  if (!empty($_SESSION['employee'])){
+                    echo'<a href="logout.php">Keluar</a>';
+                  }else{
+                    echo'<a href="login.php">Masuk</a>';
+                  }
+                ?>
+                </li>
                 <li class="sitemap"><a href="https://goo.gl/maps/t1pZEah8czZkTvxx6" target="_blank">Kampus Kita</a></li>
               </ul>
             </div>
@@ -95,10 +104,10 @@ $employee = Employees::getAll($db);
               <ul id="menu" class="nav navbar-nav">
                 <li> <a href="index.php">Halaman Utama</a></li>
                 <li> <a href="category_page.php">Daftar Produk</a></li>
-                <li> <a href="checkout_page.html">Riwayat Transaksi</a></li>
+                <li> <a href="checkout_page.php">Riwayat Transaksi</a></li>
                 <li> <a href="orders.php">Transaksi</a></li>
                 <li> <a href="employee.php">Kelola Pegawai</a></li>
-                <li> <a href="about-us.html">Tentang Kami</a></li>
+                <li> <a href="about-us.php">Tentang Kami</a></li>
               </ul>
             </div>
             <!-- /.nav-collapse -->

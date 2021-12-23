@@ -93,10 +93,10 @@ $employee= Employees::getAll($db);
               <ul id="menu" class="nav navbar-nav">
                 <li> <a href="index.php">Halaman Utama</a></li>
                 <li> <a href="category_page.php">Daftar Produk</a></li>
-                <li> <a href="checkout_page.html">Riwayat Transaksi</a></li>
+                <li> <a href="checkout_page.php">Riwayat Transaksi</a></li>
                 <li> <a href="orders.php">Transaksi</a></li>
                 <li> <a href="employee.php">Kelola Pegawai</a></li>
-                <li> <a href="about-us.html">Tentang Kami</a></li>
+                <li> <a href="about-us.php">Tentang Kami</a></li>
               </ul>
             </div>
             <!-- /.nav-collapse -->
@@ -162,10 +162,10 @@ $employee= Employees::getAll($db);
         <div class="col-sm-8 col-md-8 col-lg-9 mtb_30">
           <!-- =====  BANNER STRAT  ===== -->
           <div class="breadcrumb ptb_20">
-            <h1>Hapus Produk</h1>
+            <h1>Hapus Pegawai</h1>
             <ul>
               <li><a href="index.php">Halaman Utama</a></li>
-              <li class="active">Hapus Produk</li>
+              <li class="active">Hapus Pegawai</li>
             </ul>
           </div>
           <!-- =====  BREADCRUMB END===== -->

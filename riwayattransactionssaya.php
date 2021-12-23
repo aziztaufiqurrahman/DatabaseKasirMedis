@@ -94,10 +94,10 @@ $dataTransaksi= Orders::getAll($db);
               <ul id="menu" class="nav navbar-nav">
                 <li> <a href="index.php">Halaman Utama</a></li>
                 <li> <a href="category_page.php">Daftar Produk</a></li>
-                <li> <a href="checkout_page.html">Riwayat Transaksi</a></li>
+                <li> <a href="checkout_page.php">Riwayat Transaksi</a></li>
                 <li> <a href="orders.php">Transaksi</a></li>
                 <li> <a href="employee.php">Kelola Pegawai</a></li>
-                <li> <a href="about-us.html">Tentang Kami</a></li>
+                <li> <a href="about-us.php">Tentang Kami</a></li>
               </ul>
             </div>
             <!-- /.nav-collapse -->
@@ -170,7 +170,7 @@ $dataTransaksi= Orders::getAll($db);
             </ul>
           </div>
           <!-- =====  BREADCRUMB END===== -->
-          <a href = 'checkout_page.html' class = 'btn'> Kembali </a> <br></br>
+          <a href = 'checkout_page.php' class = 'btn'> Kembali </a> <br></br>
           <table class="table table-bordered table-hover">  
             <thead>
             <tr>
