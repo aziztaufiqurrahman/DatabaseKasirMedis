@@ -48,5 +48,28 @@ class Products
         $stmt->bindValue(":expired_at", $expired_at);
         $stmt->execute();
     }
+    /**
+     * edit produk
+     */
+    public static function update($db, $id_product, $name, $unit, $price)
+    {
+        $sql = "CALL update_product(:id_product, :name, :unit, :price)";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(":id_product", $id_product);
+        $stmt->bindValue(":name", $name);
+        $stmt->bindValue(":unit", $unit);
+        $stmt->bindValue(":price", $price);
+        $stmt->execute();
+    }
+    /**
+     * hapus produk
+     */
+    public function delete($db, $id_product)
+    {
+        $sql = "CALL softdelete_product(:id_product)";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(":id_product", $id_product);
+        $stmt->execute();
+    }
 }
 ?>
