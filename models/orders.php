@@ -88,7 +88,7 @@ class Orders
     }
     public static function getAllAdmin($db)
     {
-        $sql = "SELECT o.id_order, e.name, c.name, o.code, o.created_at
+        $sql = "SELECT o.id_order, e.name AS employee_name, c.name, o.code, o.created_at
         FROM orders o
         JOIN employees e ON e.id_employee = o.id_employee
         JOIN customers c ON c.id_customer = o.id_customer
