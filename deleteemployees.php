@@ -1,9 +1,8 @@
 <?php 
 include "connect.php";
 include "models/employees.php";
-$employee = Employees::getAll($db);
+$employee= Employees::getAll($db);
 ?>
-
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html lang="en">
@@ -39,7 +38,6 @@ $employee = Employees::getAll($db);
   <link rel="apple-touch-icon" href="images/apple-touch-icon.html">
   <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.html">
   <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.html">
-  <link href="DataTables/datatables.css" rel="stylesheet">
 </head>
 
 <body>
@@ -156,45 +154,38 @@ $employee = Employees::getAll($db);
               </ul>
             </div>
           </div>
+          <div class="left_banner left-sidebar-widget mt_30 mb_50"> <a href="#"><img src="images/leftt 1.jpg" alt="Left Banner" class="img-responsive" /></a> </div>
+          <div class="left-cms left-sidebar-widget mb_50">
+            
+          </div>
         </div>
         <div class="col-sm-8 col-md-8 col-lg-9 mtb_30">
-        <a href = 'addemployee.php' class = 'btn'> Tambah Pegawai </a> <br></br>
-            <table class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                      <th>NO.</th>
-                      <th>USERNAME</th>
-                      <th width="400px">NAMA</th>
-                      <th>ROLE</th>
-                      <th>NO HP</th>
-                      <th width="600px">ALAMAT</th>
-                      <th width="700px">DITERIMA</th>
-                      <th width="900px">DIPERBAHARUI</th>
-                      <th>ACTION</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <?php
-                 $nomor=1;
-                ?>
-
-            <?php foreach ($employee as $key) {
-            echo "<tr>";
-            echo "<td>".$nomor++."</td>";
-            echo "<td>".$key["USERNAME"]."</td>";
-            echo "<td>". $key["NAME"]."</td>";
-            echo "<td>". $key["ROLE"]."</td>";
-            echo "<td>". $key["PHONE"]. "</td>";
-            echo "<td>". $key["ADDRESS"]. "</td>";
-            echo "<td>". $key["CREATED_AT"]. "</td>";
-            echo "<td>". $key["UPDATED_AT"]. "</td>";
-            echo "<td><a href = 'editemployees.php' > <i class = 'fa fa-pencil'> </i> </a> <a href = 'deleteemployees.php' > <i class = 'fa fa-trash'> </i> </a>". "</td>";
-            echo "</tr>";
-            }?> 
-
-                </tbody>
-            </table>
-         </div>
+          <!-- =====  BANNER STRAT  ===== -->
+          <div class="breadcrumb ptb_20">
+            <h1>Hapus Produk</h1>
+            <ul>
+              <li><a href="index.php">Halaman Utama</a></li>
+              <li class="active">Hapus Produk</li>
+            </ul>
+          </div>
+          <!-- =====  BREADCRUMB END===== -->
+         <a href = 'employee.php'class = 'btn'> Kembali </a> <br></br>
+         <form id="login-form" action="events/performlogin.php" method="post">
+         <div class="panel panel-default pull-left">
+              <div class="panel-body">
+                  <div class="row">
+                      <div class="col-md-12 no-padding mt_10">
+                        <div class="col-md-12"> <center>Apakah Anda Yakin Ingin Menghapus Pegawai ini?</center></div>
+                        </div>
+                      </div> 
+                      <br> </br>
+                      <div class="col-md-12 mt_10">
+                        <a href = 'employee.php' class="btn pull-right"> Ya Setuju</a>
+                      </div>
+                    </div>
+              </div>
+          </div>  
+        </div>
       </div>
     </div>
     <!-- =====  CONTAINER END  ===== -->
@@ -223,7 +214,6 @@ $employee = Employees::getAll($db);
         </div>
       </div>
     </div>
-    </div>
     <!-- =====  FOOTER END  ===== -->
   </div>
   <a id="scrollup">Scroll</a>
@@ -247,23 +237,6 @@ $employee = Employees::getAll($db);
     $("#amount").val("$" + $("#slider-range").slider("values", 0) +
       " - $" + $("#slider-range").slider("values", 1));
   });
-  </script>
-  <script src="js/jQuery_v3.1.1.min.js"></script>
-  <script src="DataTables/datatables.js"></script>
-  <script type="text/javascript">
-
-      var save_method; //for save method string
-      var table;
-
-      $(document).ready(function() {
-          //datatables
-          table = $('#table').DataTable({ 
-              "processing": true, //Feature control the processing indicator.
-              "serverSide": true, //Feature control DataTables' server-side processing mode.
-              "order": [], //Initial no order.
-          });
-
-      });
   </script>
 </body>
 
