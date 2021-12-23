@@ -1,7 +1,9 @@
 <?php 
 include "connect.php";
 include "models/products.php";
-$produk= Products::getForAddStock($db,$_GET["id"]);
+include "models/batches.php";
+$produk = Products::getForAddStock($db,$_GET["id"]);
+$batch = Batches::view($db, $_GET["id"]);
 ?>
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
@@ -188,6 +190,18 @@ $produk= Products::getForAddStock($db,$_GET["id"]);
                       <th><center>Tanggal Kadaluarsa</center></th>
                       </tr>
                       </thead>
+                      <tbody>
+                        <?php 
+                        $i = 1;
+                        foreach ($batch as $batch){
+                          echo "<tr>";
+                          echo "<td>".($i++)."</td>";
+                          echo "<td>".($batch["STOCK"])."</td>";
+                          echo "<td>".($batch["EXPIRED_AT"])."</td>";
+                          echo "</tr>";
+                        }
+                        ?>
+                      </tbody>
                       </table>
                       <br> </br>
                     </div>
