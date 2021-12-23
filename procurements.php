@@ -1,11 +1,3 @@
-<?php
-if (isset($_GET['ctx']))
-{
-  if (strlen($_GET['ctx']) > 1) echo "<script>alert('Transaksi jual beli berhasil dilakukan, Kode: ".$_GET['ctx']."');</script>";
-  else echo "<script>alert('Transaksi jual beli gagal');</script>";
-}
-?>
-
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html lang="en">
@@ -67,7 +59,7 @@ if (isset($_GET['ctx']))
       </div>
     </div>
     <!-- =====  HEADER START  ===== -->
-    <form method="post" action="events/performorder.php"> 
+    <form method="post" action="events/performaddstock.php"> 
     <header id="header">
       <div class="header-top">
         <div class="container">
@@ -197,10 +189,10 @@ if (isset($_GET['ctx']))
         <div id="column-right" class="col-sm-8 col-md-8 col-lg-9 mtb_30">
           <!-- =====  BANNER STRAT  ===== -->
           <div class="breadcrumb ptb_20">
-            <h1>Transaksi Jual Beli</h1>
+            <h1>Transaksi Penambahan Stok</h1>
             <ul>
               <li><a href="index-2.html">Halaman Utama</a></li>
-              <li class="active">Transaksi Jual Beli</li>
+              <li class="active">Transaksi Penambahan Stok</li>
             </ul>
           </div>
           <!-- =====  BREADCRUMB END===== -->
@@ -210,9 +202,10 @@ if (isset($_GET['ctx']))
                   <tr>
                     <th class="text-center" style="width: 5%;">No.</th>
                     <!-- <th class="text-center" style="width: 15%;">Gambar</th> -->
-                    <th class="text-center" style="width: 35%;">Nama Produk</th>
-                    <th class="text-center" style="width: 5%;">Jumlah</th>
-                    <th class="text-center" style="width: 20%;">Harga Satuan</th>
+                    <th class="text-center" style="width: 20%;">Nama Produk</th>
+                    <th class="text-center" style="width: 25%;">Kadaluwarsa</th>
+                    <th class="text-center" style="width: 15%;">Stok</th>
+                    <th class="text-center" style="width: 20%;">Penambahan</th>
                     <th class="text-center" style="width: 20%;">Subtotal</th>
                     <th class="text-center" style="width: 10%;">Aksi</th>
                   </tr>
@@ -241,10 +234,16 @@ if (isset($_GET['ctx']))
                         </div>
                       </div>
                       <div class="col-md-12 no-padding mt_10" id="ctx_content_count">
-                        <div class="col-md-4"><label for="ctx_count">Jumlah Pembelian Produk</label></div>
+                        <div class="col-md-4"><label for="ctx_count">Jumlah Penambahan Stok</label></div>
                         <div class="col-md-8">
                           <input type="number" id="ctx_count" value="1" min="1" max="100">
-                          <span>(Stok Tersedia: <span id="ctx_stock">0</span>)</span>
+                          <span>(Total Saat Ini: <span id="ctx_stock">0</span>)</span>
+                        </div>
+                      </div>
+                      <div class="col-md-12 no-padding mt_10" id="ctx_content_expired_at">
+                        <div class="col-md-4"><label for="ctx_expired_at">Kadaluwarsa</label></div>
+                        <div class="col-md-8">
+                          <input type="datetime-local" class="form-control" id="ctx_expired_at" value="1" min="1" max="100">
                         </div>
                       </div>
                       <div class="col-md-12 mt_10">
@@ -253,69 +252,9 @@ if (isset($_GET['ctx']))
                     </div>
               </div>
           </div>
-          <div class="panel panel-default pull-left">
-            <div class="panel-heading">
-              <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Identitas Pembeli</a></h4>
-            </div>
-            <div id="collapseTwo" class="panel-collapse collapse in" aria-expanded="true">
-              <div class="panel-body">
-                <div class="row">
-                  <div class="col-md-12 no-padding mt_10">
-                    <div class="col-md-4"><label for="ctx_customer">Nama Pembeli</label></div>
-                    <div class="col-md-8">
-                      <select id="ctx_customer" name="ctx_customer" style='width: 100%;'></select>
-                    </div>
-                  </div>
-                  <div class="col-md-12 no-padding mt_10">
-                    <div class="col-md-4"><label for="ctx_custphone">No. Telepon</label></div>
-                    <div class="col-md-8">
-                      <input type="hidden" name="ctx_custid" id="ctx_custid" value="0">
-                      <input type="hidden" name="ctx_custname" id="ctx_custname" value="">
-                      <input type="text" class="form-control" name="ctx_custphone" id="ctx_custphone" placeholder="Masukkan No. Telepon Pembeli">
-                    </div>
-                  </div>
-                  <div class="col-md-12 no-padding mt_10">
-                    <div class="col-md-4"><label for="ctx_custaddress">Alamat</label></div>
-                    <div class="col-md-8">
-                      <textarea class="form-control cs-textarea" name="ctx_custaddress" id="ctx_custaddress"></textarea>
-                    </div>
-                  </div>
-                  <div class="col-md-12 mt_10" id="ctx_custhelper">
-                      <p style="text-align: right; margin-bottom: 1em; font-style: italic;"><b>*)</b> Tekan tombol di bawah apabila anda ingin menghapus pembeli ini secara permanen.</p>
-                      <span class="btn pull-right" id="ctx_custdelete">Hapus Pembeli</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-12">
-              <table class="table table-bordered">
-                <tbody>
-                  <tr>
-                    <td class="text-right" style="width: 70%;"><strong>Total:</strong></td>
-                    <td class="text-right" id="ctx_total">Rp 0,00</td>
-                  </tr>
-                  <tr>
-                    <td class="text-right" style="vertical-align: middle;">
-                      <span style="vertical-align: middle;"><strong>Uang Bayar (Rp):</strong></span>
-                    </td>
-                    <td class="text-right">
-                      <input class="form-control pull-right" style="height: 30px; width: auto;" placeholder="Masukkan uang bayar" id="ctx_custpay" type="text" min="0" max="999999999">
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-right"><strong>Kembalian:</strong></td>
-                    <td class="text-right" id="ctx_change">Rp 0,00</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
           <div class="col-md-12" style="padding: 0;">
             <div style="float:right">
-              <button class="btn" id="clear_input">Bersihkan</button>
-              <button type="submit" class="btn">Simpan Transaksi</button>
+              <button type="submit" class="btn">Simpan Penambahan Stok</button>
             </div>
           </div>
         </div>
@@ -362,15 +301,16 @@ if (isset($_GET['ctx']))
 /**
  * tambah baris baru ke tabel transaksi
  */
-function generateRow(id, name, count, maxstock, price)
+function generateRow(id, name, count, existing, expired_at)
 {
-  let total = count * price
+  let total = Number(count) + Number(existing)
   return `<tr>
       <td class="text-center"></td>
       <td class="text-left"><input type="hidden" name="id_product[]" id="id_product[]" value="${id}">${name}</td>
-      <td class="text-center"><input type="number" class="cs-inputcount" name="count[]" id="count[]" value="${count}" min="1" max="100"><input type="hidden" value="${maxstock}"></td>
-      <td class="text-right">${numberToCurrency(price)}</td>
-      <td class="text-right" id="subtotal">${numberToCurrency(total)}</td>
+      <td class="text-right"><input type="datetime-local" class="form-control" name="expired_at[]" value="${expired_at}"></td>
+      <td class="text-right"><input type="hidden" value="${existing}">${existing}</td>
+      <td class="text-center"><input type="number" class="cs-inputcount" name="count[]" id="count[]" value="${count}" min="1" max="100"></td>
+      <td class="text-right" id="subtotal">${total}</td>
       <td class="text-center"><a class="cs-btndelete">Hapus</a></td>
   </tr>`
 }
@@ -383,15 +323,8 @@ function countTotal(table)
   let total = 0
   rows.each(function() {
       let subtotal = $(this).find('#subtotal').html()
-      total += currencyToNumber(subtotal)
+      total += subtotal
   })
-  $('#ctx_total').text(numberToCurrency(total))
-  let payment = parseFloat($('#ctx_custpay').val().replaceAll('.','').replace(',','.'))
-  let change = payment - total
-  if (isNaN(change)) change = 0
-
-  if (change < 0) $('#ctx_change').text(`Kurang ${numberToCurrency(change * -1)}`)
-  else $('#ctx_change').text(numberToCurrency(change))
 }
 /**
  * hapus input yang ada di formulir (kecuali data input yang ada di tabel) 
@@ -399,14 +332,10 @@ function countTotal(table)
 function clearInput()
 {
   $('#ctx_product').val('').trigger('change')
-  $('#ctx_customer').val('').trigger('change')
   $('ctx_content_count').hide()
+  $('ctx_content_expired_at').hide()
   $('#ctx_count').val(1)
-  $('ctx_customer').val('')
-  $('#ctx_custphone').val('')
-  $('#ctx_custaddress').val('')
-  $('#ctx_custpay').val('')
-  $('#ctx_change').text(numberToCurrency(0))
+  $('#ctx_expired_at').val(null)
 }
 $(document).ready(() => {
     var tbody = $('#cs-ordertb').children('tbody')
@@ -414,11 +343,14 @@ $(document).ready(() => {
     var ctx_product = $('#ctx_product')
     var ctx_customer = $('#ctx_customer')
     var ctx_count = $('#ctx_count')
+    var ctx_expired_at = $('#ctx_expired_at')
     var ctx_content_count = $('#ctx_content_count')
+    var ctx_content_expired_at = $('#ctx_content_expired_at')
     var ctx_custhelper = $('#ctx_custhelper')
     var row_count = 0
 
     ctx_content_count.hide()
+    ctx_content_expired_at.hide()
     ctx_custhelper.hide()
     ctx_count.val(1)
 
@@ -463,105 +395,49 @@ $(document).ready(() => {
         cache: false
       }
     })
-    // ambil data customer dari databases
-    ctx_customer.select2({
-      placeholder: 'Masukkan Nama Pembeli',
-      tags: true,
-      ajax: {
-        type: 'POST',
-        url: 'handlers/customersuggestion.php',
-        data: function(params) {
-          return {
-            name: params.term
-          }
-        },
-        dataType: 'json',
-        delay: 250,
-        processResults: function(res) {
-          let result = []
-          res.forEach(element => {
-            dataCustomers.push(element)
-          });
-          $.each(res, function(index, item) {
-            result.push({
-              id: item['ID_CUSTOMER'],
-              text: item['NAME'] + ' (' + item['PHONE'] + ')'
-            })
-          })
-          return {
-            results: result
-          }
-        }
-      }
-    })
     // hapus hasil dari seleksi sebelumnya
     ctx_product.on('change', function() {
       let id_product = ctx_product.children('option:selected').val()
       if (typeof id_product === typeof(undefined)) return
       dataPickProduct = dataProducts.find(data => data.ID_PRODUCT == id_product)
       ctx_content_count.show()
+      ctx_content_expired_at.show()
       $('#ctx_stock').text(dataPickProduct.STOCK)
-    })
-    // hapus hasil dari seleksi sebelumnya
-    ctx_customer.on('change', function() {
-      let id_customer = $(this).val()
-      if (typeof id_customer === typeof(undefined)) return
-      dataPickCustomer = dataCustomers.find(data => data.ID_CUSTOMER == id_customer)
-      let phone = ''
-      let address = ''
-      let id = 0
-      let name = $('#ctx_customer :selected').text()
-      if (dataPickCustomer)
-      {
-        phone = dataPickCustomer.PHONE
-        address = dataPickCustomer.ADDRESS
-        id = dataPickCustomer.ID_CUSTOMER
-        name = dataPickCustomer.NAME
-        $('#ctx_custhelper').show()
-      }
-      else $('#ctx_custhelper').hide()
-      $('#ctx_custid').val(id)
-      $('#ctx_custname').val(name)
-      $('#ctx_custphone').val(phone)
-      $('#ctx_custaddress').val(address)
     })
     // hitung harga subtotal dari produk yang dibeli
     $(document).on('input', '#ctx_count', function() {
       let val = Number($(this).val())
-      if (val > dataPickProduct.STOCK) $(this).val(dataPickProduct.STOCK)
+      if (val > 100) $(this).val(100)
       else if (val >= 1) return
       else $(this).val(1)
     })
     // ganti subtotal produk
     $(document).on('input', 'input[name^="count"]', function() {
       let col_count = $(this)
-      let col_max = $(this).next()
-      let col_price = col_count.parent().next()
-      let col_subtotal = col_price.next()
+      let col_stock = col_count.parent().prev()
+      let col_subtotal = col_stock.next().next()
       let count = Number(col_count.val())
-      let max = Number(col_max.val())
       if (count < 1) return col_count.val(1)
-      else if (count > max) return col_count.val(max)
+      else if (count > 100) return col_count.val(100)
       
-      let subtotal = count * currencyToNumber(col_price.text())
-      col_subtotal.text(numberToCurrency(subtotal))
-      countTotal(table)
+      let subtotal = Number(count) + Number(col_stock.text())
+      col_subtotal.text(subtotal)
     })
     // tambah produk baru ke tabel
     $('#add_product').click(function() {
-      if (row_count == 10) return alert('Peringatan: Maksimal hanya 10 produk yang dapat dibeli dalam satu transaksi')
+      if (row_count == 10) return alert('Peringatan: Maksimal hanya 10 produk yang stoknya dapat ditambahkan')
       let name = ctx_product.children('option:selected').text()
       let count = ctx_count.val()
-      if (name.length == 0 || count.length == 0) return
+      let expired_at = ctx_expired_at.val()
+      if (name.length == 0 || count.length == 0 || !expired_at) return
 
       let id_product = dataPickProduct.ID_PRODUCT
-      let price = dataPickProduct.PRICE
-      let maxstock = dataPickProduct.STOCK
-      table.append(generateRow(id_product, name, count, maxstock, price))
-      countTotal(table)
+      let existing = dataPickProduct.STOCK
+      table.append(generateRow(id_product, name, count, existing, expired_at))
       
       ctx_product.val('').trigger('change')
       ctx_content_count.hide()
+      ctx_content_expired_at.hide()
       ctx_count.val(1)
       dataPickProduct = null
       row_count++
@@ -569,31 +445,7 @@ $(document).ready(() => {
     // hapus baris dari tabel di baris ketika tulisan delete diklik
     $(table).on('click', '.cs-btndelete', function() {
       $(this).closest('tr').remove()
-      countTotal(table)
       row_count--
-    })
-    // hapus semua input, kecuali data yang ada di tabel
-    $('#clear_input').click(function() {
-      clearInput()
-    })
-    // hitung kembalian berdasarkan uang yang dikasih sama pembeli
-    $('#ctx_custpay').on('input', function() {
-      countTotal(table)
-    })
-    // hapus customer ketika tombol diklik
-    $('#ctx_custdelete').click(function(e) {
-      let id_customer = Number($('#ctx_custid').val())
-      if (id_customer == 0) return;
-      let name = $('#ctx_custname').val()
-      e.preventDefault()
-      $.ajax({
-        type: 'POST',
-        url: 'handlers/deletecustomer.php',
-        data: {
-          id_customer: id_customer
-        }
-      })
-      clearInput()
     })
 })
 </script>

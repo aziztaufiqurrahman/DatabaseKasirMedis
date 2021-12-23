@@ -9,7 +9,7 @@ $password = $_POST['password']; // Ambil value password yang dikirim dari form
 $data = Employees::login($db, $username, $password);
 // Cek apakah variabel $data ada datanya atau tidak
 if(!empty($data)){ // Jika tidak sama dengan empty (kosong)
-  $_SESSION['employee'] = $data; // Set session untuk username (simpan username di session)
+  $_SESSION['employee'] = json_decode($data); // Set session untuk username (simpan username di session)
   header("location: ../index.php"); // Kita redirect ke halaman index.php
  }else{ // Jika $data nya kosong
    // Buat sebuah cookie untuk menampung data pesan kesalahan

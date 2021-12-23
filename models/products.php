@@ -37,10 +37,11 @@ class Products
     /**
      * tambah stock
      */
-    public static function addStock($db, $id_product, $id_employee, $count, $expired_at)
+    public static function addStock($db, $id_proc, $id_product, $id_employee, $count, $expired_at)
     {
-        $sql = "CALL add_stock(:id_product, :id_employee, :count, :expired_at)";
+        $sql = "CALL add_stock(:id_proc, :id_product, :id_employee, :count, :expired_at)";
         $stmt = $db->prepare($sql);
+        $stmt->bindValue(":id_proc", $id_proc);
         $stmt->bindValue(":id_product", $id_product);
         $stmt->bindValue(":id_employee", $id_employee);
         $stmt->bindValue(":count", $count);

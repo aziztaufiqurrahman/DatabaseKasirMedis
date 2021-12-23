@@ -24,7 +24,7 @@ class Employees
         $stmt->bindValue(':b',$password);
         $stmt->execute();
         $temp = $stmt->fetch();
-        return $temp;
+        return json_encode($temp, JSON_NUMERIC_CHECK);
     }
 }
 ?>

@@ -169,7 +169,8 @@ $produk= Products::getAll($db);
             </ul>
           </div>
           <!-- =====  BREADCRUMB END===== -->
-          <a href = 'addproducts.php' class = 'btn'> Tambah Produk </a> <br></br>
+          <a href = 'addproducts.php' class = 'btn'>Tambah Produk</a>
+          <a href = 'procurements.php' class = 'btn'>Tambah Stok</a> <br></br>
           <table class="table table-bordered table-hover">
             <thead>
             <tr>
