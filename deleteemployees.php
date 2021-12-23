@@ -162,10 +162,10 @@ $employee= Employees::getAll($db);
         <div class="col-sm-8 col-md-8 col-lg-9 mtb_30">
           <!-- =====  BANNER STRAT  ===== -->
           <div class="breadcrumb ptb_20">
-            <h1>Hapus Produk</h1>
+            <h1>Hapus Pegawai</h1>
             <ul>
               <li><a href="index.php">Halaman Utama</a></li>
-              <li class="active">Hapus Produk</li>
+              <li class="active">Hapus Pegawai</li>
             </ul>
           </div>
           <!-- =====  BREADCRUMB END===== -->
