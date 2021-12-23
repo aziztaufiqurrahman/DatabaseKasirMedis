@@ -195,7 +195,7 @@ $dataTransaksi= Orders::getAll($db);
             echo "<td>".  "</td>";
             echo "<td>". $key["CREATED_AT"]. "</td>";
             echo "<td>Rp. ". "</td>";
-            echo "<td><a href = 'deletetransactions.php' > <i class = 'fa fa-trash'> </i> </a>". "</td>";
+            echo "<td><a href = 'detailtransactions.php' > <i class = 'fa fa-eye'> </i> </a> <a href = 'deletetransactions.php' > <i class = 'fa fa-trash'> </i> </a>". "</td>";
             echo "</tr>";
             }?> 
             

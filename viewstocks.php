@@ -162,10 +162,10 @@ $produk= Products::getForAddStock($db,$_GET["id"]);
         <div class="col-sm-8 col-md-8 col-lg-9 mtb_30">
           <!-- =====  BANNER STRAT  ===== -->
           <div class="breadcrumb ptb_20">
-            <h1>Tambah Stock</h1>
+            <h1>Detail Produk</h1>
             <ul>
               <li><a href="index.php">Halaman Utama</a></li>
-              <li class="active">Tambah Stock</li>
+              <li class="active">Detail Produk</li>
             </ul>
           </div>
           <!-- =====  BREADCRUMB END===== -->
@@ -180,23 +180,16 @@ $produk= Products::getForAddStock($db,$_GET["id"]);
                         </div>
                       </div> 
                       <br> </br>
-                      <div class="col-md-12 no-padding mt_10">
-                        <div class="col-md-4"><label for="count">Jumlah Penambahan</label></div>
-                        <div class="col-md-8">
-                          <input type = 'hidden' name = "id_product" value =  '"<?php echo $_GET["id"]?>"'>
-                          <input type="number" class="form-control" name="count" id="count" placeholder="Jumlah Penambahan">
-                        </div>
-                      </div>
+                      <table class="table table-bordered table-hover">
+                      <thead>
+                      <tr>
+                      <th><center>NO.</center></th>
+                      <th><center>Stock</center></th>
+                      <th><center>Tanggal Kadaluarsa</center></th>
+                      </tr>
+                      </thead>
+                      </table>
                       <br> </br>
-                      <div class="col-md-12 no-padding mt_10">
-                        <div class="col-md-4"><label for="expired_at">Tanggal Kadaluarsa</label></div>
-                        <div class="col-md-8">
-                          <input type="datetime-local" class="form-control" name="expired_at">
-                        </div>
-                      </div> 
-                      <div class="col-md-12 mt_10">
-                        <button type="submit" class="btn pull-right" id="add_product"> Tambah Stock </span>
-                      </div>
                     </div>
                     </form>
               </div>
