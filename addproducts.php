@@ -1,7 +1,9 @@
-<?php 
+<?php
 include "connect.php";
 include "models/products.php";
-$produk= Products::getAll($db);
+include "models/producttypes.php";
+$produk = Products::getAll($db);
+$type = ProductTypes::getAll($db);
 ?>
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
@@ -186,13 +188,6 @@ $produk= Products::getAll($db);
                           <input type="text" class="form-control" name="unit" id="unit" placeholder="Masukk Unit Barang">
                         </div>
                       </div>
-                      <div class="col-md-12 no-padding mt_10" id="ctx_content_count">
-                        <div class="col-md-4"><label for="stock">Jumlah Penambahan</label></div>
-                        <div class="col-md-8">
-                          <input type="number" class = "form-control" name="stock" id="stock" value="1" min="1" max="100">
-                        </div>
-                      </div>
-                      <br> </br>
                       <div class="col-md-12 no-padding mt_10">
                         <div class="col-md-4"><label for="harga">Harga</label></div>
                         <div class="col-md-8">
@@ -200,15 +195,29 @@ $produk= Products::getAll($db);
                         </div>
                       </div> 
                       <div class="col-md-12 no-padding mt_10">
+                        <div class="col-md-4"><label for="expired_at">Tanggal Kadaluarsa</label></div>
+                        <div class="col-md-8">
+                          <input type="datetime-local" class="form-control" name="expired_at">
+                        </div>
+                      </div>
+                      <div class="col-md-12 no-padding mt_10">
                         <div class="col-md-4"><label for="tipe">Tipe Produk</label></div>
                         <div class="col-md-8">
                           <select class="form-control" name="tipe" id="tipe" placeholder="Masukkan Tipe Produk"> 
-                              <option value="1"> Contoh Tipe 1 </option>
-                              <option value="2"> Contoh Tipe 2</option>
-                              <option value="3"> Contoh Tipe 3</option>
+                             <?php 
+                             foreach ($type as  $type){
+                             echo "<option value ='".$type["ID_TYPE"]."'>".$type["TYPETEXT"]."</option>";}?>
                           </select>
                         </div>
                       </div>
+                      <div class="col-md-12 no-padding mt_10" id="ctx_content_count">
+                        <div class="col-md-4"><label for="stock">Jumlah Penambahan</label></div>
+                        <div class="col-md-8">
+                          <input type="number" class = "form-control" name="stock" id="stock" value="1" min="1" max="100">
+                        </div>
+                      </div>
+                      <br> </br>
+                      
                       <div class="col-md-12 mt_10">
                         <span class="btn pull-right" id="add_product"> Tambah </span>
                       </div>
