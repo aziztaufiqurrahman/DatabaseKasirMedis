@@ -7,7 +7,7 @@
 <!--<![endif]-->
 
 
-<!-- Mirrored from html.lionode.com/healthcare/hc001/checkout_page.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:07 GMT -->
+<!-- Mirrored from html.lionode.com/healthcare/hc001/checkout_page.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:07 GMT -->
 <head>
   <!-- =====  BASIC PAGE NEEDS  ===== -->
   <meta charset="utf-8">
@@ -99,10 +99,10 @@
               <ul id="menu" class="nav navbar-nav">
                 <li> <a href="index.php">Halaman Utama</a></li>
                 <li> <a href="category_page.php">Daftar Produk</a></li>
-                <li> <a href="checkout_page.html">Riwayat Transaksi</a></li>
+                <li> <a href="checkout_page.php">Riwayat Transaksi</a></li>
                 <li> <a href="orders.php">Transaksi</a></li>
                 <li> <a href="employee.php">Kelola Pegawai</a></li>
-                <li> <a href="about-us.html">Tentang Kami</a></li>
+                <li> <a href="about-us.php">Tentang Kami</a></li>
               </ul>
             </div>
             <!-- /.nav-collapse -->
@@ -271,5 +271,5 @@
 </body>
 
 
-<!-- Mirrored from html.lionode.com/healthcare/hc001/checkout_page.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:07 GMT -->
+<!-- Mirrored from html.lionode.com/healthcare/hc001/checkout_page.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:07 GMT -->
 </html>
