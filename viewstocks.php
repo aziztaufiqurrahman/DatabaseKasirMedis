@@ -2,7 +2,7 @@
 include "connect.php";
 include "models/products.php";
 include "models/batches.php";
-$produk = Products::getForAddStock($db,$_GET["id"]);
+$produk = Products::getById($db,$_GET["id"]);
 $batch = Batches::view($db, $_GET["id"]);
 ?>
 <!DOCTYPE html>
