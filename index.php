@@ -114,7 +114,7 @@
             <div class="collapse navbar-collapse js-navbar-collapse pull-right">
               <ul id="menu" class="nav navbar-nav">
                 <li> <a href="index.php">Halaman Utama</a></li>
-                <li> <a href="category_page.php">Daftar Produk</a></li>
+                <li> <a href="listproducts.php">Daftar Produk</a></li>
                 <li> <a href="checkout_page.php">Riwayat Transaksi</a></li>
                 <li> <a href="orders.php">Transaksi</a></li>
                 <li> <a href="employee.php">Kelola Pegawai</a></li>

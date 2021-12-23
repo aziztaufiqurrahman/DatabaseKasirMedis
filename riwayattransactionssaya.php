@@ -1,7 +1,9 @@
 <?php 
+session_start();
 include "connect.php";
 include "models/orders.php";
-$dataTransaksi= Orders::getAll($db);
+$id_employee=$_SESSION["employee"]->ID_EMPLOYEE;
+$dataTransaksi= Orders::getAll($db,$id_employee);
 ?> 
 
 <!DOCTYPE html>
@@ -10,7 +12,7 @@ $dataTransaksi= Orders::getAll($db);
 <!--<![endif]-->
 
 
-<!-- Mirrored from html.lionode.com/healthcare/hc001/category_page.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:02 GMT -->
+<!-- Mirrored from html.lionode.com/healthcare/hc001/listproducts.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:02 GMT -->
 <head>
   <!-- =====  BASIC PAGE NEEDS  ===== -->
   <meta charset="utf-8">
@@ -93,7 +95,7 @@ $dataTransaksi= Orders::getAll($db);
             <div class="collapse navbar-collapse js-navbar-collapse pull-right">
               <ul id="menu" class="nav navbar-nav">
                 <li> <a href="index.php">Halaman Utama</a></li>
-                <li> <a href="category_page.php">Daftar Produk</a></li>
+                <li> <a href="listproducts.php">Daftar Produk</a></li>
                 <li> <a href="checkout_page.php">Riwayat Transaksi</a></li>
                 <li> <a href="orders.php">Transaksi</a></li>
                 <li> <a href="employee.php">Kelola Pegawai</a></li>
@@ -175,8 +177,10 @@ $dataTransaksi= Orders::getAll($db);
             <thead>
             <tr>
             <th>No</th>
-            <th>Nama Pelanggan</th>
+            <th>Nama Pelanggan</th> 
+            <th>Kode Transaksi</th> 
             <th>Tanggal Pembelian</th>
+            <th>Total Pembelian</th>
             <th>Aksi</th>
             </tr>
             </thead>
@@ -189,11 +193,12 @@ $dataTransaksi= Orders::getAll($db);
             <?php foreach ($dataTransaksi as $key) {
             echo "<tr>";
             echo "<td>". $nomor++."</td>";
-            echo "<td>". "</td>";
-            echo "<td>". $key["CREATED_AT"]. "</td>";
-            echo "<td><a href = 'detailtransactions.php' > <i class = 'fa fa-eye'> </i> </a>". "</td>";
+            echo "<td>".$key["NAME"]."</td>";
+            echo "<td>".$key["CODE"]."</td>";
+            echo "<td>".$key["CREATED_AT"]."</td>";
+            echo "<td>Rp. "."</td>";
+            echo "<td> <a href = 'detailtransactions.php?id=".$key["ID_ORDER"]."'> <i class = 'fa fa-eye'> </i> </a>". "</td>";
             echo "</tr>";
-            
             }?> 
             </tbody>
             </table>
@@ -253,5 +258,5 @@ $dataTransaksi= Orders::getAll($db);
 </body>
 
 
-<!-- Mirrored from html.lionode.com/healthcare/hc001/category_page.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:03 GMT -->
+<!-- Mirrored from html.lionode.com/healthcare/hc001/listproducts.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:03 GMT -->
 </html>

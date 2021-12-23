@@ -1,7 +1,7 @@
 <?php 
 include "connect.php";
 include "models/orders.php";
-$dataTransaksi= Orders::getAll($db);
+$dataTransaksi= Orders::getAllAdmin($db);
 ?> 
 
 <!DOCTYPE html>
@@ -10,7 +10,7 @@ $dataTransaksi= Orders::getAll($db);
 <!--<![endif]-->
 
 
-<!-- Mirrored from html.lionode.com/healthcare/hc001/category_page.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:02 GMT -->
+<!-- Mirrored from html.lionode.com/healthcare/hc001/listproducts.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:02 GMT -->
 <head>
   <!-- =====  BASIC PAGE NEEDS  ===== -->
   <meta charset="utf-8">
@@ -93,7 +93,7 @@ $dataTransaksi= Orders::getAll($db);
             <div class="collapse navbar-collapse js-navbar-collapse pull-right">
               <ul id="menu" class="nav navbar-nav">
                 <li> <a href="index.php">Halaman Utama</a></li>
-                <li> <a href="category_page.php">Daftar Produk</a></li>
+                <li> <a href="listproducts.php">Daftar Produk</a></li>
                 <li> <a href="checkout_page.php">Riwayat Transaksi</a></li>
                 <li> <a href="orders.php">Transaksi</a></li>
                 <li> <a href="employee.php">Kelola Pegawai</a></li>
@@ -177,6 +177,7 @@ $dataTransaksi= Orders::getAll($db);
             <th>No</th>
             <th>Nama Pelanggan</th>
             <th>Nama Kasir</th>
+            <th>Kode Transaksi</th>
             <th>Tanggal Pembelian</th>
             <th>Total Belanja</th>
             <th>Aksi</th>
@@ -192,7 +193,8 @@ $dataTransaksi= Orders::getAll($db);
             echo "<tr>";
             echo "<td>". $nomor++."</td>";
             echo "<td>". "</td>";
-            echo "<td>".  "</td>";
+            echo "<td>". "</td>";
+            echo "<td>". "</td>";
             echo "<td>". $key["CREATED_AT"]. "</td>";
             echo "<td>Rp. ". "</td>";
             echo "<td><a href = 'detailtransactions.php' > <i class = 'fa fa-eye'> </i> </a> <a href = 'deletetransactions.php' > <i class = 'fa fa-trash'> </i> </a>". "</td>";
@@ -258,5 +260,5 @@ $dataTransaksi= Orders::getAll($db);
 </body>
 
 
-<!-- Mirrored from html.lionode.com/healthcare/hc001/category_page.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:03 GMT -->
+<!-- Mirrored from html.lionode.com/healthcare/hc001/listproducts.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:03 GMT -->
 </html>

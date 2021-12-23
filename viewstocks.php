@@ -12,7 +12,7 @@ $batch = Batches::view($db, $_GET["id"]);
 <!--<![endif]-->
 
 
-<!-- Mirrored from html.lionode.com/healthcare/hc001/category_page.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:02 GMT -->
+<!-- Mirrored from html.lionode.com/healthcare/hc001/listproducts.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:02 GMT -->
 <head>
   <!-- =====  BASIC PAGE NEEDS  ===== -->
   <meta charset="utf-8">
@@ -103,7 +103,7 @@ $batch = Batches::view($db, $_GET["id"]);
             <div class="collapse navbar-collapse js-navbar-collapse pull-right">
               <ul id="menu" class="nav navbar-nav">
                 <li> <a href="index.php">Halaman Utama</a></li>
-                <li> <a href="category_page.php">Daftar Produk</a></li>
+                <li> <a href="listproducts.php">Daftar Produk</a></li>
                 <li> <a href="checkout_page.php">Riwayat Transaksi</a></li>
                 <li> <a href="orders.php">Transaksi</a></li>
                 <li> <a href="employee.php">Kelola Pegawai</a></li>
@@ -180,7 +180,7 @@ $batch = Batches::view($db, $_GET["id"]);
             </ul>
           </div>
           <!-- =====  BREADCRUMB END===== -->
-         <a href = 'category_page.php'class = 'btn'> Kembali </a> <br></br>
+         <a href = 'listproducts.php'class = 'btn'> Kembali </a> <br></br>
           <div class="panel panel-default pull-left">
               <div class="panel-body">
                   <div class="row">
@@ -273,5 +273,5 @@ $batch = Batches::view($db, $_GET["id"]);
 </body>
 
 
-<!-- Mirrored from html.lionode.com/healthcare/hc001/category_page.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:03 GMT -->
+<!-- Mirrored from html.lionode.com/healthcare/hc001/listproducts.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:03 GMT -->
 </html>
