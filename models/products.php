@@ -25,9 +25,9 @@ class Products
     /**
      * ambil id dan nama produk
      */
-    public static function getForAddStock($db, $id_product)
+    public static function getById($db, $id_product)
     {
-        $sql = "SELECT id_product, name FROM products WHERE deleted_at IS NULL and id_product = :id_product";
+        $sql = "SELECT * name FROM products WHERE deleted_at IS NULL and id_product = :id_product";
         $stmt = $db->prepare($sql);
         $stmt->bindValue(":id_product", $id_product);
         $stmt->execute();
@@ -46,6 +46,45 @@ class Products
         $stmt->bindValue(":id_employee", $id_employee);
         $stmt->bindValue(":count", $count);
         $stmt->bindValue(":expired_at", $expired_at);
+        $stmt->execute();
+    }
+    /**
+     * tambah produk
+     */
+    public function add($db, $id_employee, $id_type, $name, $unit, $price, $count, $expired_at)
+    {
+        $sql = "CALL insert_product(:id_employee, :id_type, :name, :unit, :price, :count, :expired_at)";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(":id_employee", $id_employee);
+        $stmt->bindValue(":id_type", $id_type);
+        $stmt->bindValue(":name", $name);
+        $stmt->bindValue(":unit", $unit);
+        $stmt->bindValue(":price", $price);
+        $stmt->bindValue(":count", $count);
+        $stmt->bindValue(":expired_at", $expired_at);
+        $stmt->execute();
+    }
+    /**
+     * edit produk
+     */
+    public static function update($db, $id_product, $name, $unit, $price)
+    {
+        $sql = "CALL update_product(:id_product, :name, :unit, :price)";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(":id_product", $id_product);
+        $stmt->bindValue(":name", $name);
+        $stmt->bindValue(":unit", $unit);
+        $stmt->bindValue(":price", $price);
+        $stmt->execute();
+    }
+    /**
+     * hapus produk
+     */
+    public function delete($db, $id_product)
+    {
+        $sql = "CALL softdelete_product(:id_product)";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(":id_product", $id_product);
         $stmt->execute();
     }
 }
