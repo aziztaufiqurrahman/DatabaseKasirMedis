@@ -69,12 +69,37 @@ class Orders
         $stmt->bindValue(":amount", $amount);
         $stmt->execute();
     }
-    public static function getAll ($db)
+    public static function getAll($db, $id_employee)
     {
-        $riwayat = "SELECT * FROM orders WHERE archived_at IS NULL";
+        $riwayat = "SELECT o.id_order, c.name, o.code, o.created_at
+        FROM orders o
+        JOIN customers c ON c.id_customer = o.id_customer
+        WHERE
+            o.id_employee = :id_employee AND
+            o.archived_at IS NULL AND
+            c.id_customer = o.id_customer
+        ORDER BY
+            o.created_at DESC";
         $stmt = $db->prepare($riwayat);
+        $stmt->bindValue(":id_employee", $id_employee);
         $stmt->execute();
-        $temp = $stmt->fetchAll ();
+        $temp = $stmt->fetchAll();
+        return $temp;
+    }
+    public static function getAllAdmin($db)
+    {
+        $sql = "SELECT o.id_order, e.name, c.name, o.code, o.created_at
+        FROM orders o
+        JOIN employees e ON e.id_employee = o.id_employee
+        JOIN customers c ON c.id_customer = o.id_customer
+        WHERE
+            o.archived_at IS NULL AND
+            c.id_customer = o.id_customer
+        ORDER BY
+            o.created_at DESC;";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $temp = $stmt->fetchAll();
         return $temp;
     }
 }
