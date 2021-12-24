@@ -27,7 +27,14 @@ class Products
      */
     public static function getById($db, $id_product)
     {
-        $sql = "SELECT * FROM products WHERE deleted_at IS NULL and id_product = :id_product";
+        $sql = "SELECT p.*, r.price
+        FROM products p
+        JOIN prices r ON p.id_product = r.id_product
+        WHERE
+            p.deleted_at IS NULL AND
+            p.id_product = :id_product
+        ORDER BY r.created_at DESC
+        FETCH FIRST 1 ROWS ONLY;";
         $stmt = $db->prepare($sql);
         $stmt->bindValue(":id_product", $id_product);
         $stmt->execute();
