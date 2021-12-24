@@ -1,11 +1,11 @@
 <?php
+session_start();
 require "../connect.php";
 require "../models/customers.php";
 require "../models/orders.php";
-if ($_SERVER['REQUEST_METHOD'] != 'POST') return;
 
 // ambil data petugas
-$id_employee = intval(3);
+$id_employee = $_SESSION['employee']->ID_EMPLOYEE;
 
 // ambil data customer
 $id_customer = intval($_POST['ctx_custid']);
@@ -18,7 +18,7 @@ $order = Orders::create($db, $id_customer, $id_employee);
 // ambil informasi tentang produk
 if ($order)
 {
-    $id_order = $order['ID_order'];
+    $id_order = $order['ID_ORDER'];
     $code = $order['CODE'];
     foreach ($_POST['id_product'] as $key => $value)
     {
