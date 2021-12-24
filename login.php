@@ -1,4 +1,5 @@
 <?php
+include "connect.php";
 require "models/producttypes.php";
 $type = ProductTypes::getAll($db);
 if (!empty($_GET['status']) && $_GET["status"] == "gagal"){
