@@ -1,5 +1,7 @@
 <?php
   session_start();
+  require "models/producttypes.php";
+  $type = ProductTypes::getAll($db);
 ?> 
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
@@ -150,14 +152,11 @@
         <div id="column-left" class="col-sm-4 col-md-4 col-lg-3 ">
           <div id="category-menu" class="navbar collapse mb_40 hidden-sm-down in" aria-expanded="true" role="button">
             <div class="nav-responsive">
-              <ul class="nav  main-navigation collapse in ">
-                <li><a href="#">Anti Inflamasi</a></li>
-                <li><a href="#">Anti Septik</a></li>
-                <li><a href="#">Vitamin</a></li>
-                <li><a href="#">Alat Kesehatan</a></li>
-                <li><a href="#">Masker</a></li>
-                <li><a href="#">P3K</a></li>
-              </ul>
+              <ul class="nav  main-navigation collapse in ">  <?php 
+                    foreach ($type as $t){ 
+                      echo "<li><a href='listproducts.php?id=".$t ["ID_TYPE"]."'>".$t["TYPE"]."</a></li>";
+                    }
+                    ?> </ul>
             </div>
           </div>
           <div class="left_banner left-sidebar-widget mt_30 mb_50"> <a href="#"><img src="images/leftt 1.jpg" alt="Left Banner" class="img-responsive" /></a> </div>

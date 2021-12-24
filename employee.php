@@ -2,6 +2,8 @@
 session_start();
 include "connect.php";
 include "models/employees.php";
+require "models/producttypes.php";
+$type = ProductTypes::getAll($db);
 $employee = Employees::getAll($db);
 ?>
 
@@ -155,14 +157,11 @@ $employee = Employees::getAll($db);
         <div id="column-left" class="col-sm-4 col-md-4 col-lg-3 ">
           <div id="category-menu" class="navbar collapse in  mb_40" aria-expanded="true" role="button">
             <div class="nav-responsive">
-              <ul class="nav  main-navigation collapse in ">
-                <li><a href="#">Anti Inflamasi</a></li>
-                <li><a href="#">Anti Septik</a></li>
-                <li><a href="#">Vitamin</a></li>
-                <li><a href="#">Alat Kesehatan</a></li>
-                <li><a href="#">Masker</a></li>
-                <li><a href="#">P3K</a></li>
-              </ul>
+              <ul class="nav  main-navigation collapse in ">  <?php 
+                    foreach ($type as $t){ 
+                      echo "<li><a href='listproducts.php?id=".$t ["ID_TYPE"]."'>".$t["TYPE"]."</a></li>";
+                    }
+                    ?> </ul>
             </div>
           </div>
         </div>
