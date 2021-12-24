@@ -169,7 +169,7 @@ $type = ProductTypes::getAll($db);
             </ul>
           </div>
           <!-- =====  BREADCRUMB END===== -->
-         <a href = 'riwayattransactionssaya.php'class = 'btn'> Kembali </a> <br></br>
+         <a href = 'checkout_page.php'class = 'btn'> Kembali </a> <br></br>
           <div class="panel panel-default pull-left">
           <table class="table table-bordered table-hover">
                 <thead>
