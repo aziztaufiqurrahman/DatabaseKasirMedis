@@ -179,19 +179,22 @@ $produk= Products::getAll($db);
           </div>
           <!-- =====  BREADCRUMB END===== -->
          <a href = 'listproducts.php'class = 'btn'> Kembali </a> <br></br>
-         <form id="login-form" action="events/performlogin.php" method="post">
+         <form id="login-form" action="events/performdeleteproduct.php" method="post">
          <div class="panel panel-default pull-left">
               <div class="panel-body">
                   <div class="row">
+                  <form method="POST" action="events/performdeleteproduct.php">
                       <div class="col-md-12 no-padding mt_10">
                         <div class="col-md-12"> <center>Apakah Anda Yakin Ingin Menghapus Produk?</center></div>
                         </div>
                       </div> 
                       <br> </br>
                       <div class="col-md-12 mt_10">
-                        <a href = 'listproducts.php' class="btn pull-right"> Ya Setuju</a>
+                      <input type="hidden" name="id_product" value = "<?php echo $_GET ["id"]?>" >
+                      <button type = "submit" class="btn pull-right" id="add_product"> Ya, Setuju </button>
                       </div>
                     </div>
+                    </form>
               </div>
           </div>  
         </div>
