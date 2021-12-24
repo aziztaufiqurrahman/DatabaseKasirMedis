@@ -23,7 +23,7 @@ class Employees
         $stmt->bindValue(':id_employee', $id_employee);
         $stmt->execute();
         $temp = $stmt->fetch();
-        return json_encode($temp, JSON_NUMERIC_CHECK);
+        return $temp;
     }
     /**
      * melakukan login

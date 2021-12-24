@@ -7,7 +7,7 @@ class ProductTypes
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $rows = $stmt->fetchAll();
-        return ($rows);
+        return $rows;
     }
 }
 ?>
