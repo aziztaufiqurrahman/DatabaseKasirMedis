@@ -186,7 +186,8 @@ $produk= Products::getById($db, $id);
                   <form method="POST" action="events/performeditproduct.php">
                       <div class="col-md-12 no-padding mt_10">
                         <div class="col-md-4"><label for="nama">Nama Barang</label></div>
-                        <div class="col-md-8">
+                        <div class="col-md-8"> 
+                          <input type="hidden" name="id_product" value = "<?php echo $_GET ["id"]?>" >
                           <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan Nama Barang" value = "<?php echo $produk ["NAME"]?>">
                         </div>
                       </div> 
@@ -205,7 +206,7 @@ $produk= Products::getById($db, $id);
                         </div>
                       </div> 
                       <div class="col-md-12 mt_10">
-                        <span class="btn pull-right" id="add_product"> Edit </span>
+                        <button type = "submit" class="btn pull-right" id="add_product"> Edit </button>
                       </div>
                     </div>
                     </form>

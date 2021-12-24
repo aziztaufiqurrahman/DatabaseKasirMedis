@@ -53,7 +53,7 @@ class Products
             p.deleted_at IS NULL AND
             p.id_product = :id_product
         ORDER BY r.created_at DESC
-        FETCH FIRST 1 ROWS ONLY;";
+        FETCH FIRST 1 ROWS ONLY";
         $stmt = $db->prepare($sql);
         $stmt->bindValue(":id_product", $id_product);
         $stmt->execute();
@@ -106,7 +106,7 @@ class Products
     /**
      * hapus produk
      */
-    public function delete($db, $id_product)
+    public static function delete($db, $id_product)
     {
         $sql = "CALL softdelete_product(:id_product)";
         $stmt = $db->prepare($sql);
