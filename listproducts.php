@@ -5,8 +5,8 @@ require "models/producttypes.php";
 include "models/products.php";
 $type = ProductTypes::getAll($db);
 $produk = [];
-  if (isset ($_GET["id"])) 
-  $produk= Products::getById($db,$_GET["id"]);
+if (isset ($_GET["id"])) 
+  $produk= Products::getAllByType($db,$_GET["id"]);
 else
 $produk= Products::getAll($db);
 ?>
@@ -14,8 +14,6 @@ $produk= Products::getAll($db);
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html lang="en">
 <!--<![endif]-->
-
-
 <!-- Mirrored from html.lionode.com/healthcare/hc001/listproducts.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:02 GMT -->
 <head>
   <!-- =====  BASIC PAGE NEEDS  ===== -->
@@ -46,7 +44,6 @@ $produk= Products::getAll($db);
   <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.html">
   <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.html">
 </head>
-
 <body>
   <!-- =====  LODER  ===== -->
   <div class="loder"></div>
@@ -159,7 +156,8 @@ $produk= Products::getAll($db);
         <div id="column-left" class="col-sm-4 col-md-4 col-lg-3 ">
           <div id="category-menu" class="navbar collapse in  mb_40" aria-expanded="true" role="button">
             <div class="nav-responsive">
-              <ul class="nav  main-navigation collapse in ">  <?php 
+              <ul class="nav  main-navigation collapse in "> 
+                <?php 
                     foreach ($type as $t){ 
                       echo "<li><a href='listproducts.php?id=".$t ["ID_TYPE"]."'>".$t["TYPE"]."</a></li>";
                     }
@@ -200,7 +198,8 @@ $produk= Products::getAll($db);
             ?>
             
             
-            <?php foreach ($produk as $key) {
+            <?php
+            foreach ($produk as $key) {
             echo "<tr>";
             echo "<td>". $nomor++."</td>";
             echo "<td>". $key["NAME"]."</td>";
@@ -210,7 +209,8 @@ $produk= Products::getAll($db);
             echo "<td><a href = 'viewstocks.php?id=".$key["ID_PRODUCT"]."' > <i class = 'fa fa-eye'> </i> </a>". "</td>";
             echo "<td><a href = 'editproducts.php?id=".$key["ID_PRODUCT"]."' > <i class = 'fa fa-pencil'> </i> </a> <a href = 'deleteproducts.php?id=".$key["ID_PRODUCT"]."' > <i class = 'fa fa-trash'> </i> </a>". "</td>";
             echo "</tr>";
-            }?> 
+            }
+            ?> 
             
             </tbody>
             </table>

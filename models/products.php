@@ -22,7 +22,7 @@ class Products
         $temp = $stmt->fetchAll ();
         return $temp;
     }
-    public function getAllByType($db, $id_type)
+    public static function getAllByType($db, $id_type)
     {
         $sql = "SELECT pr.id_product, pr.name, pr.unit, pi.price, pi.created_at AS price_at, SUM(ba.stock) AS stock
         FROM products pr
