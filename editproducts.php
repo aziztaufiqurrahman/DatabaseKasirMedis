@@ -2,7 +2,8 @@
 session_start();
 include "connect.php";
 include "models/products.php";
-$produk= Products::getAll($db);
+$id = $_GET["id"];
+$produk= Products::getById($db, $id);
 ?>
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
@@ -182,40 +183,32 @@ $produk= Products::getAll($db);
           <div class="panel panel-default pull-left">
               <div class="panel-body">
                   <div class="row">
+                  <form method="POST" action="events/performeditproduct.php">
                       <div class="col-md-12 no-padding mt_10">
                         <div class="col-md-4"><label for="nama">Nama Barang</label></div>
                         <div class="col-md-8">
-                          <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan Nama Barang">
+                          <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan Nama Barang" value = "<?php echo $produk ["NAME"]?>">
                         </div>
                       </div> 
                       <br> </br>
                       <div class="col-md-12 no-padding mt_10">
                         <div class="col-md-4"><label for="unit">Unit</label></div>
                         <div class="col-md-8">
-                          <input type="text" class="form-control" name="unit" id="unit" placeholder="Masukk Unit Barang">
+                          <input type="text" class="form-control" name="unit" id="unit" placeholder="Masukk Unit Barang" value = "<?php echo $produk ["UNIT"]?>">
                         </div>
                       </div>
                       <br> </br>
                       <div class="col-md-12 no-padding mt_10">
                         <div class="col-md-4"><label for="harga">Harga</label></div>
                         <div class="col-md-8">
-                          <input type="text" class="form-control" name="harga" id="harga" placeholder="Masukkan Harga Produk">
+                          <input type="text" class="form-control" name="harga" id="harga" placeholder="Masukkan Harga Produk" value = "<?php echo $produk ["PRICE"]?>">
                         </div>
                       </div> 
-                      <div class="col-md-12 no-padding mt_10">
-                        <div class="col-md-4"><label for="tipe">Tipe Produk</label></div>
-                        <div class="col-md-8">
-                          <select class="form-control" name="tipe" id="tipe" placeholder="Masukkan Tipe Produk"> 
-                              <option value="1"> Contoh Tipe 1 </option>
-                              <option value="2"> Contoh Tipe 2</option>
-                              <option value="3"> Contoh Tipe 3</option>
-                          </select>
-                        </div>
-                      </div>
                       <div class="col-md-12 mt_10">
                         <span class="btn pull-right" id="add_product"> Edit </span>
                       </div>
                     </div>
+                    </form>
               </div>
           </div>  
         </div>
