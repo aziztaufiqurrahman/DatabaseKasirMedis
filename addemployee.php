@@ -183,6 +183,7 @@ $employee = Employees::getAll($db);
           <div class="panel panel-default pull-left">
               <div class="panel-body">
                   <div class="row">
+                  <form method="POST" action="events/performaddemployee.php">
                       <div class="col-md-12 no-padding mt_10">
                         <div class="col-md-4"><label for="nama">Nama</label></div>
                         <div class="col-md-8">
@@ -213,21 +214,22 @@ $employee = Employees::getAll($db);
                         <div class="col-md-4"><label for="role">Role</label></div>
                         <div class="col-md-8">
                           <select class="form-control" name="role" id="role" placeholder="---Diterima sebagai---"> 
-                              <option value="1">Pegawai Kasir</option>
-                              <option value="2">Manajer</option>
+                              <option value="Cashier">Pegawai Kasir</option>
+                              <option value="Manager">Manajer</option>
                           </select>
                         </div>
                       </div>
                       <div class="col-md-12 no-padding mt_10">
-                      <div class="col-md-4"><label for="ctx_custaddress">Alamat</label></div>
+                      <div class="col-md-4"><label for="address">Alamat</label></div>
                          <div class="col-md-8">
-                             <textarea class="form-control cs-textarea" name="ctx_custaddress" id="ctx_custaddress"></textarea>
+                             <textarea class="form-control cs-textarea" name="address" id="address"></textarea>
                          </div>
                      </div>
                       <div class="col-md-12 mt_10">
-                        <span class="btn pull-right" id="add_employee"> Tambah </span>
+                        <button type = "submit" class="btn pull-right" id="add_employee"> Tambah </button>
                       </div>
                     </div>
+                    </form>
               </div>
           </div>  
         </div>

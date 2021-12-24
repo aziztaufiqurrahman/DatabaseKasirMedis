@@ -29,7 +29,7 @@ class Employees
     /**
      * tambah employees
      */
-    public static function insert($db, $username, $password, $name, $role, $phone, $address)
+    public static function add($db, $username, $password, $name, $role, $phone, $address)
     {
         $sql = "CALL insert_employee(:username, standard_hash(:password, 'MD5'), :name, :role, :phone, :address)";
         $stmt = $db->prepare($sql);
