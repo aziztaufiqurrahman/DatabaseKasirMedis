@@ -4,6 +4,10 @@ include "connect.php";
 require "models/producttypes.php";
 include "models/products.php";
 $type = ProductTypes::getAll($db);
+$produk = [];
+  if (isset ($_GET["id"])) 
+  $produk= Products::getById($db,$_GET["id"]);
+else
 $produk= Products::getAll($db);
 ?>
 <!DOCTYPE html>
