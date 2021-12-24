@@ -1,8 +1,8 @@
 <?php 
 include "connect.php";
-include "models/products.php";
+include "models/orders.php";
 require "models/producttypes.php";
-$produk= Products::getAll($db);
+$order= Orders::getDetail($db,$_GET["id"]);
 $type = ProductTypes::getAll($db);
 ?>
 
@@ -174,9 +174,11 @@ $type = ProductTypes::getAll($db);
           <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                      <th>NO.</th>
+                      <th>No.</th>
                       <th>Nama Barang</th>
                       <th>Jumlah Pembelian</th>
+                      <th>Harga Jual</th>
+                      <th>Sub Total</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -184,11 +186,13 @@ $type = ProductTypes::getAll($db);
                  $nomor=1;
                 ?>
 
-            <?php foreach ($produk as $key) {
+            <?php foreach ($order as $key) {
             echo "<tr>";
             echo "<td>".$nomor++."</td>";
             echo "<td>".$key["NAME"]."</td>";
             echo "<td>".$key["AMOUNT"]."</td>";
+            echo "<td>".$key["PRICE"]."</td>";
+            echo "<td>".$key["SUBTOTAL"]."</td>";
             echo "</tr>";
             }?>
                 </tbody>
