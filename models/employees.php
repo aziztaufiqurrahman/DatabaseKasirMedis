@@ -63,7 +63,7 @@ class Employees
         $stmt->bindValue(":address", $address);
         $stmt->execute();
     }
-    public function delete($db, $id_employee)
+    public static function delete($db, $id_employee)
     {
         $sql = "CALL softdelete_employee(:id_employee)";
         $stmt = $db->prepare($sql);
