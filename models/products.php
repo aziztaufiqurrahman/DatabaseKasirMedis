@@ -51,7 +51,7 @@ class Products
     /**
      * tambah produk
      */
-    public function add($db, $id_employee, $id_type, $name, $unit, $price, $count, $expired_at)
+    public static function add($db, $id_employee, $id_type, $name, $unit, $price, $count, $expired_at)
     {
         $sql = "CALL insert_product(:id_employee, :id_type, :name, :unit, :price, :count, :expired_at)";
         $stmt = $db->prepare($sql);

@@ -162,10 +162,10 @@ $produk= Products::getAll($db);
         <div class="col-sm-8 col-md-8 col-lg-9 mtb_30">
           <!-- =====  BANNER STRAT  ===== -->
           <div class="breadcrumb ptb_20">
-            <h1>Hapus Riwayat Transaksi</h1>
+            <h1>Arsipkan Transaksi</h1>
             <ul>
               <li><a href="index.php">Halaman Utama</a></li>
-              <li class="active">Hapus Riwayat Transaksi</li>
+              <li class="active">Arsipkan Transaksi</li>
             </ul>
           </div>
           <!-- =====  BREADCRUMB END===== -->
@@ -174,7 +174,7 @@ $produk= Products::getAll($db);
               <div class="panel-body">
                   <div class="row">
                       <div class="col-md-12 no-padding mt_10">
-                        <div class="col-md-12"> <center>Apakah Anda Yakin Ingin Menghapus Riwayat Transaksi?</center></div>
+                        <div class="col-md-12"> <center>Apakah Anda Yakin Ingin Mengarsipkan Transaksi?</center></div>
                         </div>
                       </div> 
                       <br> </br>
