@@ -207,7 +207,7 @@ $employee= Employees::getById($db,$id_employee);
                       <div class="col-md-12 no-padding mt_10">
                       <div class="col-md-4"><label for="address">Alamat</label></div>
                          <div class="col-md-8">
-                             <textarea class="form-control cs-textarea" name="address" id="address"></textarea>
+                             <textarea class="form-control cs-textarea" name="address" id="address"><?php echo $employee["ADDRESS"]?></textarea>
                          </div>
                      </div>
                       <br> </br>
