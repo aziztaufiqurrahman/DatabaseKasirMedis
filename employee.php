@@ -197,7 +197,7 @@ $employee = Employees::getAll($db);
             echo "<td>". $key["ADDRESS"]. "</td>";
             echo "<td>". $key["CREATED_AT"]. "</td>";
             echo "<td>". $key["UPDATED_AT"]. "</td>";
-            echo "<td><a href = 'editemployees.php' > <i class = 'fa fa-pencil'> </i> </a> <a href = 'deleteemployees.php' > <i class = 'fa fa-trash'> </i> </a>". "</td>";
+            echo "<td><a href = 'editemployees.php?id=". $key["ID_EMPLOYEE"]. "' > <i class = 'fa fa-pencil'> </i> </a> <a href = 'deleteemployees.php?id=". $key["ID_EMPLOYEE"]. "' > <i class = 'fa fa-trash'> </i> </a>". "</td>";
             echo "</tr>";
             }?> 
 

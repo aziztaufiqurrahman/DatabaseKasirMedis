@@ -2,7 +2,8 @@
 session_start();
 include "connect.php";
 include "models/employees.php";
-$employee= Employees::getAll($db);
+$id_employee = $_GET ["id"];
+$employee= Employees::getById($db,$id_employee);
 ?>
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
@@ -182,6 +183,7 @@ $employee= Employees::getAll($db);
           <div class="panel panel-default pull-left">
               <div class="panel-body">
                   <div class="row"> 
+                  <form method="POST" action="events/performeditemployee.php">
                       <div class="col-md-12 no-padding mt_10">
                         <div class="col-md-4"><label for="username">Username</label></div>
                         <div class="col-md-8">
@@ -191,7 +193,8 @@ $employee= Employees::getAll($db);
                       <div class="col-md-12 no-padding mt_10">
                         <div class="col-md-4"><label for="nama">Nama</label></div>
                         <div class="col-md-8">
-                          <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan Nama Pegawai">
+                        <input type="hidden" name="id_employee" value = "<?php echo $_GET ["id"]?>">  
+                          <input type="text" class="form-control" name="nama" value = "<?php echo $employee ["NAME"]?>" id="nama" placeholder="Masukkan Nama Pegawai">
                         </div>
                       </div>
                       <br> </br>
@@ -203,16 +206,17 @@ $employee= Employees::getAll($db);
                       </div>
                       <br> </br>
                       <div class="col-md-12 no-padding mt_10">
-                      <div class="col-md-4"><label for="ctx_custaddress">Alamat</label></div>
+                      <div class="col-md-4"><label for="address">Alamat</label></div>
                          <div class="col-md-8">
-                             <textarea class="form-control cs-textarea" name="ctx_custaddress" id="ctx_custaddress"></textarea>
+                             <textarea class="form-control cs-textarea" name="address" id="address"></textarea>
                          </div>
                      </div>
                       <br> </br>
                       <div class="col-md-12 mt_10">
-                        <span class="btn pull-right" id="add_employee"> Edit </span>
+                        <button type = "submit" class="btn pull-right" id="edit_employee"> Edit </button>
                       </div>
                     </div>
+                    </form>
               </div>
           </div>  
         </div>
