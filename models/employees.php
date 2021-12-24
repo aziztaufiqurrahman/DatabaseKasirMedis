@@ -14,6 +14,18 @@ class Employees
         return $temp;
     }
     /**
+     * mengambil data berdasarkan id
+     */
+    public static function getById($db, $id_employee)
+    {
+        $sql = "SELECT * FROM employees WHERE id_employee = :id_employee";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id_employee', $id_employee);
+        $stmt->execute();
+        $temp = $stmt->fetch();
+        return json_encode($temp, JSON_NUMERIC_CHECK);
+    }
+    /**
      * melakukan login
      */
     public static function login($db, $username, $password)
