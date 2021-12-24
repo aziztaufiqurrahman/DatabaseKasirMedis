@@ -440,7 +440,7 @@ $(document).ready(() => {
       placeholder: 'Masukkan Nama Produk',
       ajax: {
         type: 'POST',
-        url: 'handlers/productsuggestion.php',
+        url: 'handlers/productsuggestionorder.php',
         data: function(params) {
           return {
             name: params.term
