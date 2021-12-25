@@ -1,2 +1,7 @@
-# DatabaseKasirMedis
-GitHub ini diperuntukkan untuk apa yaaaa hehe untuk tugas besar aplikasi database kasir medis 
+# A5 APOTEKita Sehat
+Tugas Besar Sistem Basis Data Semester 3 - 2021
+
+TODO:
+- Salin file config.example
+- Rename file salinan menjadi config.php
+- Isi config berdasarkan kredential pada server
