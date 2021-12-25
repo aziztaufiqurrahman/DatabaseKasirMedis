@@ -157,7 +157,8 @@ $dataTransaksi= Orders::getAll($db,$id_employee);
         <div id="column-left" class="col-sm-4 col-md-4 col-lg-3 ">
           <div id="category-menu" class="navbar collapse in  mb_40" aria-expanded="true" role="button">
             <div class="nav-responsive">
-              <ul class="nav  main-navigation collapse in ">  <?php 
+              <ul class="nav  main-navigation collapse in ">  
+                <?php 
                     foreach ($type as $t){ 
                       echo "<li><a href='listproducts.php?id=".$t ["ID_TYPE"]."'>".$t["TYPE"]."</a></li>";
                     }
@@ -203,7 +204,7 @@ $dataTransaksi= Orders::getAll($db,$id_employee);
             echo "<td>".$key["NAME"]."</td>";
             echo "<td>".$key["CODE"]."</td>";
             echo "<td>".$key["CREATED_AT"]."</td>";
-            echo "<td>Rp. "."</td>";
+            echo "<td>Rp. ".number_format($key["TOTAL"])."</td>";
             echo "<td> <a href = 'detailtransactions.php?id=".$key["ID_ORDER"]."'> <i class = 'fa fa-eye'> </i> </a>". "</td>";
             echo "</tr>";
             }?> 

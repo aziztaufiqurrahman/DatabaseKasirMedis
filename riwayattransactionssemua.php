@@ -199,12 +199,12 @@ $type = ProductTypes::getAll($db);
             <?php foreach ($dataTransaksi as $key) {
             echo "<tr>";
             echo "<td>". $nomor++."</td>";
-            echo "<td>". "</td>";
-            echo "<td>". "</td>";
-            echo "<td>". "</td>";
+            echo "<td>".$key["NAME"]. "</td>";
+            echo "<td>".$key["EMPLOYEE_NAME"]."</td>";
+            echo "<td>". $key["CODE"]."</td>";
             echo "<td>". $key["CREATED_AT"]. "</td>";
-            echo "<td>Rp. ". "</td>";
-            echo "<td><a href = 'detailtransactions.php' > <i class = 'fa fa-eye'> </i> </a> <a href = 'archiveorders.php' > <i class = 'fa fa-archive'> </i> </a>". "</td>";
+            echo "<td>Rp. ".number_format($key["TOTAL"])."</td>";
+            echo "<td><a href = 'detailtransactions.php?id=".$key["ID_ORDER"]."' > <i class = 'fa fa-eye'> </i> </a> <a href = 'archiveorders.php' > <i class = 'fa fa-archive'> </i> </a>". "</td>";
             echo "</tr>";
             }?> 
             
