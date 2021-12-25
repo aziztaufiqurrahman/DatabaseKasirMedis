@@ -220,7 +220,7 @@ if ($role != "Administrator" && $role != "Cashier") return header("location:logi
             echo "<td>".$key["CODE"]."</td>";
             echo "<td>".formatTS($key["CREATED_AT"])."</td>";
             echo "<td>Rp. ".number_format($key["TOTAL"])."</td>";
-            echo "<td> <a href = 'detailorder.php?id=".$key["ID_ORDER"]."'> <i class = 'fa fa-eye'> </i> </a>". "</td>";
+            echo "<td> <a href = 'detailorder.php?id=".$key["ID_ORDER"]."'> <i class = 'fa fa-eye'> </i> </a> <a href = 'printorder.php?id=".$key["ID_ORDER"]."' target='_blank'> <i class = 'fa fa-print'> </i> </a>". "</td>";
             echo "</tr>";
             }?> 
             </tbody>

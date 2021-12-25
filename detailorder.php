@@ -247,7 +247,10 @@ if ($role != "Administrator" && $role != "Cashier") return header("location:logi
                 </tbody>
             </table>
           </div>  
-         </div>
+          <div class="col-md-12 mt_10 no-padding">
+            <a href = "printorder.php?id=<?php echo $_GET["id"] ?>" class="btn pull-right" id="add_product">Cetak PDF</a>
+          </div>
+        </div>
         </div>
       </div>
     </div>
