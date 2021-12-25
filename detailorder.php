@@ -1,7 +1,10 @@
-<?php
+<?php 
 session_start();
 require "connect.php";
+require "models/orders.php";
 require "models/producttypes.php";
+$order= Orders::getDetail($db,$_GET["id"]);
+$nodetail = Orders::getAllForId($db, $_GET["id"]);
 $type = ProductTypes::getAll($db);
 // guard
 $role = "NONE";
@@ -10,14 +13,16 @@ if (isset($_SESSION['employee']) && !empty($_SESSION['employee']))
   $auth = $_SESSION['employee'];
   $role = $auth->ROLE;
 }
+if ($role != "Administrator" && $role != "Cashier") return header("location:login.php");
 ?>
+
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html lang="en">
 <!--<![endif]-->
 
 
-<!-- Mirrored from html.lionode.com/healthcare/hc001/ by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:44:16 GMT -->
+<!-- Mirrored from html.lionode.com/healthcare/hc001/listproducts.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:02 GMT -->
 <head>
   <!-- =====  BASIC PAGE NEEDS  ===== -->
   <meta charset="utf-8">
@@ -41,33 +46,17 @@ if (isset($_SESSION['employee']) && !empty($_SESSION['employee']))
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link rel="stylesheet" type="text/css" href="css/magnific-popup.css">
   <link rel="stylesheet" type="text/css" href="css/owl.carousel.css">
+  <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
   <link rel="shortcut icon" href="images/favicon.png">
   <link rel="apple-touch-icon" href="images/apple-touch-icon.html">
   <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.html">
   <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.html">
-  <link href="DataTables/datatables.css" rel="stylesheet">
 </head>
 
 <body>
   <!-- =====  LODER  ===== -->
   <div class="loder"></div>
   <div class="wrapper">
-    <div id="subscribe-me" class="modal animated fade in" role="dialog" data-keyboard="true" tabindex="-1">
-      <div class="newsletter-popup">
-        <img class="offer" src="images/heii.jpg" alt="offer">
-        <div class="newsletter-popup-static newsletter-popup-top">
-          <div class="popup-text">
-            <div class="popup-title">Hallo<span><br/>SEMOGA SELALU SEHAT</div>
-            <div class="popup-desc">
-              <div>Selamat Datang. <br/> Selamat Bekerja. <br/> Kerja keras. <br/> Kerja ikhlas. <br/> Kerja cerdas.<br/><br/>
-              -Kelompok 4-
-              </div>
-            </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
     <!-- =====  HEADER START  ===== -->
     <header id="header">
       <div class="header-top">
@@ -82,15 +71,7 @@ if (isset($_SESSION['employee']) && !empty($_SESSION['employee']))
             </div>
             <div class="col-sm-6">
               <ul class="header-top-right text-right">
-                <li class="account">
-                  <?php 
-                  if (!empty($_SESSION['employee'])){
-                    echo'<a href="logout.php">Keluar</a>';
-                  }else{
-                    echo'<a href="login.php">Masuk</a>';
-                  }
-                  ?>
-                </li>
+                <li class="account"><a href="login.php">Masuk</a></li>
                 <li class="sitemap"><a href="https://goo.gl/maps/t1pZEah8czZkTvxx6" target="_blank">Kampus Kita</a></li>
               </ul>
             </div>
@@ -189,144 +170,89 @@ if (isset($_SESSION['employee']) && !empty($_SESSION['employee']))
     <div class="container">
       <div class="row ">
         <div id="column-left" class="col-sm-4 col-md-4 col-lg-3 ">
-          <div id="category-menu" class="navbar collapse mb_40 hidden-sm-down in" aria-expanded="true" role="button">
+          <div id="category-menu" class="navbar collapse in  mb_40" aria-expanded="true" role="button">
             <div class="nav-responsive">
               <ul class="nav  main-navigation collapse in ">  <?php 
                     foreach ($type as $t){ 
                       echo "<li><a href='listproducts.php?id=".$t ["ID_TYPE"]."'>".$t["TYPE"]."</a></li>";
                     }
                     ?> </ul>
-              </ul>
             </div>
           </div>
           <div class="left_banner left-sidebar-widget mt_30 mb_50"> <a href="#"><img src="images/leftt 1.jpg" alt="Left Banner" class="img-responsive" /></a> </div>
           <div class="left-cms left-sidebar-widget mb_50">
+            
+          </div>
+        </div>
+        <div class="col-sm-8 col-md-8 col-lg-9 mtb_30">
+          <!-- =====  BANNER STRAT  ===== -->
+          <div class="breadcrumb ptb_20">
+            <h1>Detail Transaksi</h1>
             <ul>
-              <li>
-                <div class="feature-i-left ptb_40">
-                  <div class="icon-right Shipping"></div>
-                  <h6>Free Shipping</h6>
-                  <p>Siap Melayani Anda</p>
-                </div>
-              </li>
-              <li>
-                <div class="feature-i-left ptb_40">
-                  <div class="icon-right Order"></div>
-                  <h6>Order Online</h6>
-                  <p>Mudah Bertransaksi di Toko Kami</p>
-                </div>
-              </li>
-              <li>
-
-              </li>
-              <li>
-                <div class="feature-i-left ptb_40">
-                  <div class="icon-right Safe"></div>
-                  <h6>Safe Shoping</h6>
-                  <p>Memberikan Pelayanan Terbaik</p>
-                </div>
-              </li>
+              <li><a href="index.php">Halaman Utama</a></li>
+              <li class="active">Detail Transaksi</li>
             </ul>
           </div>
-          <div class="left-special left-sidebar-widget mb_50">
-           
-          </div>
-          
-        </div>
-        <div id="column-right" class="col-sm-8 col-md-8 col-lg-9 mtb_30">
-          <!-- =====  BANNER STRAT  ===== -->
-          <div class="banner">
-            <div class="main-banner owl-carousel">
-              <div class="item"><a href="#"><img src="images/banner utama.png" alt="Main Banner" class="img-responsive" /></a></div>
-            </div>
-          </div>
-          <!-- =====  BANNER END  ===== -->
-          <!-- =====  SUB BANNER  STRAT ===== -->
-         <div class="row">
-            <div class="col-md-12">
-              <div class="heading-part mb_20 mt_40 ">
-                <h2 class="main_title">Diagram Penjualan dan Pendapatan</h2>
-              </div>
-              <div id="p_line">
-                <div class="progress">
-                  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"> <span class="sr-only"> Harus Diisi</span> </div>
-                  <span class="progress-type">Penjualan Bulanan</span> <span class="progress-completed">Harus Diisi</span> </div>
-                <div class="progress">
-                  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"> <span class="sr-only">Harus Diisi</span> </div>
-                  <span class="progress-type">Penjualan Mingguan</span> <span class="progress-completed">Harus Diisi</span> </div>
-                <div class="progress">
-                  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%"> <span class="sr-only">Harus diisi</span> </div>
-                  <span class="progress-type">Penjualan Harian</span> <span class="progress-completed">Harus Diisi</span> </div>
-                <div class="progress">
-                  <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"> <span class="sr-only">Harus Diisi</span> </div>
-                  <span class="progress-type">Pendapatan Bulanan</span> <span class="progress-completed">Harus Diisi</span> </div>
-                <div class="progress">
-                  <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%"> <span class="sr-only">Harus diisi</span> </div>
-                  <span class="progress-type">Pendapatan Harian</span> <span class="progress-completed">Harus Diisi</span> </div>
-              </div>
-          </div>
-          <!-- =====  SUB BANNER END  ===== -->
-          <!-- =====  product end  ===== -->
-          <!-- =====  Blog ===== -->
-          <div id="Blog" class="mt_40">
-            <div class="heading-part mb_20 ">
-              <h2 class="main_title">Website Kesehatan</h2>
-            </div>
-            <div class="blog-contain box">
-              <div class="blog owl-carousel ">
-                <div class="item">
-                  <div class="box-holder">
-                    <div class="thumb post-img"><a href="https://www.alodokter.com/" target="_blank"> <img src="images/alodokter.jfif" alt="HealthCare"> </a> </div>
-                    <div class="post-info mtb_20 ">
-                      <h6 class="mb_10 text-uppercase"> <a href="https://www.alodokter.com/" target="_blank">ALODOKTER</a> </h6>
-                      <p>Platform Kesehatan Tepercaya No.1 Di Indonesia Alodokter adalah perusahaan kesehatan digital nomor satu di Indonesia dengan lebih dari 26 juta pengguna aktif setiap bulannya</p>
-                      
-                    </div>
-                  </div>
+          <!-- =====  BREADCRUMB END===== -->
+         <a href = '<?php echo (($role == "Administrator")? "histories.php" : "myorders.php") ?> ' class = 'btn'> Kembali </a> <br></br>
+         <div class="col-md-12 no-padding">
+           <div class="panel panel-default pull-left">
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-12 no-padding">
+                  <div class="col-md-4"><label for="cust">Nama Pelanggan</label></div>
+                  <div class="col-md-8"><?php echo $nodetail["NAME"] ?></div>
                 </div>
-                <div class="item">
-                  <div class="box-holder">
-                    <div class="thumb post-img"><a href="https://www.halodoc.com/" target="_blank"> <img src="images/halodoc2.jpg" alt="HealthCare"> </a></div>
-                    <div class="post-info mtb_20 ">
-                      <h6 class="mb_10 text-uppercase"> <a href="https://www.halodoc.com/" target="_blank">HALODOC</a> </h6>
-                      <p>Sebuah aplikasi platform komunikasi yang memfasilitasi interaksi antara dokter dengan pengguna memberikan kemudahan bagi masyarakat untuk menemui dokter mereka kapan saja
-                      </p>
-                
-                    </div>
-                  </div>
+                <div class="col-md-12 no-padding mt_10">
+                  <div class="col-md-4"><label for="cust">Kode Transaksi</label></div>
+                  <div class="col-md-8"><?php echo $nodetail["CODE"] ?></div>
                 </div>
-                <div class="item">
-                  <div class="box-holder">
-                    <div class="thumb post-img"><a href="https://www.klikdokter.com/" target="_blank"> <img src="images/klikdokter2.jpg" alt="HealthCare"> </a></div>
-                    <div class="post-info mtb_20 ">
-                      <h6 class="mb_10 text-uppercase"> <a href="https://www.klikdokter.com/" target="_blank">KLIK DOKTER</a> </h6>
-                      <p>Butuh informasi kesehatan yang akurat? chat bersama dokter bisa menjadi solusinya! Chat dokter seputar penyakit yang diderita untuk penanganan yang cepat dan tepat. Ibu dan Anak.
-                      </p>
-                      
-                    </div>
-                  </div>
+                <div class="col-md-12 no-padding mt_10">
+                  <div class="col-md-4"><label for="cust">Total Pembelian</label></div>
+                  <div class="col-md-8"><?php echo "Rp. ".number_format($nodetail["TOTAL"], 2, ",", ".") ?></div>
                 </div>
-                <div class="item">
-                  <div class="box-holder">
-                    <div class="thumb post-img"><a href="https://www.sehatq.com/" target="_blank"> <img src="images/sehatq2.jpg" alt="HealthCare"> </a></div>
-                    <div class="post-info mtb_20 ">
-                      <h6 class="mb_10 text-uppercase"> <a href="https://www.sehatq.com/" target="_blank">SEHAT Q</a> </h6>
-                      <p>SehatQ merupakan aplikasi yang menyediakan layanan chat dokter, booking dokter, layanan kesehatan, toko vitamin dan obat online, dan menyajikan beragam informasi seputar kesehatan.</p>
-                      
-                    </div>
-                  </div>
+                <div class="col-md-12 no-padding mt_10">
+                  <div class="col-md-4"><label for="cust">Tanggal Pembelian</label></div>
+                  <div class="col-md-8"><?php echo formatTS($nodetail["CREATED_AT"]) ?></div>
                 </div>
-                
               </div>
             </div>
-            <!-- =====  Blog end ===== -->
-          </div>
+           </div>
+         </div>
+         <div class="col-md-12 no-padding"><div class="panel panel-default pull-left">
+          <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                      <th>No</th>
+                      <th>Nama Barang</th>
+                      <th>Jumlah Pembelian</th>
+                      <th>Harga Terjual</th>
+                      <th>Sub Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+              <?php
+                $nomor=1;
+              ?>
+
+              <?php foreach ($order as $key) {
+              echo "<tr>";
+              echo "<td>".$nomor++."</td>";
+              echo "<td>".$key["NAME"]."</td>";
+              echo "<td>".$key["AMOUNT"]."</td>";
+              echo "<td>Rp. ".number_format($key["PRICE"],2,",",".")."</td>";
+              echo "<td>Rp. ".number_format($key["SUBTOTAL"],2,",",".")."</td>";
+              echo "</tr>";
+              }?>
+                </tbody>
+            </table>
+          </div>  
+         </div>
         </div>
       </div>
     </div>
     <!-- =====  CONTAINER END  ===== -->
     <!-- =====  FOOTER START  ===== -->
-  </div>
     <div class="footer pt_30">
       <div class="container">
         <div class="row">
@@ -351,7 +277,6 @@ if (isset($_SESSION['employee']) && !empty($_SESSION['employee']))
         </div>
       </div>
     </div>
-    
     <!-- =====  FOOTER END  ===== -->
   </div>
   <a id="scrollup">Scroll</a>
@@ -359,10 +284,25 @@ if (isset($_SESSION['employee']) && !empty($_SESSION['employee']))
   <script src="js/owl.carousel.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/jquery.magnific-popup.js"></script>
-  <script src="js/jquery.firstVisitPopup.js"></script>
   <script src="js/custom.js"></script>
+  <script src="js/jquery-ui.js"></script>
+  <script>
+  $(function() {
+    $("#slider-range").slider({
+      range: true,
+      min: 0,
+      max: 500,
+      values: [75, 300],
+      slide: function(event, ui) {
+        $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+      }
+    });
+    $("#amount").val("$" + $("#slider-range").slider("values", 0) +
+      " - $" + $("#slider-range").slider("values", 1));
+  });
+  </script>
 </body>
 
 
-<!-- Mirrored from html.lionode.com/healthcare/hc001/ by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:46:19 GMT -->
+<!-- Mirrored from html.lionode.com/healthcare/hc001/listproducts.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:03 GMT -->
 </html>

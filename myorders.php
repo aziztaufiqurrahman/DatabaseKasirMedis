@@ -1,11 +1,19 @@
 <?php 
 session_start();
-include "connect.php";
-include "models/orders.php";
+require "connect.php";
+require "models/orders.php";
 require "models/producttypes.php";
 $id_employee=$_SESSION["employee"]->ID_EMPLOYEE;
 $type = ProductTypes::getAll($db);
 $dataTransaksi= Orders::getAll($db,$id_employee);
+// guard
+$role = "NONE";
+if (isset($_SESSION['employee']) && !empty($_SESSION['employee']))
+{
+  $auth = $_SESSION['employee'];
+  $role = $auth->ROLE;
+}
+if ($role != "Administrator" && $role != "Cashier") return header("location:login.php");
 ?> 
 
 <!DOCTYPE html>
@@ -56,23 +64,14 @@ $dataTransaksi= Orders::getAll($db,$id_employee);
           <div class="row">
             <div class="col-sm-6">
               <ul class="header-top-left">
-                <li class="language dropdown"> <span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button"> <img src="images/Indonesia.gif" alt="img"> Indonesia <span class="caret"></span> </span>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="#"><img src="images/Indonesia.gif" alt="img"> Indonesia</a></li>
-                  </ul>
+                <?php
+                if ($role != "NONE") echo $role.", <b>".$auth->NAME."</b> (@".$auth->USERNAME.")";
+                ?>
               </ul>
             </div>
             <div class="col-sm-6">
               <ul class="header-top-right text-right">
-              <li class="account">
-                <?php 
-                  if (!empty($_SESSION['employee'])){
-                    echo'<a href="logout.php">Keluar</a>';
-                  }else{
-                    echo'<a href="login.php">Masuk</a>';
-                  }
-                ?>
-              </li>
+                <li class="account"><a href="login.php">Masuk</a></li>
                 <li class="sitemap"><a href="https://goo.gl/maps/t1pZEah8czZkTvxx6" target="_blank">Kampus Kita</a></li>
               </ul>
             </div>
@@ -104,12 +103,28 @@ $dataTransaksi= Orders::getAll($db,$id_employee);
             </div>
             <div class="collapse navbar-collapse js-navbar-collapse pull-right">
               <ul id="menu" class="nav navbar-nav">
-                <li> <a href="index.php">Halaman Utama</a></li>
-                <li> <a href="listproducts.php">Daftar Produk</a></li>
-                <li> <a href="checkout_page.php">Riwayat Transaksi</a></li>
-                <li> <a href="orders.php">Transaksi</a></li>
-                <li> <a href="employee.php">Kelola Pegawai</a></li>
-                <li> <a href="about-us.php">Tentang Kami</a></li>
+              <?php
+                echo "<li><a href='index.php'>Utama</a></li>";
+                if ($role == "Cashier")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                  echo "<li><a href='orders.php'>Transaksi</a></li>";
+                  echo "<li><a href='myorders.php'>Riwayat Transaksi</a></li>";
+                }
+                else if ($role == "Manager")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                }
+                else if ($role == "Administrator")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                  echo "<li><a href='orders.php'>Transaksi</a></li>";
+                  echo "<li><a href='histories.php'>Riwayat Transaksi</a></li>";
+                  echo "<li><a href='employee.php'>Kelola Pegawai</a></li>";
+                }
+                if ($role != "NONE") echo "<li><a href='accounts.php'>Profil</a></li>";
+                echo "<li><a href='about-us.php'>Tentang Kami</a></li>";
+              ?>
               </ul>
             </div>
             <!-- /.nav-collapse -->
@@ -180,7 +195,7 @@ $dataTransaksi= Orders::getAll($db,$id_employee);
             </ul>
           </div>
           <!-- =====  BREADCRUMB END===== -->
-          <a href = 'checkout_page.php' class = 'btn'> Kembali </a> <br></br>
+          <a href = 'histories.php' class = 'btn'> Kembali </a> <br></br>
           <table class="table table-bordered table-hover">  
             <thead>
             <tr>
@@ -203,9 +218,9 @@ $dataTransaksi= Orders::getAll($db,$id_employee);
             echo "<td>". $nomor++."</td>";
             echo "<td>".$key["NAME"]."</td>";
             echo "<td>".$key["CODE"]."</td>";
-            echo "<td>".$key["CREATED_AT"]."</td>";
+            echo "<td>".formatTS($key["CREATED_AT"])."</td>";
             echo "<td>Rp. ".number_format($key["TOTAL"])."</td>";
-            echo "<td> <a href = 'detailtransactions.php?id=".$key["ID_ORDER"]."'> <i class = 'fa fa-eye'> </i> </a>". "</td>";
+            echo "<td> <a href = 'detailorder.php?id=".$key["ID_ORDER"]."'> <i class = 'fa fa-eye'> </i> </a>". "</td>";
             echo "</tr>";
             }?> 
             </tbody>

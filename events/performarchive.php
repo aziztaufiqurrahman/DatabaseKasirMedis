@@ -6,5 +6,5 @@ require "../models/orders.php";
 $id_order = $_POST["id_order"];
 
 Orders::archive($db, $id_order);
-return header("location:../riwayattransactionssemua.php");
+return header("location:../allorders.php");
 ?>

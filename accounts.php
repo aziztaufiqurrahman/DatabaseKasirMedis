@@ -1,12 +1,23 @@
 <?php 
 session_start();
-include "connect.php";
+require "connect.php";
+require "models/employees.php";
 require "models/producttypes.php";
-include "models/products.php";
-include "models/batches.php";
 $type = ProductTypes::getAll($db);
-$produk = Products::getById($db,$_GET["id"]);
-$batch = Batches::view($db, $_GET["id"]);
+// guard
+$role = "NONE";
+if (isset($_SESSION['employee']) && !empty($_SESSION['employee']))
+{
+  $auth = $_SESSION['employee'];
+  $role = $auth->ROLE;
+}
+if ($role == "NONE") return header("location:login.php");
+$employee= Employees::getById($db, $auth->ID_EMPLOYEE);
+if (isset($_GET['status']))
+{
+  if (intval($_GET['status']) == 0) echo "<script>alert('Gagal memperbarui profil');</script>";
+  else echo "<script>alert('Berhasil memperbarui profil');</script>";
+}
 ?>
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
@@ -56,10 +67,9 @@ $batch = Batches::view($db, $_GET["id"]);
           <div class="row">
             <div class="col-sm-6">
               <ul class="header-top-left">
-                <li class="language dropdown"> <span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button"> <img src="images/Indonesia.gif" alt="img"> Indonesia <span class="caret"></span> </span>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="#"><img src="images/Indonesia.gif" alt="img"> Indonesia</a></li>
-                  </ul>
+                <?php
+                if ($role != "NONE") echo $role.", <b>".$auth->NAME."</b> (@".$auth->USERNAME.")";
+                ?>
               </ul>
             </div>
             <div class="col-sm-6">
@@ -72,7 +82,7 @@ $batch = Batches::view($db, $_GET["id"]);
                     echo'<a href="login.php">Masuk</a>';
                   }
                 ?>
-                </li>
+              </li>
                 <li class="sitemap"><a href="https://goo.gl/maps/t1pZEah8czZkTvxx6" target="_blank">Kampus Kita</a></li>
               </ul>
             </div>
@@ -104,12 +114,28 @@ $batch = Batches::view($db, $_GET["id"]);
             </div>
             <div class="collapse navbar-collapse js-navbar-collapse pull-right">
               <ul id="menu" class="nav navbar-nav">
-                <li> <a href="index.php">Halaman Utama</a></li>
-                <li> <a href="listproducts.php">Daftar Produk</a></li>
-                <li> <a href="checkout_page.php">Riwayat Transaksi</a></li>
-                <li> <a href="orders.php">Transaksi</a></li>
-                <li> <a href="employee.php">Kelola Pegawai</a></li>
-                <li> <a href="about-us.php">Tentang Kami</a></li>
+              <?php
+                echo "<li><a href='index.php'>Utama</a></li>";
+                if ($role == "Cashier")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                  echo "<li><a href='orders.php'>Transaksi</a></li>";
+                  echo "<li><a href='myorders.php'>Riwayat Transaksi</a></li>";
+                }
+                else if ($role == "Manager")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                }
+                else if ($role == "Administrator")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                  echo "<li><a href='orders.php'>Transaksi</a></li>";
+                  echo "<li><a href='histories.php'>Riwayat Transaksi</a></li>";
+                  echo "<li><a href='employee.php'>Kelola Pegawai</a></li>";
+                }
+                if ($role != "NONE") echo "<li><a href='accounts.php'>Profil</a></li>";
+                echo "<li><a href='about-us.php'>Tentang Kami</a></li>";
+              ?>
               </ul>
             </div>
             <!-- /.nav-collapse -->
@@ -172,46 +198,49 @@ $batch = Batches::view($db, $_GET["id"]);
         <div class="col-sm-8 col-md-8 col-lg-9 mtb_30">
           <!-- =====  BANNER STRAT  ===== -->
           <div class="breadcrumb ptb_20">
-            <h1>Detail Produk</h1>
+            <h1>Profil</h1>
             <ul>
               <li><a href="index.php">Halaman Utama</a></li>
-              <li class="active">Detail Produk</li>
+              <li class="active">Profil</li>
             </ul>
           </div>
           <!-- =====  BREADCRUMB END===== -->
-         <a href = 'listproducts.php'class = 'btn'> Kembali </a> <br></br>
           <div class="panel panel-default pull-left">
               <div class="panel-body">
-                  <div class="row">
-                  <form  action="events/performaddstock.php" method="post" >
+                  <div class="row"> 
+                  <form method="POST" action="events/performeditaccount.php">
                       <div class="col-md-12 no-padding mt_10">
-                        <div class="col-md-4"><label for="nama">Nama Barang</label></div>
-                        <div class="col-md-8"> <?php echo $produk ["NAME"]?>
-                        </div>
+                        <div class="col-md-4"><label for="username">Username</label></div>
+                        <div class="col-md-8"><?php echo "@".$auth->USERNAME ?></div>
                       </div> 
                       <br> </br>
-                      <table class="table table-bordered table-hover">
-                      <thead>
-                      <tr>
-                      <th><center>NO.</center></th>
-                      <th><center>Stock</center></th>
-                      <th><center>Tanggal Kadaluarsa</center></th>
-                      </tr>
-                      </thead>
-                      <tbody>
-                        <?php 
-                        $i = 1;
-                        foreach ($batch as $batch){
-                          echo "<tr>";
-                          echo "<td>".($i++)."</td>";
-                          echo "<td>".($batch["STOCK"])."</td>";
-                          echo "<td>".($batch["EXPIRED_AT"])."</td>";
-                          echo "</tr>";
-                        }
-                        ?>
-                      </tbody>
-                      </table>
+                      <div class="col-md-12 no-padding mt_10">
+                        <div class="col-md-4"><label for="nama">Nama</label></div>
+                        <div class="col-md-8"><input type="text" class="form-control" name="nama" value = "<?php echo $employee ["NAME"]?>" id="nama" placeholder="Masukkan Nama Pegawai" required></div>
+                      </div>
                       <br> </br>
+                      <div class="col-md-12 no-padding mt_10">
+                        <div class="col-md-4"><label for="password">Password</label></div>
+                        <div class="col-md-8">
+                          <input type="password" class="form-control" name="password" id="password" placeholder="Masukkan Password baru Anda" required>
+                        </div>
+                      </div>
+                      <br> </br>
+                      <div class="col-md-12 no-padding mt_10">
+                      <div class="col-md-4"><label for="address">Alamat</label></div>
+                         <div class="col-md-8">
+                             <textarea class="form-control cs-textarea" name="address" id="address" required><?php echo $employee["ADDRESS"]?></textarea>
+                         </div>
+                     </div>
+                     <br />
+                     <div class="col-md-12 no-padding mt_10">
+                        <div class="col-md-4"><label for="username">No. Telepon</label></div>
+                        <div class="col-md-8"><?php echo $employee["PHONE"]; ?></div>
+                      </div> 
+                      <br> </br>
+                      <div class="col-md-12 mt_10">
+                        <button type = "submit" class="btn pull-right" id="edit_employee">Simpan</button>
+                      </div>
                     </div>
                     </form>
               </div>

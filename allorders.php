@@ -1,11 +1,19 @@
 <?php 
 session_start();
-include "connect.php";
-include "models/orders.php";
+require "connect.php";
+require "models/orders.php";
 require "models/producttypes.php";
-$order= Orders::getDetail($db,$_GET["id"]);
+$dataTransaksi= Orders::getAllAdmin($db);
 $type = ProductTypes::getAll($db);
-?>
+// guard
+$role = "NONE";
+if (isset($_SESSION['employee']) && !empty($_SESSION['employee']))
+{
+  $auth = $_SESSION['employee'];
+  $role = $auth->ROLE;
+}
+if ($role != "Administrator") return header("location:login.php");
+?> 
 
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
@@ -55,23 +63,14 @@ $type = ProductTypes::getAll($db);
           <div class="row">
             <div class="col-sm-6">
               <ul class="header-top-left">
-                <li class="language dropdown"> <span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button"> <img src="images/Indonesia.gif" alt="img"> Indonesia <span class="caret"></span> </span>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="#"><img src="images/Indonesia.gif" alt="img"> Indonesia</a></li>
-                  </ul>
+                <?php
+                if ($role != "NONE") echo $role.", <b>".$auth->NAME."</b> (@".$auth->USERNAME.")";
+                ?>
               </ul>
             </div>
             <div class="col-sm-6">
               <ul class="header-top-right text-right">
-              <li class="account">
-                <?php 
-                  if (!empty($_SESSION['employee'])){
-                    echo'<a href="logout.php">Keluar</a>';
-                  }else{
-                    echo'<a href="login.php">Masuk</a>';
-                  }
-                ?>
-              </li>
+                <li class="account"><a href="login.php">Masuk</a></li>
                 <li class="sitemap"><a href="https://goo.gl/maps/t1pZEah8czZkTvxx6" target="_blank">Kampus Kita</a></li>
               </ul>
             </div>
@@ -103,12 +102,28 @@ $type = ProductTypes::getAll($db);
             </div>
             <div class="collapse navbar-collapse js-navbar-collapse pull-right">
               <ul id="menu" class="nav navbar-nav">
-                <li> <a href="index.php">Halaman Utama</a></li>
-                <li> <a href="listproducts.php">Daftar Produk</a></li>
-                <li> <a href="checkout_page.php">Riwayat Transaksi</a></li>
-                <li> <a href="orders.php">Transaksi</a></li>
-                <li> <a href="employee.php">Kelola Pegawai</a></li>
-                <li> <a href="about-us.php">Tentang Kami</a></li>
+              <?php
+                echo "<li><a href='index.php'>Utama</a></li>";
+                if ($role == "Cashier")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                  echo "<li><a href='orders.php'>Transaksi</a></li>";
+                  echo "<li><a href='myorders.php'>Riwayat Transaksi</a></li>";
+                }
+                else if ($role == "Manager")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                }
+                else if ($role == "Administrator")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                  echo "<li><a href='orders.php'>Transaksi</a></li>";
+                  echo "<li><a href='histories.php'>Riwayat Transaksi</a></li>";
+                  echo "<li><a href='employee.php'>Kelola Pegawai</a></li>";
+                }
+                if ($role != "NONE") echo "<li><a href='accounts.php'>Profil</a></li>";
+                echo "<li><a href='about-us.php'>Tentang Kami</a></li>";
+              ?>
               </ul>
             </div>
             <!-- /.nav-collapse -->
@@ -171,42 +186,47 @@ $type = ProductTypes::getAll($db);
         <div class="col-sm-8 col-md-8 col-lg-9 mtb_30">
           <!-- =====  BANNER STRAT  ===== -->
           <div class="breadcrumb ptb_20">
-            <h1>Detail Transaksi</h1>
+            <h1>Riwayat Transaksi</h1>
             <ul>
               <li><a href="index.php">Halaman Utama</a></li>
-              <li class="active">Detail Transaksi</li>
+              <li class="active">Riwayat Transaksi</li>
             </ul>
           </div>
           <!-- =====  BREADCRUMB END===== -->
-         <a href = 'checkout_page.php'class = 'btn'> Kembali </a> <br></br>
-          <div class="panel panel-default pull-left">
+          <a href = 'histories.php' class = 'btn'> Kembali </a> <br></br>
           <table class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                      <th>No.</th>
-                      <th>Nama Barang</th>
-                      <th>Jumlah Pembelian</th>
-                      <th>Harga Jual</th>
-                      <th>Sub Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <?php
-                 $nomor=1;
-                ?>
-
-            <?php foreach ($order as $key) {
+            <thead>
+            <tr>
+            <th>No</th>
+            <th>Nama Pelanggan</th>
+            <th>Nama Kasir</th>
+            <th>Kode Transaksi</th>
+            <th>Tanggal Pembelian</th>
+            <th>Total Belanja</th>
+            <th>Aksi</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            $nomor=1;
+            ?>
+            
+            
+            <?php foreach ($dataTransaksi as $key) {
             echo "<tr>";
-            echo "<td>".$nomor++."</td>";
-            echo "<td>".$key["NAME"]."</td>";
-            echo "<td>".$key["AMOUNT"]."</td>";
-            echo "<td>".$key["PRICE"]."</td>";
-            echo "<td>".$key["SUBTOTAL"]."</td>";
+            echo "<td>". $nomor++."</td>";
+            echo "<td>".$key["NAME"]. "</td>";
+            echo "<td>".$key["EMPLOYEE_NAME"]."</td>";
+            echo "<td>". $key["CODE"]."</td>";
+            echo "<td>". formatTS($key["CREATED_AT"]). "</td>";
+            echo "<td>Rp. ".number_format($key["TOTAL"], 2, ",", ".")."</td>";
+            echo "<td><a href = 'detailorder.php?id=".$key["ID_ORDER"]."' > <i class = 'fa fa-eye'> </i> </a> <a href = 'archiveorders.php' > <i class = 'fa fa-archive'> </i> </a>". "</td>";
             echo "</tr>";
-            }?>
-                </tbody>
+            }?> 
+            
+            </tbody>
             </table>
-          </div>  
+            
         </div>
       </div>
     </div>

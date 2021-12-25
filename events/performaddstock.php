@@ -3,7 +3,6 @@ session_start();
 require "../connect.php"; 
 require "../models/products.php";
 require "../models/procurements.php";
-if ($_SERVER['REQUEST_METHOD'] != 'POST') return;
 
 $id_employee = $_SESSION['employee']->ID_EMPLOYEE;
 $proc = Procurements::add($db, $id_employee);

@@ -1,11 +1,19 @@
 <?php 
 session_start();
-include "connect.php";
-include "models/employees.php";
+require "connect.php";
+require "models/employees.php";
 require "models/producttypes.php";
 $id_employee = $_GET ["id"];
 $type = ProductTypes::getAll($db);
 $employee= Employees::getById($db,$id_employee);
+// guard
+$role = "NONE";
+if (isset($_SESSION['employee']) && !empty($_SESSION['employee']))
+{
+  $auth = $_SESSION['employee'];
+  $role = $auth->ROLE;
+}
+if ($role != "Administrator") return header("location:login.php");
 ?>
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
@@ -55,10 +63,9 @@ $employee= Employees::getById($db,$id_employee);
           <div class="row">
             <div class="col-sm-6">
               <ul class="header-top-left">
-                <li class="language dropdown"> <span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button"> <img src="images/Indonesia.gif" alt="img"> Indonesia <span class="caret"></span> </span>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="#"><img src="images/Indonesia.gif" alt="img"> Indonesia</a></li>
-                  </ul>
+                <?php
+                if ($role != "NONE") echo $role.", <b>".$auth->NAME."</b> (@".$auth->USERNAME.")";
+                ?>
               </ul>
             </div>
             <div class="col-sm-6">
@@ -103,12 +110,28 @@ $employee= Employees::getById($db,$id_employee);
             </div>
             <div class="collapse navbar-collapse js-navbar-collapse pull-right">
               <ul id="menu" class="nav navbar-nav">
-                <li> <a href="index.php">Halaman Utama</a></li>
-                <li> <a href="listproducts.php">Daftar Produk</a></li>
-                <li> <a href="checkout_page.php">Riwayat Transaksi</a></li>
-                <li> <a href="orders.php">Transaksi</a></li>
-                <li> <a href="employee.php">Kelola Pegawai</a></li>
-                <li> <a href="about-us.php">Tentang Kami</a></li>
+              <?php
+                echo "<li><a href='index.php'>Utama</a></li>";
+                if ($role == "Cashier")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                  echo "<li><a href='orders.php'>Transaksi</a></li>";
+                  echo "<li><a href='myorders.php'>Riwayat Transaksi</a></li>";
+                }
+                else if ($role == "Manager")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                }
+                else if ($role == "Administrator")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                  echo "<li><a href='orders.php'>Transaksi</a></li>";
+                  echo "<li><a href='histories.php'>Riwayat Transaksi</a></li>";
+                  echo "<li><a href='employee.php'>Kelola Pegawai</a></li>";
+                }
+                if ($role != "NONE") echo "<li><a href='accounts.php'>Profil</a></li>";
+                echo "<li><a href='about-us.php'>Tentang Kami</a></li>";
+              ?>
               </ul>
             </div>
             <!-- /.nav-collapse -->
@@ -185,8 +208,7 @@ $employee= Employees::getById($db,$id_employee);
                   <form method="POST" action="events/performeditemployee.php">
                       <div class="col-md-12 no-padding mt_10">
                         <div class="col-md-4"><label for="username">Username</label></div>
-                        <div class="col-md-8">
-                        </div>
+                        <div class="col-md-8"><?php echo "@".$employee["USERNAME"]; ?></div>
                       </div> 
                       <br> </br>
                       <div class="col-md-12 no-padding mt_10">
@@ -200,7 +222,7 @@ $employee= Employees::getById($db,$id_employee);
                       <div class="col-md-12 no-padding mt_10">
                         <div class="col-md-4"><label for="password">Password</label></div>
                         <div class="col-md-8">
-                          <input type="password" class="form-control" name="password" id="password" placeholder="Masukk Password baru Anda">
+                          <input type="password" class="form-control" name="password" id="password" placeholder="Masukkan Password baru Anda">
                         </div>
                       </div>
                       <br> </br>
@@ -210,6 +232,11 @@ $employee= Employees::getById($db,$id_employee);
                              <textarea class="form-control cs-textarea" name="address" id="address"><?php echo $employee["ADDRESS"]?></textarea>
                          </div>
                      </div>
+                     <br />
+                     <div class="col-md-12 no-padding mt_10">
+                        <div class="col-md-4"><label for="username">No. Telepon</label></div>
+                        <div class="col-md-8"><?php echo $employee["PHONE"]; ?></div>
+                      </div> 
                       <br> </br>
                       <div class="col-md-12 mt_10">
                         <button type = "submit" class="btn pull-right" id="edit_employee"> Edit </button>

@@ -1,5 +1,5 @@
 <?php
-include "config.php";
+require "config.php";
 
 $opt = [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -29,6 +29,11 @@ function pretty($arr)
 function formatdate($date)
 {
     return date("Y-m-d H:i:s",strtotime($date));
+}
+function formatTS($timestampString)
+{
+    $date = DateTime::createFromFormat("d#M#y H#i#s*A", $timestampString);
+    return $date->format('d-m-Y H:i:s');
 }
 
 ?>

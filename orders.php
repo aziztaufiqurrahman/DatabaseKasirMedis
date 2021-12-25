@@ -1,13 +1,21 @@
 <?php
 session_start();
-include "connect.php";
+require "connect.php";
 require "models/producttypes.php";
 $type = ProductTypes::getAll($db);
 if (isset($_GET['ctx']))
 {
   if (strlen($_GET['ctx']) > 1) echo "<script>alert('Transaksi jual beli berhasil dilakukan, Kode: ".$_GET['ctx']."');</script>";
   else echo "<script>alert('Transaksi jual beli gagal');</script>";
-} 
+}
+// guard
+$role = "NONE";
+if (isset($_SESSION['employee']) && !empty($_SESSION['employee']))
+{
+  $auth = $_SESSION['employee'];
+  $role = $auth->ROLE;
+}
+if ($role != "Administrator" && $role != "Cashier") return header("location:login.php");
 ?>
 
 <!DOCTYPE html>
@@ -78,10 +86,9 @@ if (isset($_GET['ctx']))
           <div class="row">
             <div class="col-sm-6">
               <ul class="header-top-left">
-                <li class="language dropdown"> <span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button"> <img src="images/Indonesia.gif" alt="img"> Indonesia <span class="caret"></span> </span>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="#"><img src="images/Indonesia.gif" alt="img"> Indonesia</a></li>
-                  </ul>
+                <?php
+                if ($role != "NONE") echo $role.", <b>".$auth->NAME."</b> (@".$auth->USERNAME.")";
+                ?>
               </ul>
             </div>
             <div class="col-sm-6">
@@ -110,12 +117,28 @@ if (isset($_GET['ctx']))
             </div>
             <div class="collapse navbar-collapse js-navbar-collapse pull-right">
               <ul id="menu" class="nav navbar-nav">
-                <li> <a href="index.php">Halaman Utama</a></li>
-                <li> <a href="listproducts.php">Daftar Produk</a></li>
-                <li> <a href="checkout_page.php">Riwayat Transaksi</a></li>
-                <li> <a href="orders.php">Transaksi</a></li>
-                <li> <a href="employee.php">Kelola Pegawai</a></li>
-                <li> <a href="about-us.php">Tentang Kami</a></li>
+              <?php
+                echo "<li><a href='index.php'>Utama</a></li>";
+                if ($role == "Cashier")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                  echo "<li><a href='orders.php'>Transaksi</a></li>";
+                  echo "<li><a href='myorders.php'>Riwayat Transaksi</a></li>";
+                }
+                else if ($role == "Manager")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                }
+                else if ($role == "Administrator")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                  echo "<li><a href='orders.php'>Transaksi</a></li>";
+                  echo "<li><a href='histories.php'>Riwayat Transaksi</a></li>";
+                  echo "<li><a href='employee.php'>Kelola Pegawai</a></li>";
+                }
+                if ($role != "NONE") echo "<li><a href='accounts.php'>Profil</a></li>";
+                echo "<li><a href='about-us.php'>Tentang Kami</a></li>";
+              ?>
               </ul>
             </div>
             <!-- /.nav-collapse -->
@@ -217,7 +240,7 @@ if (isset($_GET['ctx']))
               <table class="table table-bordered" id="cs-ordertb">
                 <thead>
                   <tr>
-                    <th class="text-center" style="width: 5%;">No.</th>
+                    <th class="text-center" style="width: 5%;">No</th>
                     <!-- <th class="text-center" style="width: 15%;">Gambar</th> -->
                     <th class="text-center" style="width: 35%;">Nama Produk</th>
                     <th class="text-center" style="width: 5%;">Jumlah</th>

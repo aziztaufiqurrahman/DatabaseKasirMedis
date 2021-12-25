@@ -1,16 +1,28 @@
-<?php
-  session_start();
-  include "connect.php";
-  require "models/producttypes.php";
-  $type = ProductTypes::getAll($db);
-?> 
+<?php 
+session_start();
+require "connect.php";
+require "models/producttypes.php";
+require "models/products.php";
+require "models/batches.php";
+$type = ProductTypes::getAll($db);
+$produk = Products::getById($db,$_GET["id"]);
+$batch = Batches::view($db, $_GET["id"]);
+// guard
+$role = "NONE";
+if (isset($_SESSION['employee']) && !empty($_SESSION['employee']))
+{
+  $auth = $_SESSION['employee'];
+  $role = $auth->ROLE;
+}
+if ($role != "Administrator" && $role != "Manager" && $role != "Cashier") return header("location:login.php");
+?>
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html lang="en">
 <!--<![endif]-->
 
 
-<!-- Mirrored from html.lionode.com/healthcare/hc001/checkout_page.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:07 GMT -->
+<!-- Mirrored from html.lionode.com/healthcare/hc001/listproducts.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:02 GMT -->
 <head>
   <!-- =====  BASIC PAGE NEEDS  ===== -->
   <meta charset="utf-8">
@@ -52,22 +64,21 @@
           <div class="row">
             <div class="col-sm-6">
               <ul class="header-top-left">
-                <li class="language dropdown"> <span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button"> <img src="images/Indonesia.gif" alt="img"> Indonesia <span class="caret"></span> </span>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="#"><img src="images/Indonesia.gif" alt="img"> Indonesia</a></li>
-                  </ul>
+                <?php
+                if ($role != "NONE") echo $role.", <b>".$auth->NAME."</b> (@".$auth->USERNAME.")";
+                ?>
               </ul>
             </div>
             <div class="col-sm-6">
               <ul class="header-top-right text-right">
-                <li class="account">
-                  <?php 
+              <li class="account">
+                <?php 
                   if (!empty($_SESSION['employee'])){
                     echo'<a href="logout.php">Keluar</a>';
                   }else{
                     echo'<a href="login.php">Masuk</a>';
                   }
-                  ?>
+                ?>
                 </li>
                 <li class="sitemap"><a href="https://goo.gl/maps/t1pZEah8czZkTvxx6" target="_blank">Kampus Kita</a></li>
               </ul>
@@ -100,12 +111,28 @@
             </div>
             <div class="collapse navbar-collapse js-navbar-collapse pull-right">
               <ul id="menu" class="nav navbar-nav">
-                <li> <a href="index.php">Halaman Utama</a></li>
-                <li> <a href="listproducts.php">Daftar Produk</a></li>
-                <li> <a href="checkout_page.php">Riwayat Transaksi</a></li>
-                <li> <a href="orders.php">Transaksi</a></li>
-                <li> <a href="employee.php">Kelola Pegawai</a></li>
-                <li> <a href="about-us.php">Tentang Kami</a></li>
+              <?php
+                echo "<li><a href='index.php'>Utama</a></li>";
+                if ($role == "Cashier")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                  echo "<li><a href='orders.php'>Transaksi</a></li>";
+                  echo "<li><a href='myorders.php'>Riwayat Transaksi</a></li>";
+                }
+                else if ($role == "Manager")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                }
+                else if ($role == "Administrator")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                  echo "<li><a href='orders.php'>Transaksi</a></li>";
+                  echo "<li><a href='histories.php'>Riwayat Transaksi</a></li>";
+                  echo "<li><a href='employee.php'>Kelola Pegawai</a></li>";
+                }
+                if ($role != "NONE") echo "<li><a href='accounts.php'>Profil</a></li>";
+                echo "<li><a href='about-us.php'>Tentang Kami</a></li>";
+              ?>
               </ul>
             </div>
             <!-- /.nav-collapse -->
@@ -151,7 +178,7 @@
     <div class="container">
       <div class="row ">
         <div id="column-left" class="col-sm-4 col-md-4 col-lg-3 ">
-          <div id="category-menu" class="navbar collapse mb_40 hidden-sm-down in" aria-expanded="true" role="button">
+          <div id="category-menu" class="navbar collapse in  mb_40" aria-expanded="true" role="button">
             <div class="nav-responsive">
               <ul class="nav  main-navigation collapse in ">  <?php 
                     foreach ($type as $t){ 
@@ -162,56 +189,69 @@
           </div>
           <div class="left_banner left-sidebar-widget mt_30 mb_50"> <a href="#"><img src="images/leftt 1.jpg" alt="Left Banner" class="img-responsive" /></a> </div>
           <div class="left-cms left-sidebar-widget mb_50">
-            <ul>
-              <li>
-                <div class="feature-i-left ptb_40">
-                  <div class="icon-right Shipping"></div>
-                  <h6>Free Shipping</h6>
-                  <p>Siap Melayani Anda</p>
-                </div>
-              </li>
-              <li>
-                <div class="feature-i-left ptb_40">
-                  <div class="icon-right Order"></div>
-                  <h6>Order Online</h6>
-                  <p>Mudah Bertransaksi di Toko Kami</p>
-                </div>
-              </li>
-              <li>
-
-              </li>
-              <li>
-                <div class="feature-i-left ptb_40">
-                  <div class="icon-right Safe"></div>
-                  <h6>Safe Shoping</h6>
-                  <p>Memberikan Pelayanan Terbaik</p>
-                </div>
-              </li>
-            </ul>
+            
           </div>
-          <div class="left-special left-sidebar-widget mb_50">
-           
-          </div>
-          
         </div>
-        <div id="column-right" class="col-sm-8 col-md-8 col-lg-9 mtb_30">
+        <div class="col-sm-8 col-md-8 col-lg-9 mtb_30">
           <!-- =====  BANNER STRAT  ===== -->
           <div class="breadcrumb ptb_20">
-            <h1>Riwayat Transaksi</h1>
+            <h1>Detail Produk</h1>
             <ul>
               <li><a href="index.php">Halaman Utama</a></li>
-              <li class="active">Riwayat Transaksi</li>
+              <li class="active">Detail Produk</li>
             </ul>
           </div>
           <!-- =====  BREADCRUMB END===== -->
-          <center>
-          <a href = 'riwayattransactionssaya.php' class = 'btn'> Riwayat Transaksi Saya </a> 
-          <a href = 'riwayattransactionssemua.php' class = 'btn'> Riwayat Transaksi Semua </a> <br></br>
-          </center>
-          
-        </div>
+         <a href = 'listproducts.php'class = 'btn'> Kembali </a> <br></br>
+         <div class="col-md-12 no-padding">
+           <div class="panel panel-default pull-left">
+             <div class="panel-body">
+               <div class="row">
+                 <div class="col-md-12 no-padding">
+                   <div class="col-md-4"><label for="nama">Nama Produk</label></div>
+                   <div class="col-md-8"><?php echo $produk["NAME"] ?></div>
+                 </div>
+                 <div class="col-md-12 no-padding mt_10">
+                   <div class="col-md-4"><label for="nama">Unit</label></div>
+                   <div class="col-md-8"><?php echo $produk["UNIT"] ?></div>
+                 </div>
+                 <div class="col-md-12 no-padding mt_10">
+                   <div class="col-md-4"><label for="nama">Harga</label></div>
+                   <div class="col-md-8"><?php echo "Rp. ".number_format($produk["PRICE"], 2, ".", ",") ?></div>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+         <div class="col-md-12 no-padding"><div class="panel panel-default pull-left">
+          <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                      <th><center>No</center></th>
+                      <th><center>Tanggal Kadaluwarsa</center></th>
+                      <th><center>Jumlah Stok</center></th>
+                      <th><center>Keterangan</center></th>
+                    </tr>
+                </thead>
+                <tbody>
+              <?php
+                $nomor=1;
+              ?>
+
+              <?php foreach ($batch as $key) {
+              echo "<tr>";
+              echo "<td><center>".$nomor++."</center></td>";
+              echo "<td>".formatTS($key["EXPIRED_AT"])."</td>";
+              echo "<td><center>".$key["STOCK"]."</center></td>";
+              echo "<td><center>".($key["STOCK"] == 0? "Sudah Habis" : "Tersedia")."</center></td>";
+              echo "</tr>";
+              }?>
+                </tbody>
+            </table>
+          </div>  
+         </div>
+         </div>
       </div>
-      
     </div>
     <!-- =====  CONTAINER END  ===== -->
     <!-- =====  FOOTER START  ===== -->
@@ -239,7 +279,6 @@
         </div>
       </div>
     </div>
-    </div>
     <!-- =====  FOOTER END  ===== -->
   </div>
   <a id="scrollup">Scroll</a>
@@ -248,28 +287,24 @@
   <script src="js/bootstrap.min.js"></script>
   <script src="js/jquery.magnific-popup.js"></script>
   <script src="js/custom.js"></script>
-  <script type="text/javascript">
-  $('input[name=\'payment_address\']').on('change', function() {
-    if (this.value == 'new') {
-      $('#payment-existing').hide();
-      $('#payment-new').show();
-    } else {
-      $('#payment-existing').show();
-      $('#payment-new').hide();
-    }
-  });
-  $('input[name=\'shipping_address\']').on('change', function() {
-    if (this.value == 'new') {
-      $('#shipping-existing').hide();
-      $('#shipping-new').show();
-    } else {
-      $('#shipping-existing').show();
-      $('#shipping-new').hide();
-    }
+  <script src="js/jquery-ui.js"></script>
+  <script>
+  $(function() {
+    $("#slider-range").slider({
+      range: true,
+      min: 0,
+      max: 500,
+      values: [75, 300],
+      slide: function(event, ui) {
+        $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+      }
+    });
+    $("#amount").val("$" + $("#slider-range").slider("values", 0) +
+      " - $" + $("#slider-range").slider("values", 1));
   });
   </script>
 </body>
 
 
-<!-- Mirrored from html.lionode.com/healthcare/hc001/checkout_page.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:07 GMT -->
+<!-- Mirrored from html.lionode.com/healthcare/hc001/listproducts.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:03 GMT -->
 </html>

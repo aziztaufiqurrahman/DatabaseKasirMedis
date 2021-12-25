@@ -1,7 +1,15 @@
 <?php
-  session_start();
-  require "models/producttypes.php";
-  $type = ProductTypes::getAll($db);
+session_start();
+require "connect.php";
+require "models/producttypes.php";
+$type = ProductTypes::getAll($db);
+// guard
+$role = "NONE";
+if (isset($_SESSION['employee']) && !empty($_SESSION['employee']))
+{
+  $auth = $_SESSION['employee'];
+  $role = $auth->ROLE;
+}
 ?>
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
@@ -50,10 +58,9 @@
           <div class="row">
             <div class="col-sm-6">
               <ul class="header-top-left">
-                <li class="language dropdown"> <span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button"> <img src="images/Indonesia.gif" alt="img"> Indonesia <span class="caret"></span> </span>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="#"><img src="images/Indonesia.gif" alt="img"> Indonesia</a></li>
-                  </ul>
+                <?php
+                if ($role != "NONE") echo $role.", <b>".$auth->NAME."</b> (@".$auth->USERNAME.")";
+                ?>
               </ul>
             </div>
             <div class="col-sm-6">
@@ -98,12 +105,28 @@
             </div>
             <div class="collapse navbar-collapse js-navbar-collapse pull-right">
               <ul id="menu" class="nav navbar-nav">
-                <li> <a href="index.php">Halaman Utama</a></li>
-                <li> <a href="listproducts.php">Daftar Produk</a></li>
-                <li> <a href="checkout_page.php">Riwayat Transaksi</a></li>
-                <li> <a href="orders.php">Transaksi</a></li>
-                <li> <a href="employee.php">Kelola Pegawai</a></li>
-                <li> <a href="about-us.php">Tentang Kami</a></li>
+              <?php
+                echo "<li><a href='index.php'>Utama</a></li>";
+                if ($role == "Cashier")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                  echo "<li><a href='orders.php'>Transaksi</a></li>";
+                  echo "<li><a href='myorders.php'>Riwayat Transaksi</a></li>";
+                }
+                else if ($role == "Manager")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                }
+                else if ($role == "Administrator")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                  echo "<li><a href='orders.php'>Transaksi</a></li>";
+                  echo "<li><a href='histories.php'>Riwayat Transaksi</a></li>";
+                  echo "<li><a href='employee.php'>Kelola Pegawai</a></li>";
+                }
+                if ($role != "NONE") echo "<li><a href='accounts.php'>Profil</a></li>";
+                echo "<li><a href='about-us.php'>Tentang Kami</a></li>";
+              ?>
               </ul>
             </div>
             <!-- /.nav-collapse -->
@@ -169,10 +192,10 @@
             <div class="col-md-12">
               <div class="about-text">
                 <div class="about-heading-wrap">
-                  <h2 class="about-heading mb_20 mt_40 ptb_10">Website <span>Kasir Medis </span></h2>
+                  <h2 class="about-heading mb_20 mt_40 ptb_10">Website <span>APOTEKita Sehat</span></h2>
                 </div>
                 <p>
-                  Website Kasir Medis merupakan website yang dirancang untuk membantu proses transaksi dari pembelian obat-obatan yang tersedia dalam aplikasi. Pada aplikasi ini ketersediaan berbagai kebutuhan konsumen untuk jenis obat-obatan serta alat medis lainnya seperti masker, P3K, antiseptik dan lain-lain disesuaikan dengan stok yang masih tersedia di toko medis.
+                  Merupakan website yang dirancang untuk membantu proses transaksi dari pembelian obat-obatan yang tersedia dalam aplikasi. Pada aplikasi ini ketersediaan berbagai kebutuhan konsumen untuk jenis obat-obatan serta alat medis lainnya seperti masker, P3K, antiseptik dan lain-lain disesuaikan dengan stok yang masih tersedia di toko medis.
                 </p>
                 <br />
                 <a class="btn" href="index.php" class="btn mt_30">Buka Website</a>
@@ -200,11 +223,11 @@
                 <div class="team-item-img"> <img src="images/ihsan.png" alt="" /> </div>
                 <div class="team-designation mt_20">Ihsan</div>
                 <h4 class="team-title  mtb_10">Ihsan Fauzan Hanif</h4>
-                <p>Lorem ipsum dolor sit amet, sea in odio erat, volumu Clita prodesset Rem ipsum dolor s..</p>
+                <p>Ihsan, menyukai pemrograman, coding, scripting, dsb.</p>
                 <ul class="social mt_20 mb_80">
                   <li><a href="https://www.github.com/Zlarex" target="_blank"><i class="fa fa-github"></i></a></li>
-                  <li><a href="https://www.twitter.com/" target="_blank"><i class="fa fa-twitter"></i></a></li>
-                  <li><a href="https://www.dribbble.com/" target="_blank"><i class="fa fa-dribbble"></i></a></li>
+                  <li><a href="https://www.instagram.com/ihsanfauzaan" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                  <li><a href="https://www.facebook.com/ihsanfauzanhanif" target="_blank"><i class="fa fa-facebook"></i></a></li>
                 </ul>
               </div>
               <div class="item team-detail">

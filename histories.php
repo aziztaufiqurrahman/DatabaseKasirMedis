@@ -1,19 +1,24 @@
-<?php 
+<?php
 session_start();
-include "connect.php";
-include "models/orders.php";
+require "connect.php";
 require "models/producttypes.php";
-$dataTransaksi= Orders::getAllAdmin($db);
 $type = ProductTypes::getAll($db);
+// guard
+$role = "NONE";
+if (isset($_SESSION['employee']) && !empty($_SESSION['employee']))
+{
+  $auth = $_SESSION['employee'];
+  $role = $auth->ROLE;
+}
+if ($role != "Administrator") return header("location:login.php");
 ?> 
-
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html lang="en">
 <!--<![endif]-->
 
 
-<!-- Mirrored from html.lionode.com/healthcare/hc001/listproducts.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:02 GMT -->
+<!-- Mirrored from html.lionode.com/healthcare/hc001/histories.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:07 GMT -->
 <head>
   <!-- =====  BASIC PAGE NEEDS  ===== -->
   <meta charset="utf-8">
@@ -55,23 +60,22 @@ $type = ProductTypes::getAll($db);
           <div class="row">
             <div class="col-sm-6">
               <ul class="header-top-left">
-                <li class="language dropdown"> <span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button"> <img src="images/Indonesia.gif" alt="img"> Indonesia <span class="caret"></span> </span>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="#"><img src="images/Indonesia.gif" alt="img"> Indonesia</a></li>
-                  </ul>
+                <?php
+                if ($role != "NONE") echo $role.", <b>".$auth->NAME."</b> (@".$auth->USERNAME.")";
+                ?>
               </ul>
             </div>
             <div class="col-sm-6">
               <ul class="header-top-right text-right">
-              <li class="account">
-                <?php 
+                <li class="account">
+                  <?php 
                   if (!empty($_SESSION['employee'])){
                     echo'<a href="logout.php">Keluar</a>';
                   }else{
                     echo'<a href="login.php">Masuk</a>';
                   }
-                ?>
-              </li>
+                  ?>
+                </li>
                 <li class="sitemap"><a href="https://goo.gl/maps/t1pZEah8czZkTvxx6" target="_blank">Kampus Kita</a></li>
               </ul>
             </div>
@@ -103,12 +107,28 @@ $type = ProductTypes::getAll($db);
             </div>
             <div class="collapse navbar-collapse js-navbar-collapse pull-right">
               <ul id="menu" class="nav navbar-nav">
-                <li> <a href="index.php">Halaman Utama</a></li>
-                <li> <a href="listproducts.php">Daftar Produk</a></li>
-                <li> <a href="checkout_page.php">Riwayat Transaksi</a></li>
-                <li> <a href="orders.php">Transaksi</a></li>
-                <li> <a href="employee.php">Kelola Pegawai</a></li>
-                <li> <a href="about-us.php">Tentang Kami</a></li>
+              <?php
+                echo "<li><a href='index.php'>Utama</a></li>";
+                if ($role == "Cashier")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                  echo "<li><a href='orders.php'>Transaksi</a></li>";
+                  echo "<li><a href='myorders.php'>Riwayat Transaksi</a></li>";
+                }
+                else if ($role == "Manager")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                }
+                else if ($role == "Administrator")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                  echo "<li><a href='orders.php'>Transaksi</a></li>";
+                  echo "<li><a href='histories.php'>Riwayat Transaksi</a></li>";
+                  echo "<li><a href='employee.php'>Kelola Pegawai</a></li>";
+                }
+                if ($role != "NONE") echo "<li><a href='accounts.php'>Profil</a></li>";
+                echo "<li><a href='about-us.php'>Tentang Kami</a></li>";
+              ?>
               </ul>
             </div>
             <!-- /.nav-collapse -->
@@ -154,7 +174,7 @@ $type = ProductTypes::getAll($db);
     <div class="container">
       <div class="row ">
         <div id="column-left" class="col-sm-4 col-md-4 col-lg-3 ">
-          <div id="category-menu" class="navbar collapse in  mb_40" aria-expanded="true" role="button">
+          <div id="category-menu" class="navbar collapse mb_40 hidden-sm-down in" aria-expanded="true" role="button">
             <div class="nav-responsive">
               <ul class="nav  main-navigation collapse in ">  <?php 
                     foreach ($type as $t){ 
@@ -165,10 +185,39 @@ $type = ProductTypes::getAll($db);
           </div>
           <div class="left_banner left-sidebar-widget mt_30 mb_50"> <a href="#"><img src="images/leftt 1.jpg" alt="Left Banner" class="img-responsive" /></a> </div>
           <div class="left-cms left-sidebar-widget mb_50">
-            
+            <ul>
+              <li>
+                <div class="feature-i-left ptb_40">
+                  <div class="icon-right Shipping"></div>
+                  <h6>Free Shipping</h6>
+                  <p>Siap Melayani Anda</p>
+                </div>
+              </li>
+              <li>
+                <div class="feature-i-left ptb_40">
+                  <div class="icon-right Order"></div>
+                  <h6>Order Online</h6>
+                  <p>Mudah Bertransaksi di Toko Kami</p>
+                </div>
+              </li>
+              <li>
+
+              </li>
+              <li>
+                <div class="feature-i-left ptb_40">
+                  <div class="icon-right Safe"></div>
+                  <h6>Safe Shoping</h6>
+                  <p>Memberikan Pelayanan Terbaik</p>
+                </div>
+              </li>
+            </ul>
           </div>
+          <div class="left-special left-sidebar-widget mb_50">
+           
+          </div>
+          
         </div>
-        <div class="col-sm-8 col-md-8 col-lg-9 mtb_30">
+        <div id="column-right" class="col-sm-8 col-md-8 col-lg-9 mtb_30">
           <!-- =====  BANNER STRAT  ===== -->
           <div class="breadcrumb ptb_20">
             <h1>Riwayat Transaksi</h1>
@@ -178,42 +227,14 @@ $type = ProductTypes::getAll($db);
             </ul>
           </div>
           <!-- =====  BREADCRUMB END===== -->
-          <a href = 'checkout_page.php' class = 'btn'> Kembali </a> <br></br>
-          <table class="table table-bordered table-hover">
-            <thead>
-            <tr>
-            <th>No</th>
-            <th>Nama Pelanggan</th>
-            <th>Nama Kasir</th>
-            <th>Kode Transaksi</th>
-            <th>Tanggal Pembelian</th>
-            <th>Total Belanja</th>
-            <th>Aksi</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            $nomor=1;
-            ?>
-            
-            
-            <?php foreach ($dataTransaksi as $key) {
-            echo "<tr>";
-            echo "<td>". $nomor++."</td>";
-            echo "<td>".$key["NAME"]. "</td>";
-            echo "<td>".$key["EMPLOYEE_NAME"]."</td>";
-            echo "<td>". $key["CODE"]."</td>";
-            echo "<td>". $key["CREATED_AT"]. "</td>";
-            echo "<td>Rp. ".number_format($key["TOTAL"])."</td>";
-            echo "<td><a href = 'detailtransactions.php?id=".$key["ID_ORDER"]."' > <i class = 'fa fa-eye'> </i> </a> <a href = 'archiveorders.php?id=".$key["ID_ORDER"]."' > <i class = 'fa fa-archive'> </i> </a>". "</td>";
-            echo "</tr>";
-            }?> 
-            
-            </tbody>
-            </table>
-            
+          <center>
+          <a href = 'myorders.php' class = 'btn'> Riwayat Transaksi Saya </a> 
+          <a href = 'allorders.php' class = 'btn'> Riwayat Transaksi Semua </a> <br></br>
+          </center>
+          
         </div>
       </div>
+      
     </div>
     <!-- =====  CONTAINER END  ===== -->
     <!-- =====  FOOTER START  ===== -->
@@ -241,6 +262,7 @@ $type = ProductTypes::getAll($db);
         </div>
       </div>
     </div>
+    </div>
     <!-- =====  FOOTER END  ===== -->
   </div>
   <a id="scrollup">Scroll</a>
@@ -249,24 +271,28 @@ $type = ProductTypes::getAll($db);
   <script src="js/bootstrap.min.js"></script>
   <script src="js/jquery.magnific-popup.js"></script>
   <script src="js/custom.js"></script>
-  <script src="js/jquery-ui.js"></script>
-  <script>
-  $(function() {
-    $("#slider-range").slider({
-      range: true,
-      min: 0,
-      max: 500,
-      values: [75, 300],
-      slide: function(event, ui) {
-        $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
-      }
-    });
-    $("#amount").val("$" + $("#slider-range").slider("values", 0) +
-      " - $" + $("#slider-range").slider("values", 1));
+  <script type="text/javascript">
+  $('input[name=\'payment_address\']').on('change', function() {
+    if (this.value == 'new') {
+      $('#payment-existing').hide();
+      $('#payment-new').show();
+    } else {
+      $('#payment-existing').show();
+      $('#payment-new').hide();
+    }
+  });
+  $('input[name=\'shipping_address\']').on('change', function() {
+    if (this.value == 'new') {
+      $('#shipping-existing').hide();
+      $('#shipping-new').show();
+    } else {
+      $('#shipping-existing').show();
+      $('#shipping-new').hide();
+    }
   });
   </script>
 </body>
 
 
-<!-- Mirrored from html.lionode.com/healthcare/hc001/listproducts.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:03 GMT -->
+<!-- Mirrored from html.lionode.com/healthcare/hc001/histories.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Nov 2021 01:47:07 GMT -->
 </html>

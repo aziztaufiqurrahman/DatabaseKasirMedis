@@ -1,10 +1,18 @@
 <?php 
 session_start();
-include "connect.php";
-include "models/employees.php";
+require "connect.php";
+require "models/employees.php";
 require "models/producttypes.php";
 $type = ProductTypes::getAll($db);
 $employee = Employees::getAll($db);
+// guard
+$role = "NONE";
+if (isset($_SESSION['employee']) && !empty($_SESSION['employee']))
+{
+  $auth = $_SESSION['employee'];
+  $role = $auth->ROLE;
+}
+if ($role != "Administrator") return header("location:login.php");
 ?>
 
 <!DOCTYPE html>
@@ -56,10 +64,9 @@ $employee = Employees::getAll($db);
           <div class="row">
             <div class="col-sm-6">
               <ul class="header-top-left">
-                <li class="language dropdown"> <span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button"> <img src="images/Indonesia.gif" alt="img"> Indonesia <span class="caret"></span> </span>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="#"><img src="images/Indonesia.gif" alt="img"> Indonesia</a></li>
-                  </ul>
+                <?php
+                if ($role != "NONE") echo $role.", <b>".$auth->NAME."</b> (@".$auth->USERNAME.")";
+                ?>
               </ul>
             </div>
             <div class="col-sm-6">
@@ -104,12 +111,28 @@ $employee = Employees::getAll($db);
             </div>
             <div class="collapse navbar-collapse js-navbar-collapse pull-right">
               <ul id="menu" class="nav navbar-nav">
-                <li> <a href="index.php">Halaman Utama</a></li>
-                <li> <a href="listproducts.php">Daftar Produk</a></li>
-                <li> <a href="checkout_page.php">Riwayat Transaksi</a></li>
-                <li> <a href="orders.php">Transaksi</a></li>
-                <li> <a href="employee.php">Kelola Pegawai</a></li>
-                <li> <a href="about-us.php">Tentang Kami</a></li>
+              <?php
+                echo "<li><a href='index.php'>Utama</a></li>";
+                if ($role == "Cashier")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                  echo "<li><a href='orders.php'>Transaksi</a></li>";
+                  echo "<li><a href='myorders.php'>Riwayat Transaksi</a></li>";
+                }
+                else if ($role == "Manager")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                }
+                else if ($role == "Administrator")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                  echo "<li><a href='orders.php'>Transaksi</a></li>";
+                  echo "<li><a href='histories.php'>Riwayat Transaksi</a></li>";
+                  echo "<li><a href='employee.php'>Kelola Pegawai</a></li>";
+                }
+                if ($role != "NONE") echo "<li><a href='accounts.php'>Profil</a></li>";
+                echo "<li><a href='about-us.php'>Tentang Kami</a></li>";
+              ?>
               </ul>
             </div>
             <!-- /.nav-collapse -->
@@ -170,15 +193,13 @@ $employee = Employees::getAll($db);
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                      <th>NO.</th>
-                      <th>USERNAME</th>
-                      <th width="400px">NAMA</th>
-                      <th>ROLE</th>
-                      <th>NO HP</th>
-                      <th width="600px">ALAMAT</th>
-                      <th width="700px">DITERIMA</th>
-                      <th width="900px">DIPERBAHARUI</th>
-                      <th>ACTION</th>
+                      <th>No</th>
+                      <th>Username</th>
+                      <th>Nama Lengkap</th>
+                      <th>Role</th>
+                      <th>Waktu dibuat</th>
+                      <th>Waktu diperbarui</th>
+                      <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -189,13 +210,11 @@ $employee = Employees::getAll($db);
             <?php foreach ($employee as $key) {
             echo "<tr>";
             echo "<td>".$nomor++."</td>";
-            echo "<td>".$key["USERNAME"]."</td>";
+            echo "<td>@".$key["USERNAME"]."</td>";
             echo "<td>". $key["NAME"]."</td>";
             echo "<td>". $key["ROLE"]."</td>";
-            echo "<td>". $key["PHONE"]. "</td>";
-            echo "<td>". $key["ADDRESS"]. "</td>";
-            echo "<td>". $key["CREATED_AT"]. "</td>";
-            echo "<td>". $key["UPDATED_AT"]. "</td>";
+            echo "<td>". formatTS($key["CREATED_AT"]). "</td>";
+            echo "<td>". formatTS($key["UPDATED_AT"]). "</td>";
             echo "<td><a href = 'editemployees.php?id=". $key["ID_EMPLOYEE"]. "' > <i class = 'fa fa-pencil'> </i> </a> <a href = 'deleteemployees.php?id=". $key["ID_EMPLOYEE"]. "' > <i class = 'fa fa-trash'> </i> </a>". "</td>";
             echo "</tr>";
             }?> 

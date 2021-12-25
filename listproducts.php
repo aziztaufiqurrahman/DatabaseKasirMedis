@@ -1,14 +1,22 @@
 <?php 
 session_start();
-include "connect.php";
+require "connect.php";
 require "models/producttypes.php";
-include "models/products.php";
+require "models/products.php";
 $type = ProductTypes::getAll($db);
 $produk = [];
 if (isset ($_GET["id"])) 
   $produk= Products::getAllByType($db,$_GET["id"]);
 else
 $produk= Products::getAll($db);
+// guard
+$role = "NONE";
+if (isset($_SESSION['employee']) && !empty($_SESSION['employee']))
+{
+  $auth = $_SESSION['employee'];
+  $role = $auth->ROLE;
+}
+if ($role != "Administrator" && $role != "Manager" && $role != "Cashier") return header("location:login.php");
 ?>
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
@@ -55,10 +63,9 @@ $produk= Products::getAll($db);
           <div class="row">
             <div class="col-sm-6">
               <ul class="header-top-left">
-                <li class="language dropdown"> <span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button"> <img src="images/Indonesia.gif" alt="img"> Indonesia <span class="caret"></span> </span>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="#"><img src="images/Indonesia.gif" alt="img"> Indonesia</a></li>
-                  </ul>
+                <?php
+                if ($role != "NONE") echo $role.", <b>".$auth->NAME."</b> (@".$auth->USERNAME.")";
+                ?>
               </ul>
             </div>
             <div class="col-sm-6">
@@ -103,12 +110,28 @@ $produk= Products::getAll($db);
             </div>
             <div class="collapse navbar-collapse js-navbar-collapse pull-right">
               <ul id="menu" class="nav navbar-nav">
-                <li> <a href="index.php">Halaman Utama</a></li>
-                <li> <a href="listproducts.php">Daftar Produk</a></li>
-                <li> <a href="checkout_page.php">Riwayat Transaksi</a></li>
-                <li> <a href="orders.php">Transaksi</a></li>
-                <li> <a href="employee.php">Kelola Pegawai</a></li>
-                <li> <a href="about-us.php">Tentang Kami</a></li>
+              <?php
+                echo "<li><a href='index.php'>Utama</a></li>";
+                if ($role == "Cashier")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                  echo "<li><a href='orders.php'>Transaksi</a></li>";
+                  echo "<li><a href='myorders.php'>Riwayat Transaksi</a></li>";
+                }
+                else if ($role == "Manager")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                }
+                else if ($role == "Administrator")
+                {
+                  echo "<li><a href='listproducts.php'>Daftar Produk</a></li>";
+                  echo "<li><a href='orders.php'>Transaksi</a></li>";
+                  echo "<li><a href='histories.php'>Riwayat Transaksi</a></li>";
+                  echo "<li><a href='employee.php'>Kelola Pegawai</a></li>";
+                }
+                if ($role != "NONE") echo "<li><a href='accounts.php'>Profil</a></li>";
+                echo "<li><a href='about-us.php'>Tentang Kami</a></li>";
+              ?>
               </ul>
             </div>
             <!-- /.nav-collapse -->
@@ -178,9 +201,14 @@ $produk= Products::getAll($db);
               <li class="active">Daftar Produk</li>
             </ul>
           </div>
+          <?php
+          if ($role == "Manager" || $role == "Administrator")
+          {
+            echo "<a href = 'addproducts.php' class = 'btn'>Tambah Produk</a>&nbsp;";
+            echo "<a href = 'procurements.php' class = 'btn'>Tambah Stok</a> <br></br>";
+          }
+          ?>
           <!-- =====  BREADCRUMB END===== -->
-          <a href = 'addproducts.php' class = 'btn'>Tambah Produk</a>
-          <a href = 'procurements.php' class = 'btn'>Tambah Stok</a> <br></br>
           <table class="table table-bordered table-hover">
             <thead>
             <tr>
@@ -188,8 +216,10 @@ $produk= Products::getAll($db);
             <th>Nama</th>
             <th>Unit</th>
             <th>Harga</th>
-            <th colspan="2">Stock</th>
-            <th>Aksi</th>
+            <th colspan = '2'>Stok</th>
+            <?php
+            if ($role == "Manager" || $role == "Administrator") echo "<th>Aksi</th>";
+            ?>
             </tr>
             </thead>
             <tbody>
@@ -206,8 +236,8 @@ $produk= Products::getAll($db);
             echo "<td>". $key["UNIT"]. "</td>";
             echo "<td>Rp. ". number_format($key["PRICE"],2,",","."). "</td>";
             echo "<td>". $key["STOCK"]."</td>";
-            echo "<td><a href = 'viewstocks.php?id=".$key["ID_PRODUCT"]."' > <i class = 'fa fa-eye'> </i> </a>". "</td>";
-            echo "<td><a href = 'editproducts.php?id=".$key["ID_PRODUCT"]."' > <i class = 'fa fa-pencil'> </i> </a> <a href = 'deleteproducts.php?id=".$key["ID_PRODUCT"]."' > <i class = 'fa fa-trash'> </i> </a>". "</td>";
+            echo "<td><a href = 'detailstock.php?id=".$key["ID_PRODUCT"]."' > <i class = 'fa fa-eye'> </i> </a>". "</td>";
+            if ($role == "Manager" || $role == "Administrator") echo "<td><a href = 'editproducts.php?id=".$key["ID_PRODUCT"]."' > <i class = 'fa fa-pencil'> </i> </a> <a href = 'deleteproducts.php?id=".$key["ID_PRODUCT"]."' > <i class = 'fa fa-trash'> </i> </a>". "</td>";
             echo "</tr>";
             }
             ?> 

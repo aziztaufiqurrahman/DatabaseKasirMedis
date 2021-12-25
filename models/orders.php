@@ -107,6 +107,36 @@ class Orders
         $temp = $stmt->fetchAll();
         return $temp;
     }
+    public static function getAllForId($db, $id_order)
+    {
+        $riwayat = "WITH res AS 
+        (
+            SELECT o.id_order, d.id_product, o.id_employee, o.code, e.name AS employee_name, c.name as customer_name, pro.name, d.amount, p.price,p.price * d.amount AS subtotal, ROW_NUMBER() OVER (
+                PARTITION BY d.id_order, d.id_product ORDER BY p.created_at DESC
+            ) AS order_price, p.created_at AS price_at, o.created_at, o.archived_at
+            FROM details d
+            JOIN orders o ON d.id_order = o.id_order
+            JOIN prices p ON d.id_product = p.id_product
+            JOIN products pro ON pro.id_product = d.id_product
+            JOIN employees e ON o.id_employee = e.id_employee
+            JOIN customers c ON c.id_customer = o.id_customer
+            WHERE
+                o.created_at > p.created_at
+        )
+        SELECT id_order, id_employee, employee_name, customer_name as name, code, created_at, SUM(subtotal) AS total
+        FROM res
+        WHERE
+            order_price = 1 AND
+            archived_at IS NULL AND
+            id_order = :id_order
+        GROUP BY id_order, id_employee, employee_name, customer_name, code, created_at
+        ORDER BY created_at DESC";
+        $stmt = $db->prepare($riwayat);
+        $stmt->bindValue(":id_order", $id_order);
+        $stmt->execute();
+        $temp = $stmt->fetch();
+        return $temp;
+    }
     /**
      * mendapatkan daftar order untuk admin
      */
