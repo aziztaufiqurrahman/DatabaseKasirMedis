@@ -62,7 +62,15 @@ $type = ProductTypes::getAll($db);
             </div>
             <div class="col-sm-6">
               <ul class="header-top-right text-right">
-                <li class="account"><a href="login.php">Masuk</a></li>
+              <li class="account">
+                <?php 
+                  if (!empty($_SESSION['employee'])){
+                    echo'<a href="logout.php">Keluar</a>';
+                  }else{
+                    echo'<a href="login.php">Masuk</a>';
+                  }
+                ?>
+              </li>
                 <li class="sitemap"><a href="https://goo.gl/maps/t1pZEah8czZkTvxx6" target="_blank">Kampus Kita</a></li>
               </ul>
             </div>
