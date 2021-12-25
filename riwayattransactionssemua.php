@@ -1,4 +1,5 @@
 <?php 
+session_start();
 include "connect.php";
 include "models/orders.php";
 require "models/producttypes.php";
