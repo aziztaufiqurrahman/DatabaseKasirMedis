@@ -187,8 +187,20 @@ if ($role != "Administrator") return header("location:login.php");
                     ?> </ul>
             </div>
           </div>
+          <div class="left_banner left-sidebar-widget mt_30 mb_50"> <a href="#"><img src="images/leftt 1.jpg" alt="Left Banner" class="img-responsive" /></a> </div>
+          <div class="left-cms left-sidebar-widget mb_50">
+        </div>
         </div>
         <div class="col-sm-8 col-md-8 col-lg-9 mtb_30">
+          <!-- =====  BANNER STRAT  ===== -->
+          <div class="breadcrumb ptb_20">
+            <h1>Kelola Pegawai</h1>
+            <ul>
+              <li><a href="index.php">Halaman Utama</a></li>
+              <li class="active">Kelola Pegawai</li>
+            </ul>
+          </div>
+          <!-- =====  BREADCRUMB END===== -->
         <a href = 'addemployee.php' class = 'btn'> Tambah Pegawai </a> <br></br>
             <table class="table table-bordered table-hover">
                 <thead>

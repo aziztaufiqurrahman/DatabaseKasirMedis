@@ -113,5 +113,17 @@ class Products
         $stmt->bindValue(":id_product", $id_product);
         $stmt->execute();
     }
+    /**
+     * menghitung total produk
+     */
+    public static function count($db)
+    {
+        $sql = "SELECT * FROM view_totalproducts";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        return intval($row['TOTAL_PRODUCTS']);  
+    }
+    
 }
 ?>

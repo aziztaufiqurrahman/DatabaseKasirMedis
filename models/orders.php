@@ -209,5 +209,28 @@ class Orders
         $stmt->bindValue(":id_order", $id_order);
         $stmt->execute();
     }
+    /**
+     * menghitung total pendapatan dalam sebulan
+     */
+    public static function getIncomeForThisMonth($db)
+    {
+        $sql = "SELECT * FROM view_totalincome";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        return intval($row['TOTAL']);  
+    }
+    /**
+     * menghitung total transaksi
+     */
+    public static function count($db)
+    {
+        $sql = "SELECT * FROM view_totalorders";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        return intval($row['TOTAL_ORDERS']);  
+    }
+    
 }
 ?>

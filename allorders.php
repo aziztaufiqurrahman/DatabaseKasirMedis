@@ -220,7 +220,7 @@ if ($role != "Administrator") return header("location:login.php");
             echo "<td>". $key["CODE"]."</td>";
             echo "<td>". formatTS($key["CREATED_AT"]). "</td>";
             echo "<td>Rp. ".number_format($key["TOTAL"], 2, ",", ".")."</td>";
-            echo "<td><a href = 'detailorder.php?id=".$key["ID_ORDER"]."' > <i class = 'fa fa-eye'> </i> </a> <a href = 'archiveorders.php' > <i class = 'fa fa-archive'> </i> </a>". "</td>";
+            echo "<td><a href = 'detailorder.php?id=".$key["ID_ORDER"]."' > <i class = 'fa fa-eye'> </i> </a> <a href = 'archiveorders.php?id=".$key["ID_ORDER"]."' > <i class = 'fa fa-archive'> </i> </a>". "</td>";
             echo "</tr>";
             }?> 
             

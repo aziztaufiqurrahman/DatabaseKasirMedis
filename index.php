@@ -1,8 +1,15 @@
 <?php
 session_start();
 require "connect.php";
+require "models/customers.php";
+require "models/orders.php";
+require "models/products.php";
 require "models/producttypes.php";
 $type = ProductTypes::getAll($db);
+$totalcustomers = Customers::count($db);
+$totalorders = Orders::count($db);
+$totalincome = Orders::getIncomeForThisMonth($db);
+$totalproducts = Products::count($db);
 // guard
 $role = "NONE";
 if (isset($_SESSION['employee']) && !empty($_SESSION['employee']))
@@ -201,32 +208,7 @@ if (isset($_SESSION['employee']) && !empty($_SESSION['employee']))
           </div>
           <div class="left_banner left-sidebar-widget mt_30 mb_50"> <a href="#"><img src="images/leftt 1.jpg" alt="Left Banner" class="img-responsive" /></a> </div>
           <div class="left-cms left-sidebar-widget mb_50">
-            <ul>
-              <li>
-                <div class="feature-i-left ptb_40">
-                  <div class="icon-right Shipping"></div>
-                  <h6>Free Shipping</h6>
-                  <p>Siap Melayani Anda</p>
-                </div>
-              </li>
-              <li>
-                <div class="feature-i-left ptb_40">
-                  <div class="icon-right Order"></div>
-                  <h6>Order Online</h6>
-                  <p>Mudah Bertransaksi di Toko Kami</p>
-                </div>
-              </li>
-              <li>
-
-              </li>
-              <li>
-                <div class="feature-i-left ptb_40">
-                  <div class="icon-right Safe"></div>
-                  <h6>Safe Shoping</h6>
-                  <p>Memberikan Pelayanan Terbaik</p>
-                </div>
-              </li>
-            </ul>
+            
           </div>
           <div class="left-special left-sidebar-widget mb_50">
            
@@ -245,26 +227,50 @@ if (isset($_SESSION['employee']) && !empty($_SESSION['employee']))
          <div class="row">
             <div class="col-md-12">
               <div class="heading-part mb_20 mt_40 ">
-                <h2 class="main_title">Diagram Penjualan dan Pendapatan</h2>
+                <h2 class="main_title">Informasi Pendataan</h2>
               </div>
               <div id="p_line">
-                <div class="progress">
-                  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"> <span class="sr-only"> Harus Diisi</span> </div>
-                  <span class="progress-type">Penjualan Bulanan</span> <span class="progress-completed">Harus Diisi</span> </div>
-                <div class="progress">
-                  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"> <span class="sr-only">Harus Diisi</span> </div>
-                  <span class="progress-type">Penjualan Mingguan</span> <span class="progress-completed">Harus Diisi</span> </div>
-                <div class="progress">
-                  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%"> <span class="sr-only">Harus diisi</span> </div>
-                  <span class="progress-type">Penjualan Harian</span> <span class="progress-completed">Harus Diisi</span> </div>
-                <div class="progress">
-                  <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"> <span class="sr-only">Harus Diisi</span> </div>
-                  <span class="progress-type">Pendapatan Bulanan</span> <span class="progress-completed">Harus Diisi</span> </div>
-                <div class="progress">
-                  <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%"> <span class="sr-only">Harus diisi</span> </div>
-                  <span class="progress-type">Pendapatan Harian</span> <span class="progress-completed">Harus Diisi</span> </div>
+                <div class="row">
+                  <div class="col-md-12 no-padding">
+                    <div class="col-md-3">
+                      <div class="panel panel-default pull-left">
+                        <div class="panel-body">
+                          <b>Pendapatan Bulan Ini</b>
+                          <p style="padding-top: 10px;">
+                          <h4><?php echo "Rp. ".number_format($totalincome, 2, ",", "."); ?></h2>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="panel panel-default pull-left">
+                        <div class="panel-body">
+                          <b>Jumlah Transaksi</b>
+                          <p style="padding-top: 10px;">
+                          <h4><?php echo $totalorders; ?> Transaksi</h2>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="panel panel-default pull-left">
+                        <div class="panel-body">
+                          <b>Jumlah Produk</b>
+                          <p style="padding-top: 10px;">
+                          <h4><?php echo $totalproducts; ?> Produk</h2>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="panel panel-default pull-left">
+                        <div class="panel-body">
+                          <b>Jumlah Pelanggan</b>
+                          <p style="padding-top: 10px;">
+                          <h4><?php echo $totalcustomers; ?> Orang</h2>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-          </div>
           <!-- =====  SUB BANNER END  ===== -->
           <!-- =====  product end  ===== -->
           <!-- =====  Blog ===== -->
@@ -319,6 +325,7 @@ if (isset($_SESSION['employee']) && !empty($_SESSION['employee']))
                 
               </div>
             </div>
+          </div>
             <!-- =====  Blog end ===== -->
           </div>
         </div>

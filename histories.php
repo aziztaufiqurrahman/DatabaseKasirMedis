@@ -185,32 +185,7 @@ if ($role != "Administrator") return header("location:login.php");
           </div>
           <div class="left_banner left-sidebar-widget mt_30 mb_50"> <a href="#"><img src="images/leftt 1.jpg" alt="Left Banner" class="img-responsive" /></a> </div>
           <div class="left-cms left-sidebar-widget mb_50">
-            <ul>
-              <li>
-                <div class="feature-i-left ptb_40">
-                  <div class="icon-right Shipping"></div>
-                  <h6>Free Shipping</h6>
-                  <p>Siap Melayani Anda</p>
-                </div>
-              </li>
-              <li>
-                <div class="feature-i-left ptb_40">
-                  <div class="icon-right Order"></div>
-                  <h6>Order Online</h6>
-                  <p>Mudah Bertransaksi di Toko Kami</p>
-                </div>
-              </li>
-              <li>
-
-              </li>
-              <li>
-                <div class="feature-i-left ptb_40">
-                  <div class="icon-right Safe"></div>
-                  <h6>Safe Shoping</h6>
-                  <p>Memberikan Pelayanan Terbaik</p>
-                </div>
-              </li>
-            </ul>
+            
           </div>
           <div class="left-special left-sidebar-widget mb_50">
            

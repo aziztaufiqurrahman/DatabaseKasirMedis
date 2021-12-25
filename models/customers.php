@@ -28,5 +28,16 @@ class Customers
         $stmt->bindValue(":id_customer", $id_customer);
         $stmt->execute();
     }
+    /**
+     * menghitung jumlah customers
+     */
+    public static function count($db)
+    {
+        $sql = "SELECT * FROM view_totalcustomers";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        return intval($row['TOTAL_CUSTOMERS']);
+    }
 }
 ?>
