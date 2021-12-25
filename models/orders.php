@@ -172,7 +172,7 @@ class Orders
     /**
      * arsipkan order
      */
-    public function archive($db, $id_order)
+    public static function archive($db, $id_order)
     {
         $sql = "CALL archive_order(:id_order)";
         $stmt = $db->prepare($sql);

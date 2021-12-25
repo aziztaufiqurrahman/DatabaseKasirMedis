@@ -172,15 +172,18 @@ $type = ProductTypes::getAll($db);
           <div class="panel panel-default pull-left">
               <div class="panel-body">
                   <div class="row">
+                  <form method="POST" action="events/performarchive.php">
                       <div class="col-md-12 no-padding mt_10">
                         <div class="col-md-12"> <center>Apakah Anda Yakin Ingin Mengarsipkan Transaksi?</center></div>
                         </div>
                       </div> 
                       <br> </br>
                       <div class="col-md-12 mt_10">
-                        <button class="btn pull-right"> Ya Setuju</button>
+                      <input type="hidden" name="id_order" value = "<?php echo $_GET ["id"]?>" >
+                        <button type = "submit" class="btn pull-right"> Ya Setuju</button>
                       </div>
                     </div>
+                  </form>
               </div>
           </div>  
         </div>
