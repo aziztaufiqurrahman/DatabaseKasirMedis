@@ -227,7 +227,7 @@ if ($role != "Administrator") return header("location:login.php");
             echo "<td>". $key["ROLE"]."</td>";
             echo "<td>". formatTS($key["CREATED_AT"]). "</td>";
             echo "<td>". formatTS($key["UPDATED_AT"]). "</td>";
-            echo "<td><a href = 'editemployees.php?id=". $key["ID_EMPLOYEE"]. "' > <i class = 'fa fa-pencil'> </i> </a> <a href = 'deleteemployees.php?id=". $key["ID_EMPLOYEE"]. "' > <i class = 'fa fa-trash'> </i> </a>". "</td>";
+            echo "<td><a href = 'editemployees.php?id=". $key["ID_EMPLOYEE"]. "' > <i class = 'fa fa-pencil'> </i> </a> ".($role == "Administrator" && $key["ID_EMPLOYEE"] == $auth->ID_EMPLOYEE? "" : "<a href = 'deleteemployees.php?id=". $key["ID_EMPLOYEE"]. "' > <i class = 'fa fa-trash'> </i> </a>"). "</td>";
             echo "</tr>";
             }?> 
 
