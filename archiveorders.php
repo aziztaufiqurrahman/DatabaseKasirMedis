@@ -230,7 +230,7 @@ if ($role != "Administrator") return header("location:login.php");
             <center><div class="footer-contact">
               <div class="footer-logo mb_40"> <a href="index.php"> <img src="images/logokami3.png" alt="HealthCare"> </a> </div>
               <ul>
-                <li>KELOMPOK A4 <br/> D4 TEKNIK INFORMATIKA</li>
+                <li>Kelompok A5 <br/> D4 TEKNIK INFORMATIKA</li>
                 <li><b>MOTTO KELOMPOK : <br/>KERJA SAMA, SALING MELENGKAPI, MEMBERIKAN YANG TERBAIK</b> </li>
               </ul>
             </div>
